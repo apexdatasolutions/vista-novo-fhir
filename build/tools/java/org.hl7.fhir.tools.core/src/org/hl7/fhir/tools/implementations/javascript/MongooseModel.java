@@ -48,42 +48,68 @@ public class MongooseModel {
     }
     
     private void generateElement(GenBlock block, ElementDefn elementDefinition, boolean includeTrailingComma) {
-      if (elementDefinition.getMaxCardinality() == null) {
-        block.ln(elementDefinition.getName().replace("[x]", "") + ": [{");
-      } else
-      {
-        block.ln(elementDefinition.getName().replace("[x]", "") + ": {");
-      }
-      block.bs();
       List<TypeRef> types = elementDefinition.getTypes();
       if(types.size() > 0) {
-        String elementType = types.get(0).getName();
-        if (elementType.equals("boolean")) {
-          block.ln("value: Boolean");
-        } else if(elementType.equals("integer") || elementType.equals("decimal")) {
-          block.ln("value: Number");
-        } else if(elementType.equals("instant") || elementType.equals("date") || elementType.equals("dateTime")) {
-          block.ln("value: Date");
-        } else if(elementType.equals("string") || elementType.equals("uri") || elementType.equals("code")) {
-          block.ln("value: String");
-        } else if(elementType.equals("Resource")) {
-          generateResourceSchema(block);
-        } else if(elementType.equals("CodeableConcept")) {
-          generateCodeableConceptSchema(block);
-        } else if(elementType.equals("Coding")) {
-          generateCodingScheama(block);
+        for (Iterator<TypeRef> iterator = types.iterator(); iterator.hasNext();) {
+          TypeRef typeRef = iterator.next();
+          String elementType = typeRef.getName();
+          block.ln(generateTypeName(elementDefinition, typeRef) + generateTypeOpening(elementDefinition));
+          block.bs();
+          if (elementType.equals("boolean")) {
+            block.ln("value: Boolean");
+          } else if(elementType.equals("integer") || elementType.equals("decimal")) {
+            block.ln("value: Number");
+          } else if(elementType.equals("instant") || elementType.equals("date") || elementType.equals("dateTime")) {
+            block.ln("value: Date");
+          } else if(elementType.equals("string") || elementType.equals("uri") || elementType.equals("code")) {
+            block.ln("value: String");
+          } else if(elementType.equals("Resource")) {
+            generateResourceSchema(block);
+          } else if(elementType.equals("CodeableConcept")) {
+            generateCodeableConceptSchema(block);
+          } else if(elementType.equals("Coding")) {
+            generateCodingScheama(block);
+          } else if(elementType.equals("Age") || elementType.equals("Quantity") || elementType.equals("Count")) {
+            generateQuantitySchema(block);
+          }
+          block.es();
+          if (elementDefinition.getMaxCardinality() == null) {
+            block.ln("}]" + (iterator.hasNext() || includeTrailingComma ? "," : ""));
+          } else {
+            block.ln("}" + (iterator.hasNext() || includeTrailingComma ? "," : ""));
+          }
         }
       } else if(types.size() == 0) {
+        block.ln(generateTypeName(elementDefinition, null) + generateTypeOpening(elementDefinition));
+        block.bs();
         for (Iterator<ElementDefn> iterator = elementDefinition.getElements().iterator(); iterator.hasNext();) {
           ElementDefn nestedElement = iterator.next();
           generateElement(block, nestedElement, iterator.hasNext());
         }
+        block.es();
+        if (elementDefinition.getMaxCardinality() == null) {
+          block.ln("}]" + (includeTrailingComma ? "," : ""));
+        } else {
+          block.ln("}" + (includeTrailingComma ? "," : ""));
+        }
       }
-      block.es();
+    }
+    
+    private String generateTypeName(ElementDefn elementDefinition, TypeRef type) {
+      String elementName = elementDefinition.getName().replace("[x]", "");
+      if (elementDefinition.getTypes().size() > 1) {
+        String typeName = type.getName();
+        typeName = Character.toUpperCase(typeName.charAt(0)) + typeName.substring(1);
+        elementName += typeName;
+      }
+      return elementName;
+    }
+    
+    private String generateTypeOpening(ElementDefn elementDefinition) {
       if (elementDefinition.getMaxCardinality() == null) {
-        block.ln("}]" + (includeTrailingComma ? "," : ""));
+        return ": [{";
       } else {
-        block.ln("}" + (includeTrailingComma ? "," : ""));
+        return ": {";
       }
     }
     
@@ -114,5 +140,13 @@ public class MongooseModel {
       generateValueSchema(block, "system", true);
       generateValueSchema(block, "code", true);
       generateValueSchema(block, "display", false);
+    }
+    
+    private void generateQuantitySchema(GenBlock block) {
+      generateValueSchema(block, "value", true);
+      generateValueSchema(block, "units", true);
+      generateValueSchema(block, "system", true);
+      generateValueSchema(block, "code", false);
+      
     }
 }
