@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.hl7.fhir.definitions.model.Definitions;
 import org.hl7.fhir.definitions.model.ResourceDefn;
 import org.hl7.fhir.tools.implementations.BaseGenerator;
@@ -48,6 +49,9 @@ public class JavaScriptGenerator extends BaseGenerator implements PlatformGenera
       MongooseModel model = new MongooseModel(name, definitions, modelFile);
       model.generate();
     }
+    File resourceHistoryModel = new File(implDir + separator + ".." + separator + ".." + separator 
+                                         + "tools" + separator + "javascript" + separator + "resource_history.js");
+    FileUtils.copyFileToDirectory(resourceHistoryModel, modelDir);
   }
 
   @Override
