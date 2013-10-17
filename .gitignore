@@ -1,4 +1,5 @@
 *.class
+.DS_Store
 build/implementations/java/org.hl7.fhir.instance
 build/schema
 build/fhir-error-dump.txt
