@@ -43,15 +43,25 @@ public class JavaScriptGenerator extends BaseGenerator implements PlatformGenera
     if (! modelDir.exists()) {
       modelDir.mkdirs();
     }
+    File configDir = new File(implDir + separator + "config");
+    if (! configDir.exists()) {
+      configDir.mkdirs();
+    }
     Map<String, ResourceDefn> namesAndDefinitions = definitions.getResources();
     for (String name : namesAndDefinitions.keySet()) {
       File modelFile = new File(modelDir.getPath() + separator + name.toLowerCase() + ".js");
       MongooseModel model = new MongooseModel(name, definitions, modelFile);
       model.generate();
     }
-    File resourceHistoryModel = new File(implDir + separator + ".." + separator + ".." + separator 
-                                         + "tools" + separator + "javascript" + separator + "resource_history.js");
+    
+    String javaScriptRoot = implDir + separator + ".." + separator + ".." + separator 
+        + "tools" + separator + "javascript" + separator;
+    
+    File resourceHistoryModel = new File( javaScriptRoot + "app" + separator + "models" + separator + "resource_history.js");
     FileUtils.copyFileToDirectory(resourceHistoryModel, modelDir);
+    FileUtils.copyFileToDirectory(new File(javaScriptRoot + separator + "package.json"), new File(implDir));
+    FileUtils.copyFileToDirectory(new File(javaScriptRoot + separator + "app.js"), new File(implDir));
+    FileUtils.copyFileToDirectory(new File(javaScriptRoot + separator + "config" + separator + "mongoose.js"), configDir);
   }
 
   @Override
