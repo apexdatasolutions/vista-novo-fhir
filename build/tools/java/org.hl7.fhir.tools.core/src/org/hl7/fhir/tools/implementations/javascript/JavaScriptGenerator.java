@@ -1,6 +1,10 @@
 package org.hl7.fhir.tools.implementations.javascript;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +15,11 @@ import org.hl7.fhir.definitions.model.ResourceDefn;
 import org.hl7.fhir.tools.implementations.BaseGenerator;
 import org.hl7.fhir.tools.publisher.PlatformGenerator;
 import org.hl7.fhir.utilities.Logger;
+import org.stringtemplate.v4.ST;
 
 public class JavaScriptGenerator extends BaseGenerator implements PlatformGenerator {
+  
+  public static char SEPARATOR = File.separatorChar;
 
   @Override
   public String getName() {
@@ -37,31 +44,54 @@ public class JavaScriptGenerator extends BaseGenerator implements PlatformGenera
   @Override
   public void generate(Definitions definitions, String destDir, String implDir, String version, Date genDate, Logger logger, String svnRevision)
       throws Exception {
-    char separator = File.separatorChar;
-    String baseDir = implDir + separator + "app";
-    File modelDir = new File(baseDir + separator + "models");
+    String baseDir = implDir + SEPARATOR + "app";
+    String javaScriptRoot = implDir + SEPARATOR + ".." + SEPARATOR + ".." + SEPARATOR 
+        + "tools" + SEPARATOR + "javascript" + SEPARATOR;
+    
+    File modelDir = new File(baseDir + SEPARATOR + "models");
     if (! modelDir.exists()) {
       modelDir.mkdirs();
     }
-    File configDir = new File(implDir + separator + "config");
+    File controllerDir = new File(baseDir + SEPARATOR + "controllers");
+    if (! controllerDir.exists()) {
+      controllerDir.mkdirs();
+    }
+    File configDir = new File(implDir + SEPARATOR + "config");
     if (! configDir.exists()) {
       configDir.mkdirs();
     }
+    String genericControllerTemplate = FileUtils.readFileToString(new File(javaScriptRoot + "app" + SEPARATOR + "controllers" + SEPARATOR + "generic_controller.js.st"));
     Map<String, ResourceDefn> namesAndDefinitions = definitions.getResources();
     for (String name : namesAndDefinitions.keySet()) {
-      File modelFile = new File(modelDir.getPath() + separator + name.toLowerCase() + ".js");
-      MongooseModel model = new MongooseModel(name, definitions, modelFile);
-      model.generate();
+      generateMongooseModel(name, modelDir, definitions);
+      generateExpressController(name, controllerDir, genericControllerTemplate);
     }
     
-    String javaScriptRoot = implDir + separator + ".." + separator + ".." + separator 
-        + "tools" + separator + "javascript" + separator;
     
-    File resourceHistoryModel = new File( javaScriptRoot + "app" + separator + "models" + separator + "resource_history.js");
+    File resourceHistoryModel = new File(javaScriptRoot + "app" + SEPARATOR + "models" + SEPARATOR + "resource_history.js");
     FileUtils.copyFileToDirectory(resourceHistoryModel, modelDir);
-    FileUtils.copyFileToDirectory(new File(javaScriptRoot + separator + "package.json"), new File(implDir));
-    FileUtils.copyFileToDirectory(new File(javaScriptRoot + separator + "app.js"), new File(implDir));
-    FileUtils.copyFileToDirectory(new File(javaScriptRoot + separator + "config" + separator + "mongoose.js"), configDir);
+    FileUtils.copyFileToDirectory(new File(javaScriptRoot + SEPARATOR + "package.json"), new File(implDir));
+    FileUtils.copyFileToDirectory(new File(javaScriptRoot + SEPARATOR + "app.js"), new File(implDir));
+    FileUtils.copyFileToDirectory(new File(javaScriptRoot + SEPARATOR + "config" + SEPARATOR + "mongoose.js"), configDir);
+  }
+  
+  private void generateMongooseModel(String name, File modelDir, Definitions definitions) throws Exception {
+    File modelFile = new File(modelDir.getPath() + SEPARATOR + name.toLowerCase() + ".js");
+    MongooseModel model = new MongooseModel(name, definitions, modelFile);
+    model.generate();
+  }
+  
+  private void generateExpressController(String name, File controllerDir, String genericControllerTemplate) throws IOException {
+    File controllerFile = new File(controllerDir.getPath() + SEPARATOR + name.toLowerCase() + ".js");
+    ST controllerTemplate = new ST(genericControllerTemplate);
+    
+    controllerTemplate.add("ModelName", name);
+    controllerTemplate.add("LowerCaseModelName", name.toLowerCase());
+    
+    Writer controllerWriter = new BufferedWriter(new FileWriter(controllerFile));
+    controllerWriter.write(controllerTemplate.render());
+    controllerWriter.flush();
+    controllerWriter.close();
   }
 
   @Override
