@@ -60,6 +60,10 @@ public class JavaScriptGenerator extends BaseGenerator implements PlatformGenera
     if (! configDir.exists()) {
       configDir.mkdirs();
     }
+    File libDir = new File(implDir + SEPARATOR + "lib");
+    if (! libDir.exists()) {
+      libDir.mkdirs();
+    }
     String genericControllerTemplate = FileUtils.readFileToString(new File(javaScriptRoot + "app" + SEPARATOR + "controllers" + SEPARATOR + "generic_controller.js.st"));
     Map<String, ResourceDefn> namesAndDefinitions = definitions.getResources();
     for (String name : namesAndDefinitions.keySet()) {
@@ -73,6 +77,8 @@ public class JavaScriptGenerator extends BaseGenerator implements PlatformGenera
     FileUtils.copyFileToDirectory(new File(javaScriptRoot + SEPARATOR + "package.json"), new File(implDir));
     FileUtils.copyFileToDirectory(new File(javaScriptRoot + SEPARATOR + "app.js"), new File(implDir));
     FileUtils.copyFileToDirectory(new File(javaScriptRoot + SEPARATOR + "config" + SEPARATOR + "mongoose.js"), configDir);
+    FileUtils.copyFileToDirectory(new File(javaScriptRoot + SEPARATOR + "lib" + SEPARATOR + "format_query_parameter_handler.js"), libDir);
+    FileUtils.copyFileToDirectory(new File(javaScriptRoot + SEPARATOR + "lib" + SEPARATOR + "response_format_helper.js"), libDir);
   }
   
   private void generateMongooseModel(String name, File modelDir, Definitions definitions) throws Exception {
