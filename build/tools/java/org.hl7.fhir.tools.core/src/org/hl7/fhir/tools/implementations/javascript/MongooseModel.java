@@ -53,31 +53,53 @@ public class MongooseModel {
         for (Iterator<TypeRef> iterator = types.iterator(); iterator.hasNext();) {
           TypeRef typeRef = iterator.next();
           String elementType = typeRef.getName();
-          block.ln(generateTypeName(elementDefinition, typeRef) + generateTypeOpening(elementDefinition));
-          block.bs();
+          //block.ln(generateTypeName(elementDefinition, typeRef) + generateTypeOpening(elementDefinition));
+          //block.bs();
           if (elementType.equals("boolean")) {
-            block.ln("value: Boolean");
+            block.ln(generateTypeName(elementDefinition,typeRef) + ": Boolean,");
           } else if(elementType.equals("integer") || elementType.equals("decimal")) {
-            block.ln("value: Number");
+            block.ln(generateTypeName(elementDefinition,typeRef) + ": Number,");
           } else if(elementType.equals("instant") || elementType.equals("date") || elementType.equals("dateTime")) {
-            block.ln("value: Date");
+            block.ln(generateTypeName(elementDefinition,typeRef) + ": Date,");
           } else if(elementType.equals("string") || elementType.equals("uri") || elementType.equals("code")) {
-            block.ln("value: String");
+            block.ln(generateTypeName(elementDefinition,typeRef) + ": String,");
           } else if(elementType.equals("Resource")) {
+            block.ln(generateTypeName(elementDefinition, typeRef) + generateTypeOpening(elementDefinition));
+            block.bs();
             generateResourceSchema(block);
+            block.es();
+            generateTypeClosing(elementDefinition,block,iterator.hasNext(),includeTrailingComma);
           } else if(elementType.equals("CodeableConcept")) {
+            block.ln(generateTypeName(elementDefinition, typeRef) + generateTypeOpening(elementDefinition));
+            block.bs();
             generateCodeableConceptSchema(block);
+            block.es();
+            generateTypeClosing(elementDefinition,block,iterator.hasNext(),includeTrailingComma);
           } else if(elementType.equals("Coding")) {
+            block.ln(generateTypeName(elementDefinition, typeRef) + generateTypeOpening(elementDefinition));
+            block.bs();
             generateCodingScheama(block);
+            block.es();
+            generateTypeClosing(elementDefinition,block,iterator.hasNext(),includeTrailingComma);
           } else if(elementType.equals("Age") || elementType.equals("Quantity") || elementType.equals("Count")) {
+            block.ln(generateTypeName(elementDefinition, typeRef) + generateTypeOpening(elementDefinition));
+            block.bs();
             generateQuantitySchema(block);
-          }
-          block.es();
-          if (elementDefinition.getMaxCardinality() == null) {
-            block.ln("}]" + (iterator.hasNext() || includeTrailingComma ? "," : ""));
+            block.es();
+            generateTypeClosing(elementDefinition,block,iterator.hasNext(),includeTrailingComma);
           } else {
-            block.ln("}" + (iterator.hasNext() || includeTrailingComma ? "," : ""));
+            block.ln(generateTypeName(elementDefinition, typeRef) + generateTypeOpening(elementDefinition));
+            block.bs();
+            block.es();
+            generateTypeClosing(elementDefinition,block,iterator.hasNext(),includeTrailingComma);
           }
+          //block.es();
+          //generateTypeClosing(elementDefinition,block,iterator.hasNext(),includeTrailingComma);
+//          if (elementDefinition.getMaxCardinality() == null) {
+//            block.ln("}]" + (iterator.hasNext() || includeTrailingComma ? "," : ""));
+//          } else {
+//            block.ln("}" + (iterator.hasNext() || includeTrailingComma ? "," : ""));
+//          }
         }
       } else if(types.size() == 0) {
         block.ln(generateTypeName(elementDefinition, null) + generateTypeOpening(elementDefinition));
@@ -113,8 +135,16 @@ public class MongooseModel {
       }
     }
     
+    private void generateTypeClosing(ElementDefn elementDefinition, GenBlock block, boolean hasNext, boolean includeTrailingComma) {
+      if (elementDefinition.getMaxCardinality() == null) {
+        block.ln("}]" + (hasNext || includeTrailingComma ? "," : ""));
+      } else {
+        block.ln("}" + (hasNext || includeTrailingComma ? "," : ""));
+      }
+    }
+    
     private void generateResourceSchema(GenBlock block) {
-      generateValueSchema(block, "type", true);
+      //generateValueSchema(block, "type", true);
       generateValueSchema(block, "reference", false);
     }
     
@@ -129,11 +159,8 @@ public class MongooseModel {
     }
     
     private void generateValueSchema(GenBlock block, String valueName, boolean includeTrailingComma) {
-      block.ln(valueName + ": {");
-      block.bs();
-      block.ln("value: String");
-      block.es();
-      block.ln("}" + (includeTrailingComma ? "," : ""));
+      block.ln(valueName + ": String"  + (includeTrailingComma ? "," : ""));
+      //block.ln("}" + (includeTrailingComma ? "," : ""));
     }
     
     private void generateCodingScheama(GenBlock block) {
