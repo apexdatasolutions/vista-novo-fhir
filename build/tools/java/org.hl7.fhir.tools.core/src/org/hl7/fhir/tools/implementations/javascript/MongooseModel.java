@@ -124,6 +124,11 @@ public class MongooseModel {
         typeName = Character.toUpperCase(typeName.charAt(0)) + typeName.substring(1);
         elementName += typeName;
       }
+      if(elementName.equals("type")){
+        elementName = "fhirType";
+      } else if(elementName.equals("collection")){
+        elementName = "fhirCollection";
+      }
       return elementName;
     }
     
@@ -144,8 +149,8 @@ public class MongooseModel {
     }
     
     private void generateResourceSchema(GenBlock block) {
-      //generateValueSchema(block, "type", true);
-      generateValueSchema(block, "reference", false);
+      generateValueSchema(block, "reference", true);
+      generateValueSchema(block, "display", false);
     }
     
     private void generateCodeableConceptSchema(GenBlock block) {
