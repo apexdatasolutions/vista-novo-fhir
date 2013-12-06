@@ -8,11 +8,11 @@ var ResourceHistorySchema = new mongoose.Schema({
 
 ResourceHistorySchema.methods = {
   addVersion: function (resourceId) {
-    this.history.push({resourceId: resourceId, createdAt: Date.now});
+    this.history.push({resourceId: resourceId, createdAt: Date.now()});
   },
 
   latestVersionId: function () {
-    return _.last(this.history).createdAt;
+    return _.last(this.history).resourceId;
   }
 };
 
