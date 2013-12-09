@@ -13,14 +13,29 @@ app.engine('eco', cons.eco);
 // set .html as the default extension 
 app.set('view engine', 'eco');
 app.set('views', __dirname + '/../app/views');
-
+app.use(express.bodyParser());
 
 
 
 
 // setup routes
 
-//show for model
+//show for model without version
+app.get('/:model/:id', function(req,res){
+   var controller = require('../app/controllers/' + req.params.model)
+   controller.load(req,res,req.params.id,null, function(obj) {
+      if(obj.constructor.name=="Error")
+      {
+        console.log("Got an error: " + obj)
+        res.send(500)
+      } else {
+        controller.show(req,res)
+      }
+
+   });
+});
+
+//show for model with version
 app.get('/:model/:id/:vid', function(req,res){
    var controller = require('../app/controllers/' + req.params.model)
    controller.load(req,res,req.params.id,req.params.vid, function(obj) {
@@ -36,7 +51,7 @@ app.get('/:model/:id/:vid', function(req,res){
 });
 
 //create for model
-app.get('/:model/create', function(req,res){
+app.post('/:model/create', function(req,res){
    var controller = require('../app/controllers/' + req.params.model)
    controller.create(req,res)
 });
