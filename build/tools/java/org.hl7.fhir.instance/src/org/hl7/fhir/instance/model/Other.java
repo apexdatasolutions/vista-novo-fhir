@@ -29,7 +29,9 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
+
+import java.util.*;
 
 /**
  * Other is a conformant for handling resource concepts not yet defined for FHIR or outside HL7's scope of interest.
@@ -56,43 +58,86 @@ public class Other extends Resource {
      */
     protected Date created;
 
+    public Other() {
+      super();
+    }
+
+    public Other(CodeableConcept code) {
+      super();
+      this.code = code;
+    }
+
+    /**
+     * @return {@link #code} (Identifies the 'type' of resource - equivalent to the resource name for other resources.)
+     */
     public CodeableConcept getCode() { 
       return this.code;
     }
 
-    public void setCode(CodeableConcept value) { 
+    /**
+     * @param value {@link #code} (Identifies the 'type' of resource - equivalent to the resource name for other resources.)
+     */
+    public Other setCode(CodeableConcept value) { 
       this.code = value;
+      return this;
     }
 
+    /**
+     * @return {@link #subject} (Identifies the patient, practitioner, device or any other resource that is the "focus" of this resoruce.)
+     */
     public ResourceReference getSubject() { 
       return this.subject;
     }
 
-    public void setSubject(ResourceReference value) { 
+    /**
+     * @param value {@link #subject} (Identifies the patient, practitioner, device or any other resource that is the "focus" of this resoruce.)
+     */
+    public Other setSubject(ResourceReference value) { 
       this.subject = value;
+      return this;
     }
 
+    /**
+     * @return {@link #author} (Indicates who was responsible for creating the resource instance.)
+     */
     public ResourceReference getAuthor() { 
       return this.author;
     }
 
-    public void setAuthor(ResourceReference value) { 
+    /**
+     * @param value {@link #author} (Indicates who was responsible for creating the resource instance.)
+     */
+    public Other setAuthor(ResourceReference value) { 
       this.author = value;
+      return this;
     }
 
+    /**
+     * @return {@link #created} (Identifies when the resource was first created.)
+     */
     public Date getCreated() { 
       return this.created;
     }
 
-    public void setCreated(Date value) { 
+    /**
+     * @param value {@link #created} (Identifies when the resource was first created.)
+     */
+    public Other setCreated(Date value) { 
       this.created = value;
+      return this;
     }
 
+    /**
+     * @return Identifies when the resource was first created.
+     */
     public String getCreatedSimple() { 
       return this.created == null ? null : this.created.getValue();
     }
 
-    public void setCreatedSimple(String value) { 
+    /**
+     * @param value Identifies when the resource was first created.
+     */
+    public Other setCreatedSimple(String value) { 
       if (value == null)
         this.created = null;
       else {
@@ -100,7 +145,16 @@ public class Other extends Resource {
           this.created = new Date();
         this.created.setValue(value);
       }
+      return this;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("code", "CodeableConcept", "Identifies the 'type' of resource - equivalent to the resource name for other resources.", 0, java.lang.Integer.MAX_VALUE, code));
+        childrenList.add(new Property("subject", "Resource(Any)", "Identifies the patient, practitioner, device or any other resource that is the 'focus' of this resoruce.", 0, java.lang.Integer.MAX_VALUE, subject));
+        childrenList.add(new Property("author", "Resource(Practitioner|Patient|RelatedPerson)", "Indicates who was responsible for creating the resource instance.", 0, java.lang.Integer.MAX_VALUE, author));
+        childrenList.add(new Property("created", "date", "Identifies when the resource was first created.", 0, java.lang.Integer.MAX_VALUE, created));
+      }
 
       public Other copy() {
         Other dst = new Other();

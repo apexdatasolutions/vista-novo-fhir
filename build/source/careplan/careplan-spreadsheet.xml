@@ -16,10 +16,10 @@
   <AllowPNG/>
  </OfficeDocumentSettings>
  <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
-  <WindowHeight>2430</WindowHeight>
+  <WindowHeight>2310</WindowHeight>
   <WindowWidth>10005</WindowWidth>
   <WindowTopX>75</WindowTopX>
-  <WindowTopY>13695</WindowTopY>
+  <WindowTopY>13815</WindowTopY>
   <ProtectStructure>False</ProtectStructure>
   <ProtectWindows>False</ProtectWindows>
  </ExcelWorkbook>
@@ -112,15 +112,20 @@
    <Alignment ss:Vertical="Top" ss:WrapText="1"/>
   </Style>
   <Style ss:ID="s78">
-   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:ShrinkToFit="1"
+    ss:WrapText="1"/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
   </Style>
   <Style ss:ID="s79">
-   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
   </Style>
   <Style ss:ID="s80">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+  </Style>
+  <Style ss:ID="s81">
    <Alignment ss:Vertical="Top"/>
   </Style>
-  <Style ss:ID="s83" ss:Parent="s62">
+  <Style ss:ID="s84" ss:Parent="s62">
    <Alignment ss:Vertical="Top" ss:WrapText="1"/>
    <Borders/>
    <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
@@ -170,7 +175,7 @@
     <Cell ss:StyleID="s67"/>
     <Cell ss:StyleID="s67"/>
     <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">220;0</Data></Cell>
     <Cell><Data ss:Type="String">Resource</Data></Cell>
     <Cell ss:StyleID="s68"/>
     <Cell><Data ss:Type="String">Healthcare plan for patient</Data></Cell>
@@ -223,7 +228,7 @@
     <Cell ss:StyleID="s68"/>
     <Cell><Data ss:Type="String">code</Data></Cell>
     <Cell ss:StyleID="s68"><Data ss:Type="String">CarePlanStatus</Data></Cell>
-    <Cell><Data ss:Type="String">planned | active | ended</Data></Cell>
+    <Cell><Data ss:Type="String">planned | active | completed</Data></Cell>
     <Cell><Data ss:Type="String">Indicates whether the plan is currently being acted upon, represents future intentions or is now just historical record.</Data></Cell>
     <Cell ss:Index="11"><Data ss:Type="String">Allows clinicians to determine whether the plan is actionable or not</Data></Cell>
     <Cell ss:Index="13" ss:StyleID="s68"/>
@@ -286,7 +291,7 @@
     <Cell><Data ss:Type="String">0..*</Data></Cell>
     <Cell ss:StyleID="s68"/>
     <Cell ss:StyleID="s68"/>
-    <Cell ss:StyleID="s68"><Data ss:Type="String">down</Data></Cell>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">20;180</Data></Cell>
     <Cell ss:Index="7" ss:StyleID="s68"/>
     <Cell><Data ss:Type="String">Who's involved in plan?</Data></Cell>
     <Cell><Data ss:Type="String">Identifies all people and organizations who are expected to be involved in the care envisioned by this plan.</Data></Cell>
@@ -336,7 +341,7 @@
     <Cell><Data ss:Type="String">0..*</Data></Cell>
     <Cell ss:StyleID="s68"/>
     <Cell ss:StyleID="s68"/>
-    <Cell ss:StyleID="s68"><Data ss:Type="String">down</Data></Cell>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">0;0</Data></Cell>
     <Cell ss:Index="7" ss:StyleID="s68"/>
     <Cell><Data ss:Type="String">Desired outcome of plan</Data></Cell>
     <Cell><Data ss:Type="String">Describes the intended objective(s) of carrying out the Care Plan.</Data></Cell>
@@ -372,7 +377,7 @@
     <Cell ss:StyleID="s68"/>
     <Cell><Data ss:Type="String">code</Data></Cell>
     <Cell ss:StyleID="s68"><Data ss:Type="String">CarePlanGoalStatus</Data></Cell>
-    <Cell><Data ss:Type="String">in progress | achieved | sustaining | abandoned</Data></Cell>
+    <Cell><Data ss:Type="String">in progress | achieved | sustaining | cancelled</Data></Cell>
     <Cell><Data ss:Type="String">Indicates whether the goal has been reached and is still considered relevant</Data></Cell>
     <Cell ss:Index="11" ss:StyleID="s68"><Data ss:Type="String">Allows measuring outcome and also indicates relevance of goal to plan.</Data></Cell>
     <Cell ss:Index="13" ss:StyleID="s68"/>
@@ -403,7 +408,7 @@
     <Cell ss:StyleID="s68"/>
     <Cell ss:StyleID="s68"/>
     <Cell ss:StyleID="s68"/>
-    <Cell><Data ss:Type="String">Resource(Concern)</Data></Cell>
+    <Cell><Data ss:Type="String">Resource(Condition)</Data></Cell>
     <Cell ss:StyleID="s68"/>
     <Cell><Data ss:Type="String">Health issues this goal addresses</Data></Cell>
     <Cell><Data ss:Type="String">The identified conditions that this goal relates to - the condition that caused it to be created, or that it is intended to address</Data></Cell>
@@ -419,7 +424,7 @@
     <Cell><Data ss:Type="String">0..*</Data></Cell>
     <Cell ss:StyleID="s68"/>
     <Cell ss:StyleID="s68"/>
-    <Cell ss:StyleID="s68"><Data ss:Type="String">right</Data></Cell>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">440;0</Data></Cell>
     <Cell ss:Index="7" ss:StyleID="s68"/>
     <Cell><Data ss:Type="String">Action to occur as part of plan</Data></Cell>
     <Cell><Data ss:Type="String">Identifies a planned action to occur as part of the plan.  For example, a medication to be used, lab tests to perform, self-monitoring, education, etc.</Data></Cell>
@@ -453,7 +458,7 @@
     <Cell ss:StyleID="s68"/>
     <Cell><Data ss:Type="String">code</Data></Cell>
     <Cell ss:StyleID="s68"><Data ss:Type="String">CarePlanActivityStatus</Data></Cell>
-    <Cell><Data ss:Type="String">not started | ongoing | suspended | completed | abandoned</Data></Cell>
+    <Cell><Data ss:Type="String">not started | scheduled | in progress | on hold | completed | cancelled</Data></Cell>
     <Cell><Data ss:Type="String">Identifies what progress is being made for the specific activity.</Data></Cell>
     <Cell ss:Index="11"><Data ss:Type="String">Indicates progress against the plan, whether the activity is still relevant for the plan</Data></Cell>
     <Cell><Data ss:Type="String">Some aspects of Status can be inferred based on the resources linked in actionTaken.  Note that &quot;status&quot; is only as current as the plan was most recently updated.</Data></Cell>
@@ -518,6 +523,7 @@
     <Cell><Data ss:Type="String">CarePlan.activity.simple</Data></Cell>
     <Cell><Data ss:Type="String">0..1</Data></Cell>
     <Cell><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:Index="5"><Data ss:Type="String">700;0</Data></Cell>
     <Cell ss:Index="8"><Data ss:Type="String">Activity details summarised here</Data></Cell>
     <Cell><Data ss:Type="String">A simple summary of details suitable for a general care plan system (e.g. form driven) that doesn't know about specific resources such as procedure etc</Data></Cell>
     <Cell ss:Index="11"><Data ss:Type="String">Details in a simple form for generic care plan systems</Data></Cell>
@@ -531,7 +537,7 @@
     <Cell ss:StyleID="s68"/>
     <Cell><Data ss:Type="String">code</Data></Cell>
     <Cell ss:StyleID="s68"><Data ss:Type="String">CarePlanActivityCategory</Data></Cell>
-    <Cell><Data ss:Type="String">encounter | procedure | observation | +</Data></Cell>
+    <Cell><Data ss:Type="String">diet | drug | encounter | observation | procedure | supply | other</Data></Cell>
     <Cell><Data ss:Type="String">High-level categorization of the type of activity in a care plan.</Data></Cell>
     <Cell ss:Index="11" ss:StyleID="s68"><Data ss:Type="String">May determine what types of extensions are permitted</Data></Cell>
     <Cell ss:Index="13" ss:StyleID="s68"/>
@@ -698,7 +704,7 @@
    <FreezePanes/>
    <FrozenNoSplit/>
    <SplitHorizontal>1</SplitHorizontal>
-   <TopRowBottomPane>19</TopRowBottomPane>
+   <TopRowBottomPane>17</TopRowBottomPane>
    <SplitVertical>1</SplitVertical>
    <LeftColumnRightPane>1</LeftColumnRightPane>
    <ActivePane>0</ActivePane>
@@ -715,8 +721,8 @@
     </Pane>
     <Pane>
      <Number>0</Number>
-     <ActiveRow>26</ActiveRow>
-     <ActiveCol>6</ActiveCol>
+     <ActiveRow>18</ActiveRow>
+     <ActiveCol>7</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -880,162 +886,154 @@
   </WorksheetOptions>
  </Worksheet>
  <Worksheet ss:Name="Search">
-  <Table ss:ExpandedColumnCount="9" ss:ExpandedRowCount="41" x:FullColumns="1"
+  <Table ss:ExpandedColumnCount="8" ss:ExpandedRowCount="41" x:FullColumns="1"
    x:FullRows="1" ss:DefaultColumnWidth="65.25" ss:DefaultRowHeight="15">
    <Column ss:AutoFitWidth="0" ss:Width="71.25"/>
    <Column ss:AutoFitWidth="0" ss:Width="383.25"/>
-   <Column ss:Index="5" ss:Width="162.75"/>
+   <Column ss:Index="4" ss:Width="162.75"/>
    <Row ss:AutoFitHeight="0" ss:Height="15.9375" ss:StyleID="s66">
     <Cell><Data ss:Type="String">Name</Data></Cell>
     <Cell><Data ss:Type="String">Description</Data></Cell>
     <Cell><Data ss:Type="String">Type</Data></Cell>
-    <Cell><Data ss:Type="String">Repeats</Data></Cell>
     <Cell><Data ss:Type="String">Path</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">patient</Data></Cell>
-    <Cell><Data ss:Type="String">[CarePlan.patient]</Data></Cell>
-    <Cell><Data ss:Type="String">reference</Data></Cell>
-    <Cell><Data ss:Type="String">union</Data></Cell>
+    <Cell ss:Index="3"><Data ss:Type="String">reference</Data></Cell>
     <Cell><Data ss:Type="String">CarePlan.patient</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">condition</Data></Cell>
-    <Cell><Data ss:Type="String">[CarePlan.concern]</Data></Cell>
-    <Cell><Data ss:Type="String">reference</Data></Cell>
-    <Cell><Data ss:Type="String">union</Data></Cell>
+    <Cell ss:Index="3"><Data ss:Type="String">reference</Data></Cell>
     <Cell><Data ss:Type="String">CarePlan.concern</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">date</Data></Cell>
-    <Cell><Data ss:Type="String">[CarePlan.period] contains date</Data></Cell>
-    <Cell><Data ss:Type="String">date</Data></Cell>
-    <Cell><Data ss:Type="String">single</Data></Cell>
+    <Cell ss:Index="3"><Data ss:Type="String">date</Data></Cell>
     <Cell><Data ss:Type="String">CarePlan.period</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">participant</Data></Cell>
-    <Cell><Data ss:Type="String">[CarePlan.participant.member]</Data></Cell>
-    <Cell><Data ss:Type="String">reference</Data></Cell>
-    <Cell><Data ss:Type="String">union</Data></Cell>
+    <Cell ss:Index="3"><Data ss:Type="String">reference</Data></Cell>
     <Cell><Data ss:Type="String">CarePlan.participant.member</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell><Data ss:Type="String">activity</Data></Cell>
-    <Cell><Data ss:Type="String">[CarePlan.activity.code]</Data></Cell>
-    <Cell><Data ss:Type="String">token</Data></Cell>
-    <Cell><Data ss:Type="String">union</Data></Cell>
+    <Cell><Data ss:Type="String">activitycode</Data></Cell>
+    <Cell ss:Index="3"><Data ss:Type="String">token</Data></Cell>
     <Cell><Data ss:Type="String">CarePlan.activity.simple.code</Data></Cell>
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">activitydate</Data></Cell>
     <Cell><Data ss:Type="String">Specified date occurs within period specified by CarePlan.activity.timingSchedule</Data></Cell>
     <Cell><Data ss:Type="String">date</Data></Cell>
-    <Cell><Data ss:Type="String">single</Data></Cell>
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">CarePlan.activity.simple.timing[x]</Data></Cell>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell><Data ss:Type="String">activitydetail</Data></Cell>
+    <Cell ss:Index="3"><Data ss:Type="String">reference</Data></Cell>
+    <Cell><Data ss:Type="String">CarePlan.activity.detail</Data></Cell>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="9" ss:StyleID="s65"/>
+    <Cell ss:Index="8" ss:StyleID="s65"/>
    </Row>
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
@@ -1045,6 +1043,12 @@
     <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
    </PageSetup>
    <Unsynced/>
+   <Print>
+    <ValidPrinterInfo/>
+    <PaperSizeIndex>9</PaperSizeIndex>
+    <HorizontalResolution>300</HorizontalResolution>
+    <VerticalResolution>300</VerticalResolution>
+   </Print>
    <FreezePanes/>
    <FrozenNoSplit/>
    <SplitHorizontal>1</SplitHorizontal>
@@ -1064,7 +1068,8 @@
     </Pane>
     <Pane>
      <Number>0</Number>
-     <ActiveRow>2</ActiveRow>
+     <ActiveRow>5</ActiveRow>
+     <ActiveCol>3</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -1090,20 +1095,20 @@
     <Cell><Data ss:Type="String">Weight Loss</Data></Cell>
     <Cell><Data ss:Type="String">General Person Example</Data></Cell>
     <Cell><Data ss:Type="String">example</Data></Cell>
-    <Cell ss:StyleID="s78"><Data ss:Type="String">careplan-example.xml</Data></Cell>
+    <Cell ss:StyleID="s79"><Data ss:Type="String">careplan-example.xml</Data></Cell>
     <Cell ss:Index="6"><Data ss:Type="String">y</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">Pregnancy</Data></Cell>
     <Cell><Data ss:Type="String">Patient 1 for linking</Data></Cell>
-    <Cell ss:StyleID="s79"><Data ss:Type="String">preg</Data></Cell>
+    <Cell ss:StyleID="s80"><Data ss:Type="String">preg</Data></Cell>
     <Cell><Data ss:Type="String">careplan-example-pregnancy.xml</Data></Cell>
     <Cell ss:Index="6"><Data ss:Type="String">y</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">Integrated</Data></Cell>
     <Cell><Data ss:Type="String">Simple integrated care plan with multiple goals &amp; conditions (from Mayo)</Data></Cell>
-    <Cell ss:StyleID="s79"><Data ss:Type="String">integrate</Data></Cell>
+    <Cell ss:StyleID="s80"><Data ss:Type="String">integrate</Data></Cell>
     <Cell><Data ss:Type="String">careplan-example-integrated.xml</Data></Cell>
     <Cell ss:Index="6"><Data ss:Type="String">n</Data></Cell>
    </Row>
@@ -1178,13 +1183,13 @@
  </Worksheet>
  <Worksheet ss:Name="Bindings">
   <Table ss:ExpandedColumnCount="5" ss:ExpandedRowCount="15" x:FullColumns="1"
-   x:FullRows="1" ss:StyleID="s80" ss:DefaultColumnWidth="65.25"
+   x:FullRows="1" ss:StyleID="s81" ss:DefaultColumnWidth="65.25"
    ss:DefaultRowHeight="15">
-   <Column ss:StyleID="s80" ss:Width="125.25"/>
-   <Column ss:StyleID="s80" ss:AutoFitWidth="0" ss:Width="221.25"/>
-   <Column ss:StyleID="s80" ss:AutoFitWidth="0" ss:Width="81.75"/>
-   <Column ss:StyleID="s80" ss:Width="138"/>
-   <Column ss:StyleID="s80" ss:AutoFitWidth="0" ss:Width="275.25"/>
+   <Column ss:StyleID="s81" ss:Width="125.25"/>
+   <Column ss:StyleID="s81" ss:AutoFitWidth="0" ss:Width="221.25"/>
+   <Column ss:StyleID="s81" ss:AutoFitWidth="0" ss:Width="81.75"/>
+   <Column ss:StyleID="s81" ss:Width="138"/>
+   <Column ss:StyleID="s81" ss:AutoFitWidth="0" ss:Width="275.25"/>
    <Row ss:AutoFitHeight="0">
     <Cell ss:StyleID="s66"><Data ss:Type="String">Binding Name</Data></Cell>
     <Cell ss:StyleID="s66"><Data ss:Type="String">Definition</Data></Cell>
@@ -1299,7 +1304,7 @@
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="Number">3</Data></Cell>
-    <Cell ss:StyleID="s62"><Data ss:Type="String">ended</Data></Cell>
+    <Cell ss:StyleID="s62"><Data ss:Type="String">completed</Data></Cell>
     <Cell ss:StyleID="s62"><Data ss:Type="String">The plan is no longer in use and is not expected to be followed or used in patient care</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
@@ -1343,7 +1348,6 @@
     <Pane>
      <Number>0</Number>
      <ActiveRow>2</ActiveRow>
-     <ActiveCol>0</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -1374,22 +1378,22 @@
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="Number">3</Data></Cell>
-    <Cell ss:StyleID="s83"><Data ss:Type="String">sustaining</Data></Cell>
-    <Cell ss:StyleID="s83"><Data ss:Type="String">The goal has been met, but ongoing activity is needed to sustain the goal objective</Data></Cell>
+    <Cell ss:StyleID="s84"><Data ss:Type="String">sustaining</Data></Cell>
+    <Cell ss:StyleID="s84"><Data ss:Type="String">The goal has been met, but ongoing activity is needed to sustain the goal objective</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="Number">4</Data></Cell>
-    <Cell ss:StyleID="s83"><Data ss:Type="String">abandoned</Data></Cell>
-    <Cell ss:StyleID="s83"><Data ss:Type="String">The goal is no longer being sought</Data></Cell>
+    <Cell ss:StyleID="s84"><Data ss:Type="String">cancelled</Data></Cell>
+    <Cell ss:StyleID="s84"><Data ss:Type="String">The goal is no longer being sought</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="3" ss:StyleID="s83"/>
+    <Cell ss:Index="3" ss:StyleID="s84"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="3" ss:StyleID="s83"/>
+    <Cell ss:Index="3" ss:StyleID="s84"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="3" ss:StyleID="s83"/>
+    <Cell ss:Index="3" ss:StyleID="s84"/>
    </Row>
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
@@ -1402,7 +1406,8 @@
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>3</ActiveRow>
+     <ActiveRow>5</ActiveRow>
+     <ActiveCol>1</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -1514,7 +1519,7 @@
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="Number">3</Data></Cell>
-    <Cell><Data ss:Type="String">ongoing</Data></Cell>
+    <Cell><Data ss:Type="String">in progress</Data></Cell>
     <Cell><Data ss:Type="String">Activity has been started but is not yet complete</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
@@ -1529,7 +1534,7 @@
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="Number">6</Data></Cell>
-    <Cell ss:StyleID="s62"><Data ss:Type="String">discontinued</Data></Cell>
+    <Cell ss:StyleID="s62"><Data ss:Type="String">cancelled</Data></Cell>
     <Cell ss:StyleID="s62"><Data ss:Type="String">The activities have been ended prior to completion (perhaps even before they were started)</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
@@ -1549,7 +1554,8 @@
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>5</ActiveRow>
+     <ActiveRow>7</ActiveRow>
+     <ActiveCol>1</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>

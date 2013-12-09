@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
 
 import java.util.*;
 
@@ -38,98 +38,249 @@ import java.util.*;
  */
 public class Substance extends Resource {
 
-    /**
-     * Identifier of the substance.
-     */
-    protected Identifier identifier;
+    public static class SubstanceInstanceComponent extends BackboneElement {
+        /**
+         * Identifier associated with the package/container (usually a label affixed directly).
+         */
+        protected Identifier identifier;
+
+        /**
+         * When the substance is no longer valid to use. For some substances, a single arbitrary date is used for expiry.
+         */
+        protected DateTime expiry;
+
+        /**
+         * The amount of the substance.
+         */
+        protected Quantity quantity;
+
+      public SubstanceInstanceComponent() {
+        super();
+      }
+
+        /**
+         * @return {@link #identifier} (Identifier associated with the package/container (usually a label affixed directly).)
+         */
+        public Identifier getIdentifier() { 
+          return this.identifier;
+        }
+
+        /**
+         * @param value {@link #identifier} (Identifier associated with the package/container (usually a label affixed directly).)
+         */
+        public SubstanceInstanceComponent setIdentifier(Identifier value) { 
+          this.identifier = value;
+          return this;
+        }
+
+        /**
+         * @return {@link #expiry} (When the substance is no longer valid to use. For some substances, a single arbitrary date is used for expiry.)
+         */
+        public DateTime getExpiry() { 
+          return this.expiry;
+        }
+
+        /**
+         * @param value {@link #expiry} (When the substance is no longer valid to use. For some substances, a single arbitrary date is used for expiry.)
+         */
+        public SubstanceInstanceComponent setExpiry(DateTime value) { 
+          this.expiry = value;
+          return this;
+        }
+
+        /**
+         * @return When the substance is no longer valid to use. For some substances, a single arbitrary date is used for expiry.
+         */
+        public String getExpirySimple() { 
+          return this.expiry == null ? null : this.expiry.getValue();
+        }
+
+        /**
+         * @param value When the substance is no longer valid to use. For some substances, a single arbitrary date is used for expiry.
+         */
+        public SubstanceInstanceComponent setExpirySimple(String value) { 
+          if (value == null)
+            this.expiry = null;
+          else {
+            if (this.expiry == null)
+              this.expiry = new DateTime();
+            this.expiry.setValue(value);
+          }
+          return this;
+        }
+
+        /**
+         * @return {@link #quantity} (The amount of the substance.)
+         */
+        public Quantity getQuantity() { 
+          return this.quantity;
+        }
+
+        /**
+         * @param value {@link #quantity} (The amount of the substance.)
+         */
+        public SubstanceInstanceComponent setQuantity(Quantity value) { 
+          this.quantity = value;
+          return this;
+        }
+
+        protected void listChildren(List<Property> childrenList) {
+          super.listChildren(childrenList);
+          childrenList.add(new Property("identifier", "Identifier", "Identifier associated with the package/container (usually a label affixed directly).", 0, java.lang.Integer.MAX_VALUE, identifier));
+          childrenList.add(new Property("expiry", "dateTime", "When the substance is no longer valid to use. For some substances, a single arbitrary date is used for expiry.", 0, java.lang.Integer.MAX_VALUE, expiry));
+          childrenList.add(new Property("quantity", "Quantity", "The amount of the substance.", 0, java.lang.Integer.MAX_VALUE, quantity));
+        }
+
+      public SubstanceInstanceComponent copy(Substance e) {
+        SubstanceInstanceComponent dst = new SubstanceInstanceComponent();
+        dst.identifier = identifier == null ? null : identifier.copy();
+        dst.expiry = expiry == null ? null : expiry.copy();
+        dst.quantity = quantity == null ? null : quantity.copy();
+        return dst;
+      }
+
+  }
+
+    public static class SubstanceIngredientComponent extends BackboneElement {
+        /**
+         * The amount of the ingredient in the substance - a concentration ratio.
+         */
+        protected Ratio quantity;
+
+        /**
+         * Another substance that is a component of this substance.
+         */
+        protected ResourceReference substance;
+
+      public SubstanceIngredientComponent() {
+        super();
+      }
+
+      public SubstanceIngredientComponent(ResourceReference substance) {
+        super();
+        this.substance = substance;
+      }
+
+        /**
+         * @return {@link #quantity} (The amount of the ingredient in the substance - a concentration ratio.)
+         */
+        public Ratio getQuantity() { 
+          return this.quantity;
+        }
+
+        /**
+         * @param value {@link #quantity} (The amount of the ingredient in the substance - a concentration ratio.)
+         */
+        public SubstanceIngredientComponent setQuantity(Ratio value) { 
+          this.quantity = value;
+          return this;
+        }
+
+        /**
+         * @return {@link #substance} (Another substance that is a component of this substance.)
+         */
+        public ResourceReference getSubstance() { 
+          return this.substance;
+        }
+
+        /**
+         * @param value {@link #substance} (Another substance that is a component of this substance.)
+         */
+        public SubstanceIngredientComponent setSubstance(ResourceReference value) { 
+          this.substance = value;
+          return this;
+        }
+
+        protected void listChildren(List<Property> childrenList) {
+          super.listChildren(childrenList);
+          childrenList.add(new Property("quantity", "Ratio", "The amount of the ingredient in the substance - a concentration ratio.", 0, java.lang.Integer.MAX_VALUE, quantity));
+          childrenList.add(new Property("substance", "Resource(Substance)", "Another substance that is a component of this substance.", 0, java.lang.Integer.MAX_VALUE, substance));
+        }
+
+      public SubstanceIngredientComponent copy(Substance e) {
+        SubstanceIngredientComponent dst = new SubstanceIngredientComponent();
+        dst.quantity = quantity == null ? null : quantity.copy();
+        dst.substance = substance == null ? null : substance.copy();
+        return dst;
+      }
+
+  }
 
     /**
-     * Name of the substance.
-     */
-    protected String_ name;
-
-    /**
-     * Type of the substance.
+     * A code (or set of codes) that identify this substance.
      */
     protected CodeableConcept type;
 
     /**
-     * Description of the substance.
+     * A description of the substance - it's appearance, handling requirements, and other usage notes.
      */
     protected String_ description;
 
     /**
-     * Substance status.
+     * Don't know.
      */
     protected CodeableConcept status;
 
     /**
-     * When the substance is active or effective.
+     * Substance may be used to desribe a kind of substance, or a specific package/container of the substance: an instance.
      */
-    protected Period effectiveTime;
-
-    /**
-     * The amount of the substance.
-     */
-    protected Quantity quantity;
+    protected SubstanceInstanceComponent instance;
 
     /**
      * A substance can be composed of other substances.
      */
-    protected List<ResourceReference> ingredient = new ArrayList<ResourceReference>();
+    protected List<SubstanceIngredientComponent> ingredient = new ArrayList<SubstanceIngredientComponent>();
+
+    public Substance() {
+      super();
+    }
+
+    public Substance(CodeableConcept type) {
+      super();
+      this.type = type;
+    }
 
     /**
-     * Indicates whether the substance quantity (used for ingredients) are absolute values or values relative to each other (percentages).
+     * @return {@link #type} (A code (or set of codes) that identify this substance.)
      */
-    protected CodeableConcept quantityMode;
-
-    public Identifier getIdentifier() { 
-      return this.identifier;
-    }
-
-    public void setIdentifier(Identifier value) { 
-      this.identifier = value;
-    }
-
-    public String_ getName() { 
-      return this.name;
-    }
-
-    public void setName(String_ value) { 
-      this.name = value;
-    }
-
-    public String getNameSimple() { 
-      return this.name == null ? null : this.name.getValue();
-    }
-
-    public void setNameSimple(String value) { 
-        if (this.name == null)
-          this.name = new String_();
-        this.name.setValue(value);
-    }
-
     public CodeableConcept getType() { 
       return this.type;
     }
 
-    public void setType(CodeableConcept value) { 
+    /**
+     * @param value {@link #type} (A code (or set of codes) that identify this substance.)
+     */
+    public Substance setType(CodeableConcept value) { 
       this.type = value;
+      return this;
     }
 
+    /**
+     * @return {@link #description} (A description of the substance - it's appearance, handling requirements, and other usage notes.)
+     */
     public String_ getDescription() { 
       return this.description;
     }
 
-    public void setDescription(String_ value) { 
+    /**
+     * @param value {@link #description} (A description of the substance - it's appearance, handling requirements, and other usage notes.)
+     */
+    public Substance setDescription(String_ value) { 
       this.description = value;
+      return this;
     }
 
+    /**
+     * @return A description of the substance - it's appearance, handling requirements, and other usage notes.
+     */
     public String getDescriptionSimple() { 
       return this.description == null ? null : this.description.getValue();
     }
 
-    public void setDescriptionSimple(String value) { 
+    /**
+     * @param value A description of the substance - it's appearance, handling requirements, and other usage notes.
+     */
+    public Substance setDescriptionSimple(String value) { 
       if (value == null)
         this.description = null;
       else {
@@ -137,64 +288,74 @@ public class Substance extends Resource {
           this.description = new String_();
         this.description.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #status} (Don't know.)
+     */
     public CodeableConcept getStatus() { 
       return this.status;
     }
 
-    public void setStatus(CodeableConcept value) { 
+    /**
+     * @param value {@link #status} (Don't know.)
+     */
+    public Substance setStatus(CodeableConcept value) { 
       this.status = value;
+      return this;
     }
 
-    public Period getEffectiveTime() { 
-      return this.effectiveTime;
+    /**
+     * @return {@link #instance} (Substance may be used to desribe a kind of substance, or a specific package/container of the substance: an instance.)
+     */
+    public SubstanceInstanceComponent getInstance() { 
+      return this.instance;
     }
 
-    public void setEffectiveTime(Period value) { 
-      this.effectiveTime = value;
+    /**
+     * @param value {@link #instance} (Substance may be used to desribe a kind of substance, or a specific package/container of the substance: an instance.)
+     */
+    public Substance setInstance(SubstanceInstanceComponent value) { 
+      this.instance = value;
+      return this;
     }
 
-    public Quantity getQuantity() { 
-      return this.quantity;
-    }
-
-    public void setQuantity(Quantity value) { 
-      this.quantity = value;
-    }
-
-    public List<ResourceReference> getIngredient() { 
+    /**
+     * @return {@link #ingredient} (A substance can be composed of other substances.)
+     */
+    public List<SubstanceIngredientComponent> getIngredient() { 
       return this.ingredient;
     }
 
     // syntactic sugar
-    public ResourceReference addIngredient() { 
-      ResourceReference t = new ResourceReference();
+    /**
+     * @return {@link #ingredient} (A substance can be composed of other substances.)
+     */
+    public SubstanceIngredientComponent addIngredient() { 
+      SubstanceIngredientComponent t = new SubstanceIngredientComponent();
       this.ingredient.add(t);
       return t;
     }
 
-    public CodeableConcept getQuantityMode() { 
-      return this.quantityMode;
-    }
-
-    public void setQuantityMode(CodeableConcept value) { 
-      this.quantityMode = value;
-    }
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("type", "CodeableConcept", "A code (or set of codes) that identify this substance.", 0, java.lang.Integer.MAX_VALUE, type));
+        childrenList.add(new Property("description", "string", "A description of the substance - it's appearance, handling requirements, and other usage notes.", 0, java.lang.Integer.MAX_VALUE, description));
+        childrenList.add(new Property("status", "CodeableConcept", "Don't know.", 0, java.lang.Integer.MAX_VALUE, status));
+        childrenList.add(new Property("instance", "", "Substance may be used to desribe a kind of substance, or a specific package/container of the substance: an instance.", 0, java.lang.Integer.MAX_VALUE, instance));
+        childrenList.add(new Property("ingredient", "", "A substance can be composed of other substances.", 0, java.lang.Integer.MAX_VALUE, ingredient));
+      }
 
       public Substance copy() {
         Substance dst = new Substance();
-        dst.identifier = identifier == null ? null : identifier.copy();
-        dst.name = name == null ? null : name.copy();
         dst.type = type == null ? null : type.copy();
         dst.description = description == null ? null : description.copy();
         dst.status = status == null ? null : status.copy();
-        dst.effectiveTime = effectiveTime == null ? null : effectiveTime.copy();
-        dst.quantity = quantity == null ? null : quantity.copy();
-        dst.ingredient = new ArrayList<ResourceReference>();
-        for (ResourceReference i : ingredient)
-          dst.ingredient.add(i.copy());
-        dst.quantityMode = quantityMode == null ? null : quantityMode.copy();
+        dst.instance = instance == null ? null : instance.copy(dst);
+        dst.ingredient = new ArrayList<SubstanceIngredientComponent>();
+        for (SubstanceIngredientComponent i : ingredient)
+          dst.ingredient.add(i.copy(dst));
         return dst;
       }
 

@@ -29,8 +29,9 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
 
+import java.util.*;
 import org.hl7.fhir.utilities.xhtml.XhtmlNode;
 
 /**
@@ -68,7 +69,7 @@ public class Narrative extends Element {
         }
     }
 
-  public class NarrativeStatusEnumFactory implements EnumFactory {
+  public static class NarrativeStatusEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
@@ -106,31 +107,67 @@ public class Narrative extends Element {
      */
     protected XhtmlNode div;
 
+    public Narrative() {
+      super();
+    }
+
+    public Narrative(Enumeration<NarrativeStatus> status, XhtmlNode div) {
+      super();
+      this.status = status;
+      this.div = div;
+    }
+
+    /**
+     * @return {@link #status} (The status of the narrative - whether it's entirely generated (from just the defined data or the extensions too), or whether a human authored it and it may contain additional data.)
+     */
     public Enumeration<NarrativeStatus> getStatus() { 
       return this.status;
     }
 
-    public void setStatus(Enumeration<NarrativeStatus> value) { 
+    /**
+     * @param value {@link #status} (The status of the narrative - whether it's entirely generated (from just the defined data or the extensions too), or whether a human authored it and it may contain additional data.)
+     */
+    public Narrative setStatus(Enumeration<NarrativeStatus> value) { 
       this.status = value;
+      return this;
     }
 
+    /**
+     * @return The status of the narrative - whether it's entirely generated (from just the defined data or the extensions too), or whether a human authored it and it may contain additional data.
+     */
     public NarrativeStatus getStatusSimple() { 
       return this.status == null ? null : this.status.getValue();
     }
 
-    public void setStatusSimple(NarrativeStatus value) { 
+    /**
+     * @param value The status of the narrative - whether it's entirely generated (from just the defined data or the extensions too), or whether a human authored it and it may contain additional data.
+     */
+    public Narrative setStatusSimple(NarrativeStatus value) { 
         if (this.status == null)
           this.status = new Enumeration<NarrativeStatus>();
         this.status.setValue(value);
+      return this;
     }
 
+    /**
+     * @return {@link #div} (The actual narrative content, a stripped down version of XHTML.)
+     */
     public XhtmlNode getDiv() { 
       return this.div;
     }
 
-    public void setDiv(XhtmlNode value) { 
+    /**
+     * @param value {@link #div} (The actual narrative content, a stripped down version of XHTML.)
+     */
+    public Narrative setDiv(XhtmlNode value) { 
       this.div = value;
+      return this;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("status", "code", "The status of the narrative - whether it's entirely generated (from just the defined data or the extensions too), or whether a human authored it and it may contain additional data.", 0, java.lang.Integer.MAX_VALUE, status));
+      }
 
       public Narrative copy() {
         Narrative dst = new Narrative();

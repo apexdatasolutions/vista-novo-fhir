@@ -2,8 +2,7 @@
 <Patient xmlns="http://hl7.org/fhir" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://hl7.org/fhir ../../schema/patient.xsd">
 
-  <extension>
-    <url value="http://hl7.org/fhir/example-do-not-use#Patient.picture"/>
+  <extension url="http://hl7.org/fhir/example-do-not-use#Patient.picture">
     <valueResource>
       <reference value="#pic1"/>
       <display value="Duck image"/>
@@ -56,13 +55,16 @@
     </organization>
   </contact>
 
-  <provider>
+  <managingOrganization>
     <reference value="Organization/1"/>
     <display value="ACME Healthcare, Inc"/>
-  </provider>
+  </managingOrganization>
 
   <link>
-    <reference value="Patient/pat2"/>
+    <other>
+      <reference value="Patient/pat2"/>
+    </other>
+    <type value="seealso" />
   </link>
 
   <active value="true"/>

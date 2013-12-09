@@ -122,7 +122,7 @@ public class Utilities {
 		return s.substring(0, 1).toUpperCase() + s.substring(1);
 	}
 	
-  public static void copyDirectory(String sourceFolder, String destFolder) throws Exception {
+  public static void copyDirectory(String sourceFolder, String destFolder, FileNotifier notifier) throws Exception {
     CSFile src = new CSFile(sourceFolder);
     if (!src.exists())
       throw new Exception("Folder " +sourceFolder+" not found");
@@ -131,9 +131,12 @@ public class Utilities {
    String[] files = src.list();
    for (String f : files) {
      if (new CSFile(sourceFolder+File.separator+f).isDirectory()) {
-       copyDirectory(sourceFolder+File.separator+f, destFolder+File.separator+f);
-     } else
+       copyDirectory(sourceFolder+File.separator+f, destFolder+File.separator+f, notifier);
+     } else {
+       if (notifier != null)
+         notifier.copyFile(sourceFolder+File.separator+f, destFolder+File.separator+f);
        copyFile(new CSFile(sourceFolder+File.separator+f), new CSFile(destFolder+File.separator+f));
+     }
    }
   }
 	
@@ -436,7 +439,7 @@ public class Utilities {
   }
 
 
-  public static String getDirectoryFoFile(String filepath) {
+  public static String getDirectoryForFile(String filepath) {
     int i = filepath.lastIndexOf(File.separator);
     if (i == -1)
       return filepath;
@@ -471,5 +474,24 @@ public class Utilities {
     if (id == null || !id.contains("."))
       return id;
     return id.substring(id.lastIndexOf(".")+1);
+  }
+
+
+  public static String escapeJava(String doco) {
+    if (doco == null)
+      return "";
+    
+    StringBuilder b = new StringBuilder();
+    for (char c : doco.toCharArray()) {
+      if (c == '\r')
+        b.append("\\r");
+      else if (c == '\n')
+        b.append("\\n");
+      else if (c == '"')
+        b.append("'");
+      else 
+        b.append(c);
+    }   
+    return b.toString();
   }
 }

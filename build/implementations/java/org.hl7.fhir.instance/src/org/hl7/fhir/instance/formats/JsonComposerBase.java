@@ -32,6 +32,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.hl7.fhir.instance.model.AtomCategory;
@@ -40,13 +41,18 @@ import org.hl7.fhir.instance.model.AtomFeed;
 import org.hl7.fhir.instance.model.Binary;
 import org.hl7.fhir.instance.model.Element;
 import org.hl7.fhir.instance.model.Resource;
-import org.hl7.fhir.instance.model.String_;
 import org.hl7.fhir.utilities.Utilities;
 import org.hl7.fhir.utilities.xhtml.XhtmlComposer;
 import org.hl7.fhir.utilities.xhtml.XhtmlNode;
 
 import com.google.gson.stream.JsonWriter;
 
+/**
+ * General composer for JSON content. You instantiate an JsonComposer object, but you 
+ * actually use compose defined on this class
+ * 
+ * The two classes are separated to keep generated and manually maintained code apart.
+ */
 
 public abstract class JsonComposerBase extends XmlBase implements Composer {
 
@@ -54,6 +60,9 @@ public abstract class JsonComposerBase extends XmlBase implements Composer {
 	private boolean htmlPretty;
 	//private boolean jsonPretty;
 
+	/**
+	 * Compose a resource to a stream, possibly using pretty presentation for a human reader (used in the spec, for example, but not normally in production)
+	 */
 	public void compose(OutputStream stream, Resource resource, boolean pretty) throws Exception {
 		OutputStreamWriter osw = new OutputStreamWriter(stream, "UTF-8");
 		JsonWriter writer = new JsonWriter(osw);
@@ -65,6 +74,9 @@ public abstract class JsonComposerBase extends XmlBase implements Composer {
 		osw.flush();
 	}
 
+	/**
+	 * Compose a bundle to a stream, possibly using pretty presentation for a human reader (used in the spec, for example, but not normally in production)
+	 */
 	public void compose(OutputStream stream, AtomFeed feed, boolean pretty) throws Exception {
 		OutputStreamWriter osw = new OutputStreamWriter(stream, "UTF-8");
 		JsonWriter writer = new JsonWriter(osw);
@@ -75,11 +87,17 @@ public abstract class JsonComposerBase extends XmlBase implements Composer {
 		osw.flush();
 	}
 
+	/**
+	 * Compose a resource using a pre-existing JsonWriter
+	 */
 	public void compose(JsonWriter writer, Resource resource) throws Exception {
 		json = writer;
 		composeResource(resource);
 	}
 
+	/**
+	 * Compose a bundle using a pre-existing JsonWriter
+	 */
 	public void compose(JsonWriter writer, AtomFeed feed) throws Exception {
 		json = writer;
 		openObject("feed");
@@ -91,6 +109,7 @@ public abstract class JsonComposerBase extends XmlBase implements Composer {
   // title, id, links, updated, published, authors
 	private void composeFeed(AtomFeed feed) throws Exception {
 
+	  prop("resourceType", "Bundle");
 	  prop("title", feed.getTitle());
     prop("id", feed.getId());
     if (feed.getLinks().size() > 0) {
@@ -217,10 +236,16 @@ public abstract class JsonComposerBase extends XmlBase implements Composer {
     json.value(value);
   }
 
+  protected void prop(String name, BigDecimal value) throws Exception {
+    if (name != null)
+      json.name(name);
+    json.value(value.toString());
+  }
+
   protected void prop(String name, java.lang.Integer value) throws Exception {
     if (name != null)
       json.name(name);
-    json.value(value);
+    json.value(value.toString());
   }
 
 //	protected void composeType(Type type) throws Exception {
@@ -514,12 +539,11 @@ public abstract class JsonComposerBase extends XmlBase implements Composer {
 
   protected void composeBinary(String name, Binary element) throws Exception {
     if (element != null) {
-      open(name);
+      prop("resourceType", "Binary");
       if (element.getXmlId() != null)
         prop("_id", element.getXmlId());
       prop("contentType", element.getContentType());
       prop("content", toString(element.getContent()));
-      close();
     }    
     
   }

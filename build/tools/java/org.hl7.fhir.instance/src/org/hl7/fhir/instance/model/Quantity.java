@@ -29,8 +29,9 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
 
+import java.util.*;
 
 import java.math.*;
 /**
@@ -68,7 +69,7 @@ public class Quantity extends Type {
         }
     }
 
-  public class QuantityComparatorEnumFactory implements EnumFactory {
+  public static class QuantityComparatorEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
@@ -121,19 +122,36 @@ public class Quantity extends Type {
      */
     protected Code code;
 
+    public Quantity() {
+      super();
+    }
+
+    /**
+     * @return {@link #value} (The value of the measured amount. The value includes an implicit precision in the presentation of the value.)
+     */
     public Decimal getValue() { 
       return this.value;
     }
 
-    public void setValue(Decimal value) { 
+    /**
+     * @param value {@link #value} (The value of the measured amount. The value includes an implicit precision in the presentation of the value.)
+     */
+    public Quantity setValue(Decimal value) { 
       this.value = value;
+      return this;
     }
 
+    /**
+     * @return The value of the measured amount. The value includes an implicit precision in the presentation of the value.
+     */
     public BigDecimal getValueSimple() { 
       return this.value == null ? null : this.value.getValue();
     }
 
-    public void setValueSimple(BigDecimal value) { 
+    /**
+     * @param value The value of the measured amount. The value includes an implicit precision in the presentation of the value.
+     */
+    public Quantity setValueSimple(BigDecimal value) { 
       if (value == null)
         this.value = null;
       else {
@@ -141,21 +159,35 @@ public class Quantity extends Type {
           this.value = new Decimal();
         this.value.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #comparator} (How the value should be understood and represented - whether the actual value is greater or less than the stated value due to measurement issues. E.g. if the comparator is "<" , then the real value is < stated value.)
+     */
     public Enumeration<QuantityComparator> getComparator() { 
       return this.comparator;
     }
 
-    public void setComparator(Enumeration<QuantityComparator> value) { 
+    /**
+     * @param value {@link #comparator} (How the value should be understood and represented - whether the actual value is greater or less than the stated value due to measurement issues. E.g. if the comparator is "<" , then the real value is < stated value.)
+     */
+    public Quantity setComparator(Enumeration<QuantityComparator> value) { 
       this.comparator = value;
+      return this;
     }
 
+    /**
+     * @return How the value should be understood and represented - whether the actual value is greater or less than the stated value due to measurement issues. E.g. if the comparator is "<" , then the real value is < stated value.
+     */
     public QuantityComparator getComparatorSimple() { 
       return this.comparator == null ? null : this.comparator.getValue();
     }
 
-    public void setComparatorSimple(QuantityComparator value) { 
+    /**
+     * @param value How the value should be understood and represented - whether the actual value is greater or less than the stated value due to measurement issues. E.g. if the comparator is "<" , then the real value is < stated value.
+     */
+    public Quantity setComparatorSimple(QuantityComparator value) { 
       if (value == null)
         this.comparator = null;
       else {
@@ -163,21 +195,35 @@ public class Quantity extends Type {
           this.comparator = new Enumeration<QuantityComparator>();
         this.comparator.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #units} (A human-readable form of the units.)
+     */
     public String_ getUnits() { 
       return this.units;
     }
 
-    public void setUnits(String_ value) { 
+    /**
+     * @param value {@link #units} (A human-readable form of the units.)
+     */
+    public Quantity setUnits(String_ value) { 
       this.units = value;
+      return this;
     }
 
+    /**
+     * @return A human-readable form of the units.
+     */
     public String getUnitsSimple() { 
       return this.units == null ? null : this.units.getValue();
     }
 
-    public void setUnitsSimple(String value) { 
+    /**
+     * @param value A human-readable form of the units.
+     */
+    public Quantity setUnitsSimple(String value) { 
       if (value == null)
         this.units = null;
       else {
@@ -185,21 +231,35 @@ public class Quantity extends Type {
           this.units = new String_();
         this.units.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #system} (The identification of the system that provides the coded form of the unit.)
+     */
     public Uri getSystem() { 
       return this.system;
     }
 
-    public void setSystem(Uri value) { 
+    /**
+     * @param value {@link #system} (The identification of the system that provides the coded form of the unit.)
+     */
+    public Quantity setSystem(Uri value) { 
       this.system = value;
+      return this;
     }
 
+    /**
+     * @return The identification of the system that provides the coded form of the unit.
+     */
     public String getSystemSimple() { 
       return this.system == null ? null : this.system.getValue();
     }
 
-    public void setSystemSimple(String value) { 
+    /**
+     * @param value The identification of the system that provides the coded form of the unit.
+     */
+    public Quantity setSystemSimple(String value) { 
       if (value == null)
         this.system = null;
       else {
@@ -207,21 +267,35 @@ public class Quantity extends Type {
           this.system = new Uri();
         this.system.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #code} (A computer processable form of the units in some unit representation system.)
+     */
     public Code getCode() { 
       return this.code;
     }
 
-    public void setCode(Code value) { 
+    /**
+     * @param value {@link #code} (A computer processable form of the units in some unit representation system.)
+     */
+    public Quantity setCode(Code value) { 
       this.code = value;
+      return this;
     }
 
+    /**
+     * @return A computer processable form of the units in some unit representation system.
+     */
     public String getCodeSimple() { 
       return this.code == null ? null : this.code.getValue();
     }
 
-    public void setCodeSimple(String value) { 
+    /**
+     * @param value A computer processable form of the units in some unit representation system.
+     */
+    public Quantity setCodeSimple(String value) { 
       if (value == null)
         this.code = null;
       else {
@@ -229,7 +303,17 @@ public class Quantity extends Type {
           this.code = new Code();
         this.code.setValue(value);
       }
+      return this;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("value", "decimal", "The value of the measured amount. The value includes an implicit precision in the presentation of the value.", 0, java.lang.Integer.MAX_VALUE, value));
+        childrenList.add(new Property("comparator", "code", "How the value should be understood and represented - whether the actual value is greater or less than the stated value due to measurement issues. E.g. if the comparator is '<' , then the real value is < stated value.", 0, java.lang.Integer.MAX_VALUE, comparator));
+        childrenList.add(new Property("units", "string", "A human-readable form of the units.", 0, java.lang.Integer.MAX_VALUE, units));
+        childrenList.add(new Property("system", "uri", "The identification of the system that provides the coded form of the unit.", 0, java.lang.Integer.MAX_VALUE, system));
+        childrenList.add(new Property("code", "code", "A computer processable form of the units in some unit representation system.", 0, java.lang.Integer.MAX_VALUE, code));
+      }
 
       public Quantity copy() {
         Quantity dst = new Quantity();

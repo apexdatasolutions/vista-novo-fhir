@@ -9,7 +9,7 @@
  <class value="outpatient"/><!--Outpatient encounter for consultation-->
  <type><!--TODO Why is this merely a CodeableConcept and not Resource (any)?-->
     <coding>
-       <system value="http://snomed.info/id"/>
+       <system value="http://snomed.info/sct"/>
        <code value="11429006"/>
        <display value="Consultation"/>
     </coding>
@@ -19,9 +19,9 @@
      <display value="Roel"/>
  </subject>
  <participant>
-     <practitioner>
+     <individual    >
          <reference value="Practitioner/f201"/>
-    </practitioner>
+    </individual>
  </participant>
  <reason>
    <text value="The patient had fever peaks over the last couple of days. He is worried about these peaks."/>
@@ -29,7 +29,7 @@
  <!--No indication, because no referral took place-->
  <priority><!--Normal priority-->
     <coding>
-       <system value="http://snomed.info/id"/>
+       <system value="http://snomed.info/sct"/>
        <code value="17621005"/>
        <display value="Normal"/>
     </coding>

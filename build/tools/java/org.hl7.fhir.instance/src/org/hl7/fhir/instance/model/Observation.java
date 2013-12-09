@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
 
 import java.util.*;
 
@@ -39,75 +39,75 @@ import java.util.*;
 public class Observation extends Resource {
 
     public enum ObservationStatus {
-        registered, // The existence of the observation is registered, but there is no result yet available
-        interim, // This is an initial or interim observation: data may be incomplete or unverified
-        final_, // The observation is complete and verified by an authorised person
-        amended, // The observation has been modified subsequent to being Final, and is complete and verified by an authorised person
-        cancelled, // The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted")
-        withdrawn, // The observation has been withdrawn following previous Final release
+        registered, // The existence of the observation is registered, but there is no result yet available.
+        preliminary, // This is an initial or interim observation: data may be incomplete or unverified.
+        final_, // The observation is complete and verified by an authorised person.
+        amended, // The observation has been modified subsequent to being Final, and is complete and verified by an authorised person.
+        cancelled, // The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
+        enteredInError, // The observation has been withdrawn following previous Final release.
         Null; // added to help the parsers
         public static ObservationStatus fromCode(String codeString) throws Exception {
             if (codeString == null || "".equals(codeString))
                 return null;
         if ("registered".equals(codeString))
           return registered;
-        if ("interim".equals(codeString))
-          return interim;
+        if ("preliminary".equals(codeString))
+          return preliminary;
         if ("final".equals(codeString))
           return final_;
         if ("amended".equals(codeString))
           return amended;
         if ("cancelled".equals(codeString))
           return cancelled;
-        if ("withdrawn".equals(codeString))
-          return withdrawn;
+        if ("entered in error".equals(codeString))
+          return enteredInError;
         throw new Exception("Unknown ObservationStatus code '"+codeString+"'");
         }
         public String toCode() {
           switch (this) {
             case registered: return "registered";
-            case interim: return "interim";
+            case preliminary: return "preliminary";
             case final_: return "final";
             case amended: return "amended";
             case cancelled: return "cancelled";
-            case withdrawn: return "withdrawn";
+            case enteredInError: return "entered in error";
             default: return "?";
           }
         }
     }
 
-  public class ObservationStatusEnumFactory implements EnumFactory {
+  public static class ObservationStatusEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
                 return null;
         if ("registered".equals(codeString))
           return ObservationStatus.registered;
-        if ("interim".equals(codeString))
-          return ObservationStatus.interim;
+        if ("preliminary".equals(codeString))
+          return ObservationStatus.preliminary;
         if ("final".equals(codeString))
           return ObservationStatus.final_;
         if ("amended".equals(codeString))
           return ObservationStatus.amended;
         if ("cancelled".equals(codeString))
           return ObservationStatus.cancelled;
-        if ("withdrawn".equals(codeString))
-          return ObservationStatus.withdrawn;
+        if ("entered in error".equals(codeString))
+          return ObservationStatus.enteredInError;
         throw new Exception("Unknown ObservationStatus code '"+codeString+"'");
         }
     public String toCode(Enum<?> code) throws Exception {
       if (code == ObservationStatus.registered)
         return "registered";
-      if (code == ObservationStatus.interim)
-        return "interim";
+      if (code == ObservationStatus.preliminary)
+        return "preliminary";
       if (code == ObservationStatus.final_)
         return "final";
       if (code == ObservationStatus.amended)
         return "amended";
       if (code == ObservationStatus.cancelled)
         return "cancelled";
-      if (code == ObservationStatus.withdrawn)
-        return "withdrawn";
+      if (code == ObservationStatus.enteredInError)
+        return "entered in error";
       return "?";
       }
     }
@@ -154,7 +154,7 @@ public class Observation extends Resource {
         }
     }
 
-  public class ObservationReliabilityEnumFactory implements EnumFactory {
+  public static class ObservationReliabilityEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
@@ -194,7 +194,7 @@ public class Observation extends Resource {
       }
     }
 
-    public class ObservationReferenceRangeComponent extends Element {
+    public static class ObservationReferenceRangeComponent extends BackboneElement {
         /**
          * Code for the meaning of the reference range.
          */
@@ -205,24 +205,53 @@ public class Observation extends Resource {
          */
         protected Type range;
 
+      public ObservationReferenceRangeComponent() {
+        super();
+      }
+
+      public ObservationReferenceRangeComponent(Type range) {
+        super();
+        this.range = range;
+      }
+
+        /**
+         * @return {@link #meaning} (Code for the meaning of the reference range.)
+         */
         public CodeableConcept getMeaning() { 
           return this.meaning;
         }
 
-        public void setMeaning(CodeableConcept value) { 
+        /**
+         * @param value {@link #meaning} (Code for the meaning of the reference range.)
+         */
+        public ObservationReferenceRangeComponent setMeaning(CodeableConcept value) { 
           this.meaning = value;
+          return this;
         }
 
+        /**
+         * @return {@link #range} (Actual value of the reference range.  May be a quantity (<20mg/L), a range (10-20 umol/L), or some text.)
+         */
         public Type getRange() { 
           return this.range;
         }
 
-        public void setRange(Type value) { 
+        /**
+         * @param value {@link #range} (Actual value of the reference range.  May be a quantity (<20mg/L), a range (10-20 umol/L), or some text.)
+         */
+        public ObservationReferenceRangeComponent setRange(Type value) { 
           this.range = value;
+          return this;
+        }
+
+        protected void listChildren(List<Property> childrenList) {
+          super.listChildren(childrenList);
+          childrenList.add(new Property("meaning", "CodeableConcept", "Code for the meaning of the reference range.", 0, java.lang.Integer.MAX_VALUE, meaning));
+          childrenList.add(new Property("range[x]", "Quantity|Range|string", "Actual value of the reference range.  May be a quantity (<20mg/L), a range (10-20 umol/L), or some text.", 0, java.lang.Integer.MAX_VALUE, range));
         }
 
       public ObservationReferenceRangeComponent copy(Observation e) {
-        ObservationReferenceRangeComponent dst = e.new ObservationReferenceRangeComponent();
+        ObservationReferenceRangeComponent dst = new ObservationReferenceRangeComponent();
         dst.meaning = meaning == null ? null : meaning.copy();
         dst.range = range == null ? null : range.copy();
         return dst;
@@ -230,7 +259,7 @@ public class Observation extends Resource {
 
   }
 
-    public class ObservationComponentComponent extends Element {
+    public static class ObservationComponentComponent extends BackboneElement {
         /**
          * Identifies what type of sub-observation was performed.
          */
@@ -241,24 +270,54 @@ public class Observation extends Resource {
          */
         protected Type value;
 
+      public ObservationComponentComponent() {
+        super();
+      }
+
+      public ObservationComponentComponent(CodeableConcept name, Type value) {
+        super();
+        this.name = name;
+        this.value = value;
+      }
+
+        /**
+         * @return {@link #name} (Identifies what type of sub-observation was performed.)
+         */
         public CodeableConcept getName() { 
           return this.name;
         }
 
-        public void setName(CodeableConcept value) { 
+        /**
+         * @param value {@link #name} (Identifies what type of sub-observation was performed.)
+         */
+        public ObservationComponentComponent setName(CodeableConcept value) { 
           this.name = value;
+          return this;
         }
 
+        /**
+         * @return {@link #value} (The information determined as a result of making the sub-observation.)
+         */
         public Type getValue() { 
           return this.value;
         }
 
-        public void setValue(Type value) { 
+        /**
+         * @param value {@link #value} (The information determined as a result of making the sub-observation.)
+         */
+        public ObservationComponentComponent setValue(Type value) { 
           this.value = value;
+          return this;
+        }
+
+        protected void listChildren(List<Property> childrenList) {
+          super.listChildren(childrenList);
+          childrenList.add(new Property("name", "CodeableConcept", "Identifies what type of sub-observation was performed.", 0, java.lang.Integer.MAX_VALUE, name));
+          childrenList.add(new Property("value[x]", "Quantity|CodeableConcept|Attachment|Ratio|Period|SampledData|string", "The information determined as a result of making the sub-observation.", 0, java.lang.Integer.MAX_VALUE, value));
         }
 
       public ObservationComponentComponent copy(Observation e) {
-        ObservationComponentComponent dst = e.new ObservationComponentComponent();
+        ObservationComponentComponent dst = new ObservationComponentComponent();
         dst.name = name == null ? null : name.copy();
         dst.value = value == null ? null : value.copy();
         return dst;
@@ -341,43 +400,88 @@ public class Observation extends Resource {
      */
     protected List<ObservationComponentComponent> component = new ArrayList<ObservationComponentComponent>();
 
+    public Observation() {
+      super();
+    }
+
+    public Observation(CodeableConcept name, Enumeration<ObservationStatus> status, Enumeration<ObservationReliability> reliability) {
+      super();
+      this.name = name;
+      this.status = status;
+      this.reliability = reliability;
+    }
+
+    /**
+     * @return {@link #name} (Identifies what type of observation was performed. Sometimes called code.)
+     */
     public CodeableConcept getName() { 
       return this.name;
     }
 
-    public void setName(CodeableConcept value) { 
+    /**
+     * @param value {@link #name} (Identifies what type of observation was performed. Sometimes called code.)
+     */
+    public Observation setName(CodeableConcept value) { 
       this.name = value;
+      return this;
     }
 
+    /**
+     * @return {@link #value} (The information determined as a result of making the observation.)
+     */
     public Type getValue() { 
       return this.value;
     }
 
-    public void setValue(Type value) { 
+    /**
+     * @param value {@link #value} (The information determined as a result of making the observation.)
+     */
+    public Observation setValue(Type value) { 
       this.value = value;
+      return this;
     }
 
+    /**
+     * @return {@link #interpretation} (The assessment made based on the result of the observation.)
+     */
     public CodeableConcept getInterpretation() { 
       return this.interpretation;
     }
 
-    public void setInterpretation(CodeableConcept value) { 
+    /**
+     * @param value {@link #interpretation} (The assessment made based on the result of the observation.)
+     */
+    public Observation setInterpretation(CodeableConcept value) { 
       this.interpretation = value;
+      return this;
     }
 
+    /**
+     * @return {@link #comments} (May include statements about significant, unexpected or unreliable values, or information about the source of the value where this may be relevant to the interpretation of the result.)
+     */
     public String_ getComments() { 
       return this.comments;
     }
 
-    public void setComments(String_ value) { 
+    /**
+     * @param value {@link #comments} (May include statements about significant, unexpected or unreliable values, or information about the source of the value where this may be relevant to the interpretation of the result.)
+     */
+    public Observation setComments(String_ value) { 
       this.comments = value;
+      return this;
     }
 
+    /**
+     * @return May include statements about significant, unexpected or unreliable values, or information about the source of the value where this may be relevant to the interpretation of the result.
+     */
     public String getCommentsSimple() { 
       return this.comments == null ? null : this.comments.getValue();
     }
 
-    public void setCommentsSimple(String value) { 
+    /**
+     * @param value May include statements about significant, unexpected or unreliable values, or information about the source of the value where this may be relevant to the interpretation of the result.
+     */
+    public Observation setCommentsSimple(String value) { 
       if (value == null)
         this.comments = null;
       else {
@@ -385,29 +489,50 @@ public class Observation extends Resource {
           this.comments = new String_();
         this.comments.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #applies} (The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the "physiologically relevant time".)
+     */
     public Type getApplies() { 
       return this.applies;
     }
 
-    public void setApplies(Type value) { 
+    /**
+     * @param value {@link #applies} (The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the "physiologically relevant time".)
+     */
+    public Observation setApplies(Type value) { 
       this.applies = value;
+      return this;
     }
 
+    /**
+     * @return {@link #issued} (Date/Time this was made available.)
+     */
     public Instant getIssued() { 
       return this.issued;
     }
 
-    public void setIssued(Instant value) { 
+    /**
+     * @param value {@link #issued} (Date/Time this was made available.)
+     */
+    public Observation setIssued(Instant value) { 
       this.issued = value;
+      return this;
     }
 
+    /**
+     * @return Date/Time this was made available.
+     */
     public Calendar getIssuedSimple() { 
       return this.issued == null ? null : this.issued.getValue();
     }
 
-    public void setIssuedSimple(Calendar value) { 
+    /**
+     * @param value Date/Time this was made available.
+     */
+    public Observation setIssuedSimple(Calendar value) { 
       if (value == null)
         this.issued = null;
       else {
@@ -415,105 +540,200 @@ public class Observation extends Resource {
           this.issued = new Instant();
         this.issued.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #status} (The status of the result value.)
+     */
     public Enumeration<ObservationStatus> getStatus() { 
       return this.status;
     }
 
-    public void setStatus(Enumeration<ObservationStatus> value) { 
+    /**
+     * @param value {@link #status} (The status of the result value.)
+     */
+    public Observation setStatus(Enumeration<ObservationStatus> value) { 
       this.status = value;
+      return this;
     }
 
+    /**
+     * @return The status of the result value.
+     */
     public ObservationStatus getStatusSimple() { 
       return this.status == null ? null : this.status.getValue();
     }
 
-    public void setStatusSimple(ObservationStatus value) { 
+    /**
+     * @param value The status of the result value.
+     */
+    public Observation setStatusSimple(ObservationStatus value) { 
         if (this.status == null)
           this.status = new Enumeration<ObservationStatus>();
         this.status.setValue(value);
+      return this;
     }
 
+    /**
+     * @return {@link #reliability} (An estimate of the degree to which quality issues have impacted on the value reported.)
+     */
     public Enumeration<ObservationReliability> getReliability() { 
       return this.reliability;
     }
 
-    public void setReliability(Enumeration<ObservationReliability> value) { 
+    /**
+     * @param value {@link #reliability} (An estimate of the degree to which quality issues have impacted on the value reported.)
+     */
+    public Observation setReliability(Enumeration<ObservationReliability> value) { 
       this.reliability = value;
+      return this;
     }
 
+    /**
+     * @return An estimate of the degree to which quality issues have impacted on the value reported.
+     */
     public ObservationReliability getReliabilitySimple() { 
       return this.reliability == null ? null : this.reliability.getValue();
     }
 
-    public void setReliabilitySimple(ObservationReliability value) { 
+    /**
+     * @param value An estimate of the degree to which quality issues have impacted on the value reported.
+     */
+    public Observation setReliabilitySimple(ObservationReliability value) { 
         if (this.reliability == null)
           this.reliability = new Enumeration<ObservationReliability>();
         this.reliability.setValue(value);
+      return this;
     }
 
+    /**
+     * @return {@link #bodySite} (Indicates where on the subject's body the observation was made.)
+     */
     public CodeableConcept getBodySite() { 
       return this.bodySite;
     }
 
-    public void setBodySite(CodeableConcept value) { 
+    /**
+     * @param value {@link #bodySite} (Indicates where on the subject's body the observation was made.)
+     */
+    public Observation setBodySite(CodeableConcept value) { 
       this.bodySite = value;
+      return this;
     }
 
+    /**
+     * @return {@link #method} (Indicates the mechanism used to perform the observation.)
+     */
     public CodeableConcept getMethod() { 
       return this.method;
     }
 
-    public void setMethod(CodeableConcept value) { 
+    /**
+     * @param value {@link #method} (Indicates the mechanism used to perform the observation.)
+     */
+    public Observation setMethod(CodeableConcept value) { 
       this.method = value;
+      return this;
     }
 
+    /**
+     * @return {@link #identifier} (A unique identifier for the simple observation.)
+     */
     public Identifier getIdentifier() { 
       return this.identifier;
     }
 
-    public void setIdentifier(Identifier value) { 
+    /**
+     * @param value {@link #identifier} (A unique identifier for the simple observation.)
+     */
+    public Observation setIdentifier(Identifier value) { 
       this.identifier = value;
+      return this;
     }
 
+    /**
+     * @return {@link #subject} (The thing the observation is being made about.)
+     */
     public ResourceReference getSubject() { 
       return this.subject;
     }
 
-    public void setSubject(ResourceReference value) { 
+    /**
+     * @param value {@link #subject} (The thing the observation is being made about.)
+     */
+    public Observation setSubject(ResourceReference value) { 
       this.subject = value;
+      return this;
     }
 
+    /**
+     * @return {@link #performer} (Who was responsible for asserting the observed value as "true".)
+     */
     public ResourceReference getPerformer() { 
       return this.performer;
     }
 
-    public void setPerformer(ResourceReference value) { 
+    /**
+     * @param value {@link #performer} (Who was responsible for asserting the observed value as "true".)
+     */
+    public Observation setPerformer(ResourceReference value) { 
       this.performer = value;
+      return this;
     }
 
+    /**
+     * @return {@link #referenceRange} (Guidance on how to interpret the value by comparison to a normal or recommended range.)
+     */
     public List<ObservationReferenceRangeComponent> getReferenceRange() { 
       return this.referenceRange;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #referenceRange} (Guidance on how to interpret the value by comparison to a normal or recommended range.)
+     */
     public ObservationReferenceRangeComponent addReferenceRange() { 
       ObservationReferenceRangeComponent t = new ObservationReferenceRangeComponent();
       this.referenceRange.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #component} (Component observation.)
+     */
     public List<ObservationComponentComponent> getComponent() { 
       return this.component;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #component} (Component observation.)
+     */
     public ObservationComponentComponent addComponent() { 
       ObservationComponentComponent t = new ObservationComponentComponent();
       this.component.add(t);
       return t;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("name", "CodeableConcept", "Identifies what type of observation was performed. Sometimes called code.", 0, java.lang.Integer.MAX_VALUE, name));
+        childrenList.add(new Property("value[x]", "Quantity|CodeableConcept|Attachment|Ratio|Period|SampledData|string", "The information determined as a result of making the observation.", 0, java.lang.Integer.MAX_VALUE, value));
+        childrenList.add(new Property("interpretation", "CodeableConcept", "The assessment made based on the result of the observation.", 0, java.lang.Integer.MAX_VALUE, interpretation));
+        childrenList.add(new Property("comments", "string", "May include statements about significant, unexpected or unreliable values, or information about the source of the value where this may be relevant to the interpretation of the result.", 0, java.lang.Integer.MAX_VALUE, comments));
+        childrenList.add(new Property("applies[x]", "Period|dateTime", "The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the 'physiologically relevant time'.", 0, java.lang.Integer.MAX_VALUE, applies));
+        childrenList.add(new Property("issued", "instant", "Date/Time this was made available.", 0, java.lang.Integer.MAX_VALUE, issued));
+        childrenList.add(new Property("status", "code", "The status of the result value.", 0, java.lang.Integer.MAX_VALUE, status));
+        childrenList.add(new Property("reliability", "code", "An estimate of the degree to which quality issues have impacted on the value reported.", 0, java.lang.Integer.MAX_VALUE, reliability));
+        childrenList.add(new Property("bodySite", "CodeableConcept", "Indicates where on the subject's body the observation was made.", 0, java.lang.Integer.MAX_VALUE, bodySite));
+        childrenList.add(new Property("method", "CodeableConcept", "Indicates the mechanism used to perform the observation.", 0, java.lang.Integer.MAX_VALUE, method));
+        childrenList.add(new Property("identifier", "Identifier", "A unique identifier for the simple observation.", 0, java.lang.Integer.MAX_VALUE, identifier));
+        childrenList.add(new Property("subject", "Resource(Patient|Group|Device)", "The thing the observation is being made about.", 0, java.lang.Integer.MAX_VALUE, subject));
+        childrenList.add(new Property("performer", "Resource(Practitioner|Device|Organization)", "Who was responsible for asserting the observed value as 'true'.", 0, java.lang.Integer.MAX_VALUE, performer));
+        childrenList.add(new Property("referenceRange", "", "Guidance on how to interpret the value by comparison to a normal or recommended range.", 0, java.lang.Integer.MAX_VALUE, referenceRange));
+        childrenList.add(new Property("component", "", "Component observation.", 0, java.lang.Integer.MAX_VALUE, component));
+      }
 
       public Observation copy() {
         Observation dst = new Observation();

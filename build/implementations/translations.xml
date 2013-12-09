@@ -22,8 +22,8 @@
     <translation lang="en">ConceptMap</translation>
   </item>  
 
-  <item id="DeviceData">
-    <translation lang="en">DeviceData</translation>
+  <item id="DeviceObservationReport">
+    <translation lang="en">DeviceObservationReport</translation>
   </item>
   
   <item id="DocumentManifest">
@@ -114,18 +114,6 @@
     <translation lang="en">Device</translation>
   </item>
 
-  <item id="DeviceCapabilities">
-    <translation lang="en">DeviceCapabilities</translation>
-  </item>
-
-  <item id="DeviceLog">
-    <translation lang="en">DeviceLog</translation>
-  </item>
-
-  <item id="DeviceObservation">
-    <translation lang="en">DeviceObservation</translation>
-  </item>
-
   <item id="DiagnosticOrder">
     <translation lang="en">DiagnosticOrder</translation>
   </item>
@@ -134,8 +122,8 @@
     <translation lang="en">DiagnosticReport</translation>
   </item>
 
-  <item id="Document">
-    <translation lang="en">Document</translation>
+  <item id="Composition">
+    <translation lang="en">Composition</translation>
   </item>
 
   <item id="DocumentReference">
@@ -194,8 +182,8 @@
     <translation lang="en">MedicationStatement</translation>
   </item>
 
-  <item id="Message">
-    <translation lang="en">Message</translation>
+  <item id="MessageHeader">
+    <translation lang="en">MessageHeader</translation>
   </item>
 
   <item id="Observation">
@@ -320,7 +308,7 @@
 
   <item id="MSG_TRANSACTION_MISSING_ID">
     <!-- <translation lang="du">Dubbele id in bundel: %s</translation> -->
-    <translation lang="en">Missing Identifier in transaction - and entry.id must be provided</translation>
+    <translation lang="en">Missing Identifier in transaction - an entry.id must be provided</translation>
     <!-- <translation lang="it">Identificatore duplicato nel batch: %s</translation> -->
   </item>
 

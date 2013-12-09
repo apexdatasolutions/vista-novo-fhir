@@ -46,6 +46,7 @@ import org.hl7.fhir.definitions.model.Definitions;
 import org.hl7.fhir.definitions.model.ElementDefn;
 import org.hl7.fhir.definitions.model.ResourceDefn;
 import org.hl7.fhir.definitions.model.SearchParameter;
+import org.hl7.fhir.definitions.model.SearchParameter.SearchType;
 import org.hl7.fhir.definitions.model.TypeRef;
 import org.hl7.fhir.instance.model.AtomEntry;
 import org.hl7.fhir.instance.model.Resource;
@@ -65,7 +66,8 @@ import org.w3c.dom.Element;
  *
  */
 public class ResourceValidator extends BaseValidator {
-
+  
+  
   public class Usage {
     public Set<SearchParameter.SearchType> usage= new HashSet<SearchParameter.SearchType>();
   }
@@ -76,6 +78,7 @@ public class ResourceValidator extends BaseValidator {
 	private Map<String, Usage> usages = new HashMap<String, Usage>();
   private Element translations;
   private Map<String, AtomEntry<ValueSet>> codeSystems = new HashMap<String, AtomEntry<ValueSet>>();
+//  private Map<String, Integer> typeCounter = new HashMap<String, Integer>();
   
   
 
@@ -151,8 +154,25 @@ public class ResourceValidator extends BaseValidator {
       rule(errors, "structure", parent.getName(), !p.getCode().contains("."), "Search Parameter Names cannot contain a '.' (\""+p.getCode()+"\")");
       rule(errors, "structure", parent.getName(), !p.getCode().equalsIgnoreCase("id"), "Search Parameter Names cannot be named 'id' (\""+p.getCode()+"\")");
       rule(errors, "structure", parent.getName(), p.getCode().equals(p.getCode().toLowerCase()), "Search Parameter Names should be all lowercase (\""+p.getCode()+"\")");
+      rule(errors, "structure", parent.getName(), Character.isUpperCase(p.getDescription().charAt(0)) || p.getDescription().contains("|"), "Search Parameter descriptions should start with uppercase (\""+p.getDescription()+"\")");
+      try {
+        if (p.getType() == SearchType.reference) {
+          for (String path : p.getPaths()) {
+            ElementDefn e;
+            e = parent.getRoot().getElementForPath(path, definitions, "Resolving Search Parameter Path");
+            for (TypeRef t : e.getTypes()) {
+              if (t.getName().equals("Resource")) {
+                for (String pn : t.getParams()) {
+                  p.getTargets().add(pn);
+                }
+              }
+            }
+          }
+        }
+      } catch (Exception e1) {
+        rule(errors, "structure", parent.getName(), false, e1.getMessage());
+      }
     }
-//    rule(errors, parent.getName(), !parent.getSearchParams().containsKey("id"), "A resource cannot have a search parameter 'id'");
     for (Compartment c : definitions.getCompartments()) 
       rule(errors, "structure", parent.getName(), c.getResources().containsKey(parent), "Resource not entered in resource map for compartment '"+c.getTitle()+"' (compartments.xml)");
 	}
@@ -161,7 +181,7 @@ public class ResourceValidator extends BaseValidator {
     return 
         name.equals("ConceptMap") || 
         name.equals("Conformance") || 
-        name.equals("Message") || 
+        name.equals("MessageHeader") || 
         name.equals("Profile") || 
         name.equals("Query") || 
         name.equals("ValueSet") ||         
@@ -188,7 +208,14 @@ public class ResourceValidator extends BaseValidator {
 	//todo: check that primitives *in datatypes* don't repeat
 	
 	private void checkElement(List<ValidationMessage> errors, String path, ElementDefn e, ResourceDefn parent, String parentName, boolean needsRimMapping) {
-		rule(errors, "structure", path, e.unbounded() || e.getMaxCardinality() == 1,	"Max Cardinality must be 1 or unbounded");
+//	  for (TypeRef t : e.getTypes()) {
+//  	  if (!typeCounter.containsKey(t.getName()))
+//	      typeCounter.put(t.getName(), 1);
+//  	  else
+//  	    typeCounter.put(t.getName(), typeCounter.get(t.getName())+1);
+//	  }
+	  
+	  rule(errors, "structure", path, e.unbounded() || e.getMaxCardinality() == 1,	"Max Cardinality must be 1 or unbounded");
 		rule(errors, "structure", path, e.getMinCardinality() == 0 || e.getMinCardinality() == 1, "Min Cardinality must be 0 or 1");
 		hint(errors, "structure", path, !nameOverlaps(e.getName(), parentName), "Name of child ("+e.getName()+") overlaps with name of parent ("+parentName+")");
     checkDefinitions(errors, path, e);
@@ -201,15 +228,17 @@ public class ResourceValidator extends BaseValidator {
 // this isn't a real hint, just a way to gather information   hint(errors, path, !e.isModifier(), "isModifier, minimum cardinality = "+e.getMinCardinality().toString());
     rule(errors, "structure", path, !e.getDefinition().toLowerCase().startsWith("this is"), "Definition should not start with 'this is'");
     rule(errors, "structure", path, e.getDefinition().endsWith("."), "Definition should end with '.', but is '"+e.getDefinition()+"'");
-    rule(errors, "structure", path, !"string|CodeableConcept".equals(e.typeCode()) && !"CodeableConcept|string".equals(e.typeCode()), "Element type cannot be string and CodeableConcept - use just CodeableConcept");
-    
+    if (e.usesType("string") && e.usesType("CodeableConcept"))
+      rule(errors, "structure", path, e.getComments().contains("string") && e.getComments().contains("CodeableConcept"), "Element type cannot have both string and CodeableConcept unless the difference between their usage is explained in the comments");
+
 //    if (needsRimMapping)
 //      warning(errors, "required", path, !Utilities.noString(e.getMapping(ElementDefn.RIM_MAPPING)), "RIM Mapping is required");
 
-    if( e.getShortDefn().length() > 0)
+    String sd = e.getShortDefn();
+    if( sd.length() > 0)
 		{
-			rule(errors, "structure", path, e.getShortDefn().contains("|") || Character.isUpperCase(e.getShortDefn().charAt(0)) || !Character.isLetter(e.getShortDefn().charAt(0)), "Short Description must start with an uppercase character ('"+e.getShortDefn()+"')");
-		    rule(errors, "structure", path, !e.getShortDefn().endsWith(".") || e.getShortDefn().endsWith("etc."), "Short Description must not end with a period ('"+e.getShortDefn()+"')");
+			rule(errors, "structure", path, sd.contains("|") || Character.isUpperCase(sd.charAt(0)) || !Character.isLetter(sd.charAt(0)), "Short Description must start with an uppercase character ('"+sd+"')");
+		    rule(errors, "structure", path, !sd.endsWith(".") || sd.endsWith("etc."), "Short Description must not end with a period ('"+sd+"')");
 		    rule(errors, "structure", path, e.getDefinition().contains("|") || Character.isUpperCase(e.getDefinition().charAt(0)) || !Character.isLetter(e.getDefinition().charAt(0)), "Long Description must start with an uppercase character ('"+e.getDefinition()+"')");
 		}
 		
@@ -239,6 +268,25 @@ public class ResourceValidator extends BaseValidator {
 			rule(errors, "structure", path, cd != null, "Unable to resolve binding name " + e.getBindingName());
 			
 			if (cd != null) {
+			  if (cd.getBinding() == Binding.CodeList) {
+			    if (path.toLowerCase().endsWith("status")) {
+			      if (rule(errors, "structure", path, definitions.getStatusCodes().containsKey(path), "Status element not registered in status-codes.xml")) {
+			        for (DefinedCode c : cd.getCodes()) {
+			          rule(errors, "structure", path, definitions.getStatusCodes().get(path).contains(c.getCode()), "Status element code \""+c.getCode()+"\" not found in status-codes.xml");
+			        }
+			      }
+			    }
+			    if (sd.contains("|")) {
+			      StringBuilder b = new StringBuilder();
+            for (DefinedCode c : cd.getCodes()) {
+              b.append(" | "+c.getCode());
+            }
+            String esd = b.substring(3);
+            rule(errors, "structure", path, sd.startsWith(esd) || (sd.endsWith("+") && b.substring(3).startsWith(sd.substring(0, sd.length()-1)) ), "The short description \""+sd+"\" does not match the expected (\""+b.substring(3)+"\")");
+			      
+			    } else
+			      rule(errors, "structure", path, cd.getCodes().size() > 20 || cd.getCodes().size() == 1 || !hasGoodCode(cd.getCodes()), "The short description of an element with a code list should have the format code | code | etc");
+			  }
 			  boolean isComplex = !e.typeCode().equals("code");
 			  if (cd.getElementType() == ElementType.Unknown) {
 			    if (isComplex)
@@ -258,13 +306,20 @@ public class ResourceValidator extends BaseValidator {
 
 	}
 
+  private boolean hasGoodCode(List<DefinedCode> codes) {
+    for (DefinedCode d : codes) 
+      if (!Utilities.IsInteger(d.getCode()) && d.getCode().length() > 1)
+        return true;
+    return false;
+  }
+
   private void checkDefinitions(List<ValidationMessage> errors, String path, ElementDefn e) {
     rule(errors, "structure", path, e.hasDefinition(), "A Definition is required");
     
     if (!e.hasShortDefn()) 
       return;
     
-    warning(errors, "structure", path, !e.getShortDefn().equals(e.getDefinition()), "Element needs a definition of it's own");
+    warning(errors, "structure", path, !e.getShortDefn().equals(e.getDefinition()), "Element needs a definition of its own");
     warning(errors, "structure", path, !e.getShortDefn().equals(e.getName()), "Short description can't be the same as the name");
     Set<String> defn = new HashSet<String>();
     for (String w : splitByCamelCase(e.getName()).toLowerCase().split(" ")) 
@@ -301,7 +356,8 @@ public class ResourceValidator extends BaseValidator {
   private String stripPunctuation(String s) {
     StringBuilder b = new StringBuilder();
     for (char c : s.toCharArray()) {
-      if (Character.isAlphabetic(c) || c == ' ')
+      int t = Character.getType(c);
+      if (t == Character.UPPERCASE_LETTER || t == Character.LOWERCASE_LETTER || t == Character.TITLECASE_LETTER || t == Character.MODIFIER_LETTER || t == Character.OTHER_LETTER || t == Character.LETTER_NUMBER || c == ' ')
         b.append(c);
     }
     return b.toString();
@@ -422,5 +478,12 @@ public class ResourceValidator extends BaseValidator {
     for (String s : usages.keySet()) {
       System.out.println(s+": "+usages.get(s).usage.toString());
     }
+  }
+
+  public void report() {
+    // for dumping of ad-hoc summaries from the checking phase
+//    for (String t : typeCounter.keySet()) {
+//      System.out.println(t+": "+typeCounter.get(t).toString());
+//    }
   }
 }

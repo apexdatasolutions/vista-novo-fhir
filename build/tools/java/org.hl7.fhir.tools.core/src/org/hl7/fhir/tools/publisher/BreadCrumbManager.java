@@ -268,10 +268,10 @@ public class BreadCrumbManager {
 
   private void writePage(StringBuilder b, Page p, int level, String path) {
     if (p.getType() == PageType.resource) {
-      addLink(b, p.getResource().toLowerCase()+".html", p.getResource(), path, level);
-      addLink(b, p.getResource().toLowerCase()+"-examples.html", p.getResource()+" Examples", path+".1", level+1);
-      addLink(b, p.getResource().toLowerCase()+"-definitions.html", p.getResource()+" Definitions", path+".2", level+1);
-      addLink(b, p.getResource().toLowerCase()+"-mappings.html", p.getResource()+" Mappings", path+".3", level+1);
+        addLink(b, p.getResource().toLowerCase()+".html", p.getResource(), path, level);
+        addLink(b, p.getResource().toLowerCase()+"-examples.html", p.getResource()+" Examples", path+".1", level+1);
+        addLink(b, p.getResource().toLowerCase()+"-definitions.html", p.getResource()+" Definitions", path+".2", level+1);
+        addLink(b, p.getResource().toLowerCase()+"-mappings.html", p.getResource()+" Mappings", path+".3", level+1);
     } else {
       addLink(b, p.getFilename(), p.getTitle(), path, level);
       for (Node n : p.getChildren()) {
@@ -347,6 +347,49 @@ public class BreadCrumbManager {
       p.addText(" "+title);
     }
     p.addTag("br");
+  }
+
+  public List<String> getSpineOrder() {
+    List<String> res = new ArrayList<String>();
+    getSpineOrder1(res, home);
+    getSpineOrder2(res, home);
+    return res;
+  }
+
+  private void getSpineOrder1(List<String> res, Page page) {
+    if (page.getType() == PageType.resource) {
+      String resource = page.resource.toLowerCase();
+      res.add(resource+".html");
+      res.add(resource+"-examples.html");
+      res.add(resource+"-definitions.html");
+      res.add(resource+"-mappings.html");
+      res.add(resource+"-explanations.html");
+      res.add(resource+"-profiles.html");
+    } else if (!Utilities.noString(page.filename))
+      res.add(page.filename);
+    for (Node p : page.getChildren()) {
+      if (p instanceof Page) 
+        getSpineOrder1(res, (Page) p);
+      else {
+        // ignore for now
+      }
+    }
+    
+  }
+
+  private void getSpineOrder2(List<String> res, Page page) {
+    for (Node p : page.getChildren()) {
+      if (p instanceof Page) 
+        getSpineOrder2(res, (Page) p);
+      else {
+        // ignore for now
+      }
+    }
+    
+  }
+
+  public Page getPage() {
+    return home;
   }
 
   

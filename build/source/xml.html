@@ -42,6 +42,7 @@ Notes:
  <li>FHIR elements are never empty. If an element is present in the resource, it SHALL have either a value attribute, child elements as defined for its type, an id attribute that is the <a href="references.html#idref">link target</a> of <a href="narrative.html#narrative">narrative</a>, or 1 or more <a href="extensibility.html">extensions</a></li>
  <li>Attributes can never be empty. Either they are absent, or they are present with at least one character of non-whitespace content</li>
  <li>The formal MIME-type for FHIR resources represented in XML is application/xml+fhir</li>
+ <li>XML comments, processing instructions and formatting are not part of the contents of a resource. Processing Instrutions SHOULD not be included, and SHALL not be required in order to properly understand and/or present the data or narrative of the resource. Applications MAY preserve these when handling resources, but are not required to do so. Note that digital signatures may depend on them (depending on the canonicalisation method used)</li>
 </ul>
 <p>
 When represented as XML, resources may be validated by schema and schematron (see below), but 
@@ -105,7 +106,8 @@ In XML <a href="extras.html#bundle">bundles</a> are represented using an Atom fo
 <ul>
  <li>Logically, a bundle is a set of resources that are prepared to send somewhere for consumption - a "feed". There is no implication that the feed is a standing arrangement (though this is not precluded)</li>
  <li>The order of elements does not matter in an atom feed (but not entries: the order of the entries is important and may have some meaning associated with it). The order of elements in the atom namespace as documented above does not need to be followed, though it is followed by the FHIR reference platforms</li>
- <li>The title for the feed and the entry are arbitrary human-readable content and not to be used for any automated processing. Applications may populate these in any useful way</li> 
+ <li>The title for the feed and the entry are arbitrary human-readable content. The title of the entry SHOULD be derived from information present in the resource itself.  
+   Systems may ignore content present in the title</li> 
  <li>Every bundle SHALL have a unique id and that id SHALL be a valid absolute <a href="datatypes.html#uri">uri</a>. UUIDs are recommended (urn:uuid:...)</li>
  <li>The entry element carries the <a href="resources.html#metadata">three pieces of resource metadata</a>: Id (.id), Version Id (.link), Last Updated (.updated)</li>
  <li>Each entry also carries all the Tags affixed to the resource in the category element. The category element can be used in other ways too</li>
@@ -163,16 +165,9 @@ the scope of resolution of an id attribute to the resource in which the <i>id</i
 <a name="binary"> </a>
 <h4>Binary Resources</h4>
 <p>
-There are situations where it is useful or required to handle pure binary content 
-as resources. Typically, this is when the binary content is referred to from other FHIR 
-Resources. The resource can contain any content, whether text, image, pdf, zip archive, etc. 
-These resources are <a href="http.html#binary">served in their native form on the rest interface</a>,
-but can also be represented in XML or JSON, such as when including these resources in a bundle
-(used when it is convenient to include these in the feed directly rather than leaving them by reference).
-</p>
-<p>
-When a binary resource is represented as XML in an atom feed, it is represented as base64 encoded content along 
-with a content-type, which is the mime-type as it would be specified in HTTP:
+When a <a href="extras.html#binary">binary resource</a> is represented as XML in an atom feed, 
+it is represented as base64 encoded content along with a content-type, which is the mime-type 
+as it would be specified in HTTP:
 </p>
 <pre class="spec">
  &lt;Binary xmlns="http://hl7.org/fhir" contentType="<span style="color:navy;">[mime type]</span>"&gt;  <span style="float: right"><a title="Documentation for this format" href="formats.html"><img src="help.png" alt="doco"/></a></span>
@@ -215,7 +210,6 @@ the resource itself.
 
 
 </div>
-[%onthispage Resource Definition#root|Internal References#idref|JSON#json|Atom (Bundle)#atom|JSON (Bundle)#json-bundles|Schema#schema%]
 
 [%file newfooter%]
 </body>

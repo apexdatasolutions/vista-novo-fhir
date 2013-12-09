@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
 
 import java.util.*;
 
@@ -84,7 +84,7 @@ public class OrderResponse extends Resource {
         }
     }
 
-  public class OrderOutcomeCodeEnumFactory implements EnumFactory {
+  public static class OrderOutcomeCodeEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
@@ -168,27 +168,57 @@ public class OrderResponse extends Resource {
      */
     protected List<ResourceReference> fulfillment = new ArrayList<ResourceReference>();
 
+    public OrderResponse() {
+      super();
+    }
+
+    public OrderResponse(ResourceReference request, Enumeration<OrderOutcomeCode> code) {
+      super();
+      this.request = request;
+      this.code = code;
+    }
+
+    /**
+     * @return {@link #request} (The order that this is a response to.)
+     */
     public ResourceReference getRequest() { 
       return this.request;
     }
 
-    public void setRequest(ResourceReference value) { 
+    /**
+     * @param value {@link #request} (The order that this is a response to.)
+     */
+    public OrderResponse setRequest(ResourceReference value) { 
       this.request = value;
+      return this;
     }
 
+    /**
+     * @return {@link #date} (When the response was made.)
+     */
     public DateTime getDate() { 
       return this.date;
     }
 
-    public void setDate(DateTime value) { 
+    /**
+     * @param value {@link #date} (When the response was made.)
+     */
+    public OrderResponse setDate(DateTime value) { 
       this.date = value;
+      return this;
     }
 
+    /**
+     * @return When the response was made.
+     */
     public String getDateSimple() { 
       return this.date == null ? null : this.date.getValue();
     }
 
-    public void setDateSimple(String value) { 
+    /**
+     * @param value When the response was made.
+     */
+    public OrderResponse setDateSimple(String value) { 
       if (value == null)
         this.date = null;
       else {
@@ -196,63 +226,112 @@ public class OrderResponse extends Resource {
           this.date = new DateTime();
         this.date.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #who} (Who made the response.)
+     */
     public ResourceReference getWho() { 
       return this.who;
     }
 
-    public void setWho(ResourceReference value) { 
+    /**
+     * @param value {@link #who} (Who made the response.)
+     */
+    public OrderResponse setWho(ResourceReference value) { 
       this.who = value;
+      return this;
     }
 
+    /**
+     * @return {@link #authority} (If required by policy.)
+     */
     public ResourceReference getAuthority() { 
       return this.authority;
     }
 
-    public void setAuthority(ResourceReference value) { 
+    /**
+     * @param value {@link #authority} (If required by policy.)
+     */
+    public OrderResponse setAuthority(ResourceReference value) { 
       this.authority = value;
+      return this;
     }
 
+    /**
+     * @return {@link #cost} (How much the request will/did cost.)
+     */
     public Money getCost() { 
       return this.cost;
     }
 
-    public void setCost(Money value) { 
+    /**
+     * @param value {@link #cost} (How much the request will/did cost.)
+     */
+    public OrderResponse setCost(Money value) { 
       this.cost = value;
+      return this;
     }
 
+    /**
+     * @return {@link #code} (The status of the response.)
+     */
     public Enumeration<OrderOutcomeCode> getCode() { 
       return this.code;
     }
 
-    public void setCode(Enumeration<OrderOutcomeCode> value) { 
+    /**
+     * @param value {@link #code} (The status of the response.)
+     */
+    public OrderResponse setCode(Enumeration<OrderOutcomeCode> value) { 
       this.code = value;
+      return this;
     }
 
+    /**
+     * @return The status of the response.
+     */
     public OrderOutcomeCode getCodeSimple() { 
       return this.code == null ? null : this.code.getValue();
     }
 
-    public void setCodeSimple(OrderOutcomeCode value) { 
+    /**
+     * @param value The status of the response.
+     */
+    public OrderResponse setCodeSimple(OrderOutcomeCode value) { 
         if (this.code == null)
           this.code = new Enumeration<OrderOutcomeCode>();
         this.code.setValue(value);
+      return this;
     }
 
+    /**
+     * @return {@link #description} (Additional description of the response.)
+     */
     public String_ getDescription() { 
       return this.description;
     }
 
-    public void setDescription(String_ value) { 
+    /**
+     * @param value {@link #description} (Additional description of the response.)
+     */
+    public OrderResponse setDescription(String_ value) { 
       this.description = value;
+      return this;
     }
 
+    /**
+     * @return Additional description of the response.
+     */
     public String getDescriptionSimple() { 
       return this.description == null ? null : this.description.getValue();
     }
 
-    public void setDescriptionSimple(String value) { 
+    /**
+     * @param value Additional description of the response.
+     */
+    public OrderResponse setDescriptionSimple(String value) { 
       if (value == null)
         this.description = null;
       else {
@@ -260,18 +339,37 @@ public class OrderResponse extends Resource {
           this.description = new String_();
         this.description.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #fulfillment} (Details of the outcome of performing the order.)
+     */
     public List<ResourceReference> getFulfillment() { 
       return this.fulfillment;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #fulfillment} (Details of the outcome of performing the order.)
+     */
     public ResourceReference addFulfillment() { 
       ResourceReference t = new ResourceReference();
       this.fulfillment.add(t);
       return t;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("request", "Resource(Order)", "The order that this is a response to.", 0, java.lang.Integer.MAX_VALUE, request));
+        childrenList.add(new Property("date", "dateTime", "When the response was made.", 0, java.lang.Integer.MAX_VALUE, date));
+        childrenList.add(new Property("who", "Resource(Practitioner|Organization)", "Who made the response.", 0, java.lang.Integer.MAX_VALUE, who));
+        childrenList.add(new Property("authority", "Resource(Any)", "If required by policy.", 0, java.lang.Integer.MAX_VALUE, authority));
+        childrenList.add(new Property("cost", "Money", "How much the request will/did cost.", 0, java.lang.Integer.MAX_VALUE, cost));
+        childrenList.add(new Property("code", "code", "The status of the response.", 0, java.lang.Integer.MAX_VALUE, code));
+        childrenList.add(new Property("description", "string", "Additional description of the response.", 0, java.lang.Integer.MAX_VALUE, description));
+        childrenList.add(new Property("fulfillment", "Resource(Any)", "Details of the outcome of performing the order.", 0, java.lang.Integer.MAX_VALUE, fulfillment));
+      }
 
       public OrderResponse copy() {
         OrderResponse dst = new OrderResponse();

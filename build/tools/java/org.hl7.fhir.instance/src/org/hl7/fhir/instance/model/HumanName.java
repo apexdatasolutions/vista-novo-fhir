@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
 
 import java.util.*;
 
@@ -80,7 +80,7 @@ public class HumanName extends Type {
         }
     }
 
-  public class NameUseEnumFactory implements EnumFactory {
+  public static class NameUseEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
@@ -155,19 +155,36 @@ public class HumanName extends Type {
      */
     protected Period period;
 
+    public HumanName() {
+      super();
+    }
+
+    /**
+     * @return {@link #use} (Identifies the purpose for this name.)
+     */
     public Enumeration<NameUse> getUse() { 
       return this.use;
     }
 
-    public void setUse(Enumeration<NameUse> value) { 
+    /**
+     * @param value {@link #use} (Identifies the purpose for this name.)
+     */
+    public HumanName setUse(Enumeration<NameUse> value) { 
       this.use = value;
+      return this;
     }
 
+    /**
+     * @return Identifies the purpose for this name.
+     */
     public NameUse getUseSimple() { 
       return this.use == null ? null : this.use.getValue();
     }
 
-    public void setUseSimple(NameUse value) { 
+    /**
+     * @param value Identifies the purpose for this name.
+     */
+    public HumanName setUseSimple(NameUse value) { 
       if (value == null)
         this.use = null;
       else {
@@ -175,21 +192,35 @@ public class HumanName extends Type {
           this.use = new Enumeration<NameUse>();
         this.use.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #text} (A full text representation of the name.)
+     */
     public String_ getText() { 
       return this.text;
     }
 
-    public void setText(String_ value) { 
+    /**
+     * @param value {@link #text} (A full text representation of the name.)
+     */
+    public HumanName setText(String_ value) { 
       this.text = value;
+      return this;
     }
 
+    /**
+     * @return A full text representation of the name.
+     */
     public String getTextSimple() { 
       return this.text == null ? null : this.text.getValue();
     }
 
-    public void setTextSimple(String value) { 
+    /**
+     * @param value A full text representation of the name.
+     */
+    public HumanName setTextSimple(String value) { 
       if (value == null)
         this.text = null;
       else {
@@ -197,19 +228,29 @@ public class HumanName extends Type {
           this.text = new String_();
         this.text.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #family} (Family name, this is the name that links to the genealogy. In some cultures (e.g. Eritrea) the family name of a son is the first name of his father.)
+     */
     public List<String_> getFamily() { 
       return this.family;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #family} (Family name, this is the name that links to the genealogy. In some cultures (e.g. Eritrea) the family name of a son is the first name of his father.)
+     */
     public String_ addFamily() { 
       String_ t = new String_();
       this.family.add(t);
       return t;
     }
 
+    /**
+     * @param value {@link #family} (Family name, this is the name that links to the genealogy. In some cultures (e.g. Eritrea) the family name of a son is the first name of his father.)
+     */
     public String_ addFamilySimple(String value) { 
       String_ t = new String_();
       t.setValue(value);
@@ -217,17 +258,26 @@ public class HumanName extends Type {
       return t;
     }
 
+    /**
+     * @return {@link #given} (Given name. NOTE: Not to be called "first name" since given names do not always come first.)
+     */
     public List<String_> getGiven() { 
       return this.given;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #given} (Given name. NOTE: Not to be called "first name" since given names do not always come first.)
+     */
     public String_ addGiven() { 
       String_ t = new String_();
       this.given.add(t);
       return t;
     }
 
+    /**
+     * @param value {@link #given} (Given name. NOTE: Not to be called "first name" since given names do not always come first.)
+     */
     public String_ addGivenSimple(String value) { 
       String_ t = new String_();
       t.setValue(value);
@@ -235,17 +285,26 @@ public class HumanName extends Type {
       return t;
     }
 
+    /**
+     * @return {@link #prefix} (Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that comes at the start of the name.)
+     */
     public List<String_> getPrefix() { 
       return this.prefix;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #prefix} (Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that comes at the start of the name.)
+     */
     public String_ addPrefix() { 
       String_ t = new String_();
       this.prefix.add(t);
       return t;
     }
 
+    /**
+     * @param value {@link #prefix} (Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that comes at the start of the name.)
+     */
     public String_ addPrefixSimple(String value) { 
       String_ t = new String_();
       t.setValue(value);
@@ -253,17 +312,26 @@ public class HumanName extends Type {
       return t;
     }
 
+    /**
+     * @return {@link #suffix} (Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that comes at the end of the name.)
+     */
     public List<String_> getSuffix() { 
       return this.suffix;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #suffix} (Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that comes at the end of the name.)
+     */
     public String_ addSuffix() { 
       String_ t = new String_();
       this.suffix.add(t);
       return t;
     }
 
+    /**
+     * @param value {@link #suffix} (Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that comes at the end of the name.)
+     */
     public String_ addSuffixSimple(String value) { 
       String_ t = new String_();
       t.setValue(value);
@@ -271,13 +339,31 @@ public class HumanName extends Type {
       return t;
     }
 
+    /**
+     * @return {@link #period} (Indicates the period of time when this name was valid for the named person.)
+     */
     public Period getPeriod() { 
       return this.period;
     }
 
-    public void setPeriod(Period value) { 
+    /**
+     * @param value {@link #period} (Indicates the period of time when this name was valid for the named person.)
+     */
+    public HumanName setPeriod(Period value) { 
       this.period = value;
+      return this;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("use", "code", "Identifies the purpose for this name.", 0, java.lang.Integer.MAX_VALUE, use));
+        childrenList.add(new Property("text", "string", "A full text representation of the name.", 0, java.lang.Integer.MAX_VALUE, text));
+        childrenList.add(new Property("family", "string", "Family name, this is the name that links to the genealogy. In some cultures (e.g. Eritrea) the family name of a son is the first name of his father.", 0, java.lang.Integer.MAX_VALUE, family));
+        childrenList.add(new Property("given", "string", "Given name. NOTE: Not to be called 'first name' since given names do not always come first.", 0, java.lang.Integer.MAX_VALUE, given));
+        childrenList.add(new Property("prefix", "string", "Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that comes at the start of the name.", 0, java.lang.Integer.MAX_VALUE, prefix));
+        childrenList.add(new Property("suffix", "string", "Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that comes at the end of the name.", 0, java.lang.Integer.MAX_VALUE, suffix));
+        childrenList.add(new Property("period", "Period", "Indicates the period of time when this name was valid for the named person.", 0, java.lang.Integer.MAX_VALUE, period));
+      }
 
       public HumanName copy() {
         HumanName dst = new HumanName();

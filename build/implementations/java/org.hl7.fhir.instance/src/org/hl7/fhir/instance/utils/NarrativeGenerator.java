@@ -124,7 +124,7 @@ public class NarrativeGenerator {
     if (vs.getCopyright() != null)
       generateCopyright(x, vs);
     p = x.addTag("p");
-    p.addText("This value set defines it's own terms in the system "+vs.getDefine().getSystemSimple());
+    p.addText("This value set defines its own terms in the system "+vs.getDefine().getSystemSimple());
     XhtmlNode t = x.addTag("table");
     boolean commentS = false;
     boolean deprecated = false;
@@ -619,9 +619,11 @@ public class NarrativeGenerator {
     for (ConformanceRestResourceComponent r : rest.getResource()) {
       tr = t.addTag("tr");
       tr.addTag("td").addText(r.getTypeSimple());
-      XhtmlNode a = tr.addTag("td").addTag("a");
-      a.addText(r.getProfile().getReferenceSimple());
-      a.setAttribute("href", prefix+r.getProfile().getReferenceSimple());
+      if (r.getProfile() != null) {
+      	XhtmlNode a = tr.addTag("td").addTag("a");
+      	a.addText(r.getProfile().getReferenceSimple());
+      	a.setAttribute("href", prefix+r.getProfile().getReferenceSimple());
+      }
       tr.addTag("td").addText(showOp(r, TypeRestfulOperation.read));
       tr.addTag("td").addText(showOp(r, TypeRestfulOperation.vread));
       tr.addTag("td").addText(showOp(r, TypeRestfulOperation.searchtype));

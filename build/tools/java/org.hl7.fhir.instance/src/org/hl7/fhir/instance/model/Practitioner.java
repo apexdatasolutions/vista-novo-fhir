@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
 
 import java.util.*;
 
@@ -38,7 +38,7 @@ import java.util.*;
  */
 public class Practitioner extends Resource {
 
-    public class PractitionerQualificationComponent extends Element {
+    public static class PractitionerQualificationComponent extends BackboneElement {
         /**
          * Coded representation of the qualification.
          */
@@ -54,32 +54,69 @@ public class Practitioner extends Resource {
          */
         protected ResourceReference issuer;
 
+      public PractitionerQualificationComponent() {
+        super();
+      }
+
+      public PractitionerQualificationComponent(CodeableConcept code) {
+        super();
+        this.code = code;
+      }
+
+        /**
+         * @return {@link #code} (Coded representation of the qualification.)
+         */
         public CodeableConcept getCode() { 
           return this.code;
         }
 
-        public void setCode(CodeableConcept value) { 
+        /**
+         * @param value {@link #code} (Coded representation of the qualification.)
+         */
+        public PractitionerQualificationComponent setCode(CodeableConcept value) { 
           this.code = value;
+          return this;
         }
 
+        /**
+         * @return {@link #period} (Period during which the qualification is valid.)
+         */
         public Period getPeriod() { 
           return this.period;
         }
 
-        public void setPeriod(Period value) { 
+        /**
+         * @param value {@link #period} (Period during which the qualification is valid.)
+         */
+        public PractitionerQualificationComponent setPeriod(Period value) { 
           this.period = value;
+          return this;
         }
 
+        /**
+         * @return {@link #issuer} (Organization that regulates and issues the qualification.)
+         */
         public ResourceReference getIssuer() { 
           return this.issuer;
         }
 
-        public void setIssuer(ResourceReference value) { 
+        /**
+         * @param value {@link #issuer} (Organization that regulates and issues the qualification.)
+         */
+        public PractitionerQualificationComponent setIssuer(ResourceReference value) { 
           this.issuer = value;
+          return this;
+        }
+
+        protected void listChildren(List<Property> childrenList) {
+          super.listChildren(childrenList);
+          childrenList.add(new Property("code", "CodeableConcept", "Coded representation of the qualification.", 0, java.lang.Integer.MAX_VALUE, code));
+          childrenList.add(new Property("period", "Period", "Period during which the qualification is valid.", 0, java.lang.Integer.MAX_VALUE, period));
+          childrenList.add(new Property("issuer", "Resource(Organization)", "Organization that regulates and issues the qualification.", 0, java.lang.Integer.MAX_VALUE, issuer));
         }
 
       public PractitionerQualificationComponent copy(Practitioner e) {
-        PractitionerQualificationComponent dst = e.new PractitionerQualificationComponent();
+        PractitionerQualificationComponent dst = new PractitionerQualificationComponent();
         dst.code = code == null ? null : code.copy();
         dst.period = period == null ? null : period.copy();
         dst.issuer = issuer == null ? null : issuer.copy();
@@ -153,65 +190,115 @@ public class Practitioner extends Resource {
      */
     protected List<CodeableConcept> communication = new ArrayList<CodeableConcept>();
 
+    public Practitioner() {
+      super();
+    }
+
+    /**
+     * @return {@link #identifier} (An identifier that applies to this person in this role.)
+     */
     public List<Identifier> getIdentifier() { 
       return this.identifier;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #identifier} (An identifier that applies to this person in this role.)
+     */
     public Identifier addIdentifier() { 
       Identifier t = new Identifier();
       this.identifier.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #name} (A name associated with the person.)
+     */
     public HumanName getName() { 
       return this.name;
     }
 
-    public void setName(HumanName value) { 
+    /**
+     * @param value {@link #name} (A name associated with the person.)
+     */
+    public Practitioner setName(HumanName value) { 
       this.name = value;
+      return this;
     }
 
+    /**
+     * @return {@link #telecom} (A contact detail for the practitioner, e.g. a telephone number or an email address.)
+     */
     public List<Contact> getTelecom() { 
       return this.telecom;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #telecom} (A contact detail for the practitioner, e.g. a telephone number or an email address.)
+     */
     public Contact addTelecom() { 
       Contact t = new Contact();
       this.telecom.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #address} (One or more addresses where the practitioner can be found or visited.)
+     */
     public Address getAddress() { 
       return this.address;
     }
 
-    public void setAddress(Address value) { 
+    /**
+     * @param value {@link #address} (One or more addresses where the practitioner can be found or visited.)
+     */
+    public Practitioner setAddress(Address value) { 
       this.address = value;
+      return this;
     }
 
+    /**
+     * @return {@link #gender} (Administrative Gender - the gender that the person is considered to have for administration and record keeping purposes.)
+     */
     public CodeableConcept getGender() { 
       return this.gender;
     }
 
-    public void setGender(CodeableConcept value) { 
+    /**
+     * @param value {@link #gender} (Administrative Gender - the gender that the person is considered to have for administration and record keeping purposes.)
+     */
+    public Practitioner setGender(CodeableConcept value) { 
       this.gender = value;
+      return this;
     }
 
+    /**
+     * @return {@link #birthDate} (The date and time of birth for the practitioner.)
+     */
     public DateTime getBirthDate() { 
       return this.birthDate;
     }
 
-    public void setBirthDate(DateTime value) { 
+    /**
+     * @param value {@link #birthDate} (The date and time of birth for the practitioner.)
+     */
+    public Practitioner setBirthDate(DateTime value) { 
       this.birthDate = value;
+      return this;
     }
 
+    /**
+     * @return The date and time of birth for the practitioner.
+     */
     public String getBirthDateSimple() { 
       return this.birthDate == null ? null : this.birthDate.getValue();
     }
 
-    public void setBirthDateSimple(String value) { 
+    /**
+     * @param value The date and time of birth for the practitioner.
+     */
+    public Practitioner setBirthDateSimple(String value) { 
       if (value == null)
         this.birthDate = null;
       else {
@@ -219,78 +306,140 @@ public class Practitioner extends Resource {
           this.birthDate = new DateTime();
         this.birthDate.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #photo} (Image of the person.)
+     */
     public List<Attachment> getPhoto() { 
       return this.photo;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #photo} (Image of the person.)
+     */
     public Attachment addPhoto() { 
       Attachment t = new Attachment();
       this.photo.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #organization} (The organization that the practitioner represents.)
+     */
     public ResourceReference getOrganization() { 
       return this.organization;
     }
 
-    public void setOrganization(ResourceReference value) { 
+    /**
+     * @param value {@link #organization} (The organization that the practitioner represents.)
+     */
+    public Practitioner setOrganization(ResourceReference value) { 
       this.organization = value;
+      return this;
     }
 
+    /**
+     * @return {@link #role} (The way in which the person represents the organization - what role do they have?.)
+     */
     public List<CodeableConcept> getRole() { 
       return this.role;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #role} (The way in which the person represents the organization - what role do they have?.)
+     */
     public CodeableConcept addRole() { 
       CodeableConcept t = new CodeableConcept();
       this.role.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #specialty} (Specific specialty of the practitioner.)
+     */
     public List<CodeableConcept> getSpecialty() { 
       return this.specialty;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #specialty} (Specific specialty of the practitioner.)
+     */
     public CodeableConcept addSpecialty() { 
       CodeableConcept t = new CodeableConcept();
       this.specialty.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #period} (The period during which the person is authorized to perform the service.)
+     */
     public Period getPeriod() { 
       return this.period;
     }
 
-    public void setPeriod(Period value) { 
+    /**
+     * @param value {@link #period} (The period during which the person is authorized to perform the service.)
+     */
+    public Practitioner setPeriod(Period value) { 
       this.period = value;
+      return this;
     }
 
+    /**
+     * @return {@link #qualification} (Qualifications relevant to the provided service.)
+     */
     public List<PractitionerQualificationComponent> getQualification() { 
       return this.qualification;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #qualification} (Qualifications relevant to the provided service.)
+     */
     public PractitionerQualificationComponent addQualification() { 
       PractitionerQualificationComponent t = new PractitionerQualificationComponent();
       this.qualification.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #communication} (A language the practitioner is able to use in patient communication.)
+     */
     public List<CodeableConcept> getCommunication() { 
       return this.communication;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #communication} (A language the practitioner is able to use in patient communication.)
+     */
     public CodeableConcept addCommunication() { 
       CodeableConcept t = new CodeableConcept();
       this.communication.add(t);
       return t;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("identifier", "Identifier", "An identifier that applies to this person in this role.", 0, java.lang.Integer.MAX_VALUE, identifier));
+        childrenList.add(new Property("name", "HumanName", "A name associated with the person.", 0, java.lang.Integer.MAX_VALUE, name));
+        childrenList.add(new Property("telecom", "Contact", "A contact detail for the practitioner, e.g. a telephone number or an email address.", 0, java.lang.Integer.MAX_VALUE, telecom));
+        childrenList.add(new Property("address", "Address", "One or more addresses where the practitioner can be found or visited.", 0, java.lang.Integer.MAX_VALUE, address));
+        childrenList.add(new Property("gender", "CodeableConcept", "Administrative Gender - the gender that the person is considered to have for administration and record keeping purposes.", 0, java.lang.Integer.MAX_VALUE, gender));
+        childrenList.add(new Property("birthDate", "dateTime", "The date and time of birth for the practitioner.", 0, java.lang.Integer.MAX_VALUE, birthDate));
+        childrenList.add(new Property("photo", "Attachment", "Image of the person.", 0, java.lang.Integer.MAX_VALUE, photo));
+        childrenList.add(new Property("organization", "Resource(Organization)", "The organization that the practitioner represents.", 0, java.lang.Integer.MAX_VALUE, organization));
+        childrenList.add(new Property("role", "CodeableConcept", "The way in which the person represents the organization - what role do they have?.", 0, java.lang.Integer.MAX_VALUE, role));
+        childrenList.add(new Property("specialty", "CodeableConcept", "Specific specialty of the practitioner.", 0, java.lang.Integer.MAX_VALUE, specialty));
+        childrenList.add(new Property("period", "Period", "The period during which the person is authorized to perform the service.", 0, java.lang.Integer.MAX_VALUE, period));
+        childrenList.add(new Property("qualification", "", "Qualifications relevant to the provided service.", 0, java.lang.Integer.MAX_VALUE, qualification));
+        childrenList.add(new Property("communication", "CodeableConcept", "A language the practitioner is able to use in patient communication.", 0, java.lang.Integer.MAX_VALUE, communication));
+      }
 
       public Practitioner copy() {
         Practitioner dst = new Practitioner();

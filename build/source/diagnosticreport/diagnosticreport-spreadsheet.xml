@@ -20,6 +20,7 @@
   <WindowWidth>17490</WindowWidth>
   <WindowTopX>5520</WindowTopX>
   <WindowTopY>6135</WindowTopY>
+  <ActiveSheet>2</ActiveSheet>
   <ProtectStructure>False</ProtectStructure>
   <ProtectWindows>False</ProtectWindows>
  </ExcelWorkbook>
@@ -91,12 +92,12 @@
    <Protection/>
   </Style>
   <Style ss:ID="s72">
-   <Alignment ss:Vertical="Bottom" ss:ShrinkToFit="1" ss:WrapText="1"/>
-  </Style>
-  <Style ss:ID="s73">
    <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:ShrinkToFit="1"
     ss:WrapText="1"/>
    <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
+  </Style>
+  <Style ss:ID="s73">
+   <Alignment ss:Vertical="Bottom" ss:ShrinkToFit="1" ss:WrapText="1"/>
   </Style>
   <Style ss:ID="s74">
    <Alignment ss:Vertical="Top" ss:WrapText="1"/>
@@ -108,6 +109,23 @@
    <Alignment ss:Vertical="Top"/>
    <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"
     ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s77">
+   <Alignment ss:Vertical="Top" ss:ShrinkToFit="1" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"
+    ss:Bold="1"/>
+   <Interior ss:Color="#EEECE1" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s78" ss:Parent="s62">
+   <Alignment ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
   </Style>
  </Styles>
  <Worksheet ss:Name="Data Elements">
@@ -199,9 +217,9 @@
       ss:Name="_FilterDatabase"/></Cell>
     <Cell ss:Index="6"><Data ss:Type="String">code</Data><NamedCell
       ss:Name="_FilterDatabase"/></Cell>
-    <Cell><Data ss:Type="String">ObservationStatus</Data><NamedCell
+    <Cell><Data ss:Type="String">DiagnosticReportStatus</Data><NamedCell
       ss:Name="_FilterDatabase"/></Cell>
-    <Cell><Data ss:Type="String">registered|interim|final|amended|cancelled|withdrawn</Data><NamedCell
+    <Cell><Data ss:Type="String">registered | partial | final | corrected +</Data><NamedCell
       ss:Name="_FilterDatabase"/></Cell>
     <Cell><Data ss:Type="String">The status of the diagnostic report as a whole</Data><NamedCell
       ss:Name="_FilterDatabase"/></Cell>
@@ -732,7 +750,7 @@
     <Cell><Data ss:Type="String">0..*</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
     <Cell ss:Index="6"><Data ss:Type="String">CodeableConcept</Data><NamedCell
       ss:Name="_FilterDatabase"/></Cell>
-    <Cell ss:StyleID="s73"><Data ss:Type="String">AdjunctDiagnosis</Data><NamedCell
+    <Cell ss:StyleID="s72"><Data ss:Type="String">AdjunctDiagnosis</Data><NamedCell
       ss:Name="_FilterDatabase"/></Cell>
     <Cell><Data ss:Type="String">Codes for the conclusion</Data><NamedCell
       ss:Name="_FilterDatabase"/></Cell>
@@ -777,11 +795,10 @@
     <HorizontalResolution>600</HorizontalResolution>
     <VerticalResolution>600</VerticalResolution>
    </Print>
-   <Selected/>
    <FreezePanes/>
    <FrozenNoSplit/>
    <SplitHorizontal>1</SplitHorizontal>
-   <TopRowBottomPane>19</TopRowBottomPane>
+   <TopRowBottomPane>1</TopRowBottomPane>
    <SplitVertical>1</SplitVertical>
    <LeftColumnRightPane>1</LeftColumnRightPane>
    <ActivePane>0</ActivePane>
@@ -794,12 +811,11 @@
     </Pane>
     <Pane>
      <Number>2</Number>
-     <ActiveRow>1</ActiveRow>
     </Pane>
     <Pane>
      <Number>0</Number>
-     <ActiveRow>25</ActiveRow>
-     <ActiveCol>6</ActiveCol>
+     <ActiveRow>3</ActiveRow>
+     <ActiveCol>7</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -808,9 +824,9 @@
  </Worksheet>
  <Worksheet ss:Name="Invariants">
   <Table ss:ExpandedColumnCount="6" ss:ExpandedRowCount="2" x:FullColumns="1"
-   x:FullRows="1" ss:StyleID="s72" ss:DefaultRowHeight="15">
-   <Column ss:Index="4" ss:StyleID="s72" ss:AutoFitWidth="0" ss:Width="143.25"/>
-   <Column ss:Index="6" ss:StyleID="s72" ss:AutoFitWidth="0" ss:Width="179.25"/>
+   x:FullRows="1" ss:StyleID="s73" ss:DefaultRowHeight="15">
+   <Column ss:Index="4" ss:StyleID="s73" ss:AutoFitWidth="0" ss:Width="143.25"/>
+   <Column ss:Index="6" ss:StyleID="s73" ss:AutoFitWidth="0" ss:Width="179.25"/>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
     <Cell><Data ss:Type="String">Id</Data></Cell>
     <Cell><Data ss:Type="String">Name</Data></Cell>
@@ -820,7 +836,7 @@
     <Cell><Data ss:Type="String">XPath</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="3" ss:StyleID="s73"/>
+    <Cell ss:Index="3" ss:StyleID="s72"/>
    </Row>
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
@@ -848,17 +864,18 @@
   </WorksheetOptions>
  </Worksheet>
  <Worksheet ss:Name="Events">
-  <Table ss:ExpandedColumnCount="8" ss:ExpandedRowCount="2" x:FullColumns="1"
+  <Table ss:ExpandedColumnCount="9" ss:ExpandedRowCount="2" x:FullColumns="1"
    x:FullRows="1" ss:StyleID="s74" ss:DefaultRowHeight="15">
-   <Column ss:StyleID="s74" ss:AutoFitWidth="0" ss:Width="73.5"/>
-   <Column ss:StyleID="s74" ss:AutoFitWidth="0" ss:Width="130.5"/>
+   <Column ss:StyleID="s74" ss:AutoFitWidth="0" ss:Width="73.5" ss:Span="1"/>
+   <Column ss:Index="3" ss:StyleID="s74" ss:AutoFitWidth="0" ss:Width="130.5"/>
    <Column ss:StyleID="s74" ss:AutoFitWidth="0" ss:Width="118.5"/>
    <Column ss:StyleID="s74" ss:AutoFitWidth="0" ss:Width="156.75" ss:Span="1"/>
-   <Column ss:Index="6" ss:StyleID="s74" ss:AutoFitWidth="0" ss:Width="125.25"
+   <Column ss:Index="7" ss:StyleID="s74" ss:AutoFitWidth="0" ss:Width="125.25"
     ss:Span="1"/>
-   <Column ss:Index="8" ss:StyleID="s74" ss:AutoFitWidth="0" ss:Width="102"/>
+   <Column ss:Index="9" ss:StyleID="s74" ss:AutoFitWidth="0" ss:Width="102"/>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">Event Code</Data></Cell>
+    <Cell><Data ss:Type="String">Category</Data></Cell>
     <Cell><Data ss:Type="String">Description</Data></Cell>
     <Cell><Data ss:Type="String">Notes</Data></Cell>
     <Cell><Data ss:Type="String">Request Resources</Data></Cell>
@@ -869,8 +886,9 @@
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="120">
     <Cell><Data ss:Type="String">diagnosticreport-provide</Data></Cell>
+    <Cell><Data ss:Type="String">Notification</Data></Cell>
     <Cell><Data ss:Type="String">Provide a diagnostic report, or update a previously provided diagnostic report</Data></Cell>
-    <Cell ss:Index="4"><Data ss:Type="String">DiagnosticReport</Data></Cell>
+    <Cell ss:Index="5"><Data ss:Type="String">DiagnosticReport</Data></Cell>
     <Cell><Data ss:Type="String">.patient&#10;.perfomer&#10;.results.specimen&#10;.results.result&#10;.image</Data></Cell>
    </Row>
   </Table>
@@ -887,11 +905,12 @@
     <HorizontalResolution>600</HorizontalResolution>
     <VerticalResolution>0</VerticalResolution>
    </Print>
+   <Selected/>
    <Panes>
     <Pane>
      <Number>3</Number>
      <ActiveRow>2</ActiveRow>
-     <ActiveCol>4</ActiveCol>
+     <ActiveCol>1</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -918,79 +937,79 @@
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">issued</Data></Cell>
-    <Cell><Data ss:Type="String">when the report was issued</Data></Cell>
+    <Cell><Data ss:Type="String">When the report was issued</Data></Cell>
     <Cell><Data ss:Type="String">date</Data></Cell>
     <Cell><Data ss:Type="String">DiagnosticReport.issued</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">subject</Data></Cell>
-    <Cell><Data ss:Type="String">the subject of the report</Data></Cell>
+    <Cell><Data ss:Type="String">The subject of the report</Data></Cell>
     <Cell><Data ss:Type="String">reference</Data></Cell>
     <Cell><Data ss:Type="String">DiagnosticReport.subject</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">performer</Data></Cell>
-    <Cell><Data ss:Type="String">who was the source of the report (organization)</Data></Cell>
+    <Cell><Data ss:Type="String">Who was the source of the report (organization)</Data></Cell>
     <Cell><Data ss:Type="String">reference</Data></Cell>
     <Cell><Data ss:Type="String">DiagnosticReport.performer</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">identifier</Data></Cell>
-    <Cell><Data ss:Type="String">an identifier for the report</Data></Cell>
+    <Cell><Data ss:Type="String">An identifier for the report</Data></Cell>
     <Cell><Data ss:Type="String">token</Data></Cell>
     <Cell><Data ss:Type="String">DiagnosticReport.reportId</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">test</Data></Cell>
-    <Cell><Data ss:Type="String">a test requested that the report is in response to</Data></Cell>
+    <Cell><Data ss:Type="String">A test requested that the report is in response to</Data></Cell>
     <Cell><Data ss:Type="String">token</Data></Cell>
     <Cell><Data ss:Type="String">DiagnosticReport.requestDetail.requestTest</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">requester</Data></Cell>
-    <Cell><Data ss:Type="String">who made a request that lead to the report</Data></Cell>
+    <Cell><Data ss:Type="String">Who made a request that lead to the report</Data></Cell>
     <Cell><Data ss:Type="String">reference</Data></Cell>
     <Cell><Data ss:Type="String">DiagnosticReport.requestDetail.requester</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">service</Data></Cell>
-    <Cell><Data ss:Type="String">which diagnostic discipline/department created the report</Data></Cell>
+    <Cell><Data ss:Type="String">Which diagnostic discipline/department created the report</Data></Cell>
     <Cell><Data ss:Type="String">token</Data></Cell>
     <Cell><Data ss:Type="String">DiagnosticReport.serviceCategory</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">date</Data></Cell>
-    <Cell><Data ss:Type="String">the clinically relevant time of the report</Data></Cell>
+    <Cell><Data ss:Type="String">The clinically relevant time of the report</Data></Cell>
     <Cell><Data ss:Type="String">date</Data></Cell>
     <Cell><Data ss:Type="String">DiagnosticReport.diagnostic[x]</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">specimen</Data></Cell>
-    <Cell><Data ss:Type="String">the specimen details</Data></Cell>
+    <Cell><Data ss:Type="String">The specimen details</Data></Cell>
     <Cell><Data ss:Type="String">reference</Data></Cell>
     <Cell><Data ss:Type="String">DiagnosticReport.results.specimen | DiagnosticReport.results.group.specimen</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">name</Data></Cell>
-    <Cell><Data ss:Type="String">the name/code of the report</Data></Cell>
+    <Cell><Data ss:Type="String">The name/code of the report</Data></Cell>
     <Cell><Data ss:Type="String">token</Data></Cell>
     <Cell><Data ss:Type="String">DiagnosticReport.results.name</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">group</Data></Cell>
-    <Cell><Data ss:Type="String">name /code of a group in the report</Data></Cell>
+    <Cell><Data ss:Type="String">Name /code of a group in the report</Data></Cell>
     <Cell><Data ss:Type="String">token</Data></Cell>
     <Cell><Data ss:Type="String">!DiagnosticReport.results.group.name</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">result</Data></Cell>
-    <Cell><Data ss:Type="String">link to an atomic result (observation resource)</Data></Cell>
+    <Cell><Data ss:Type="String">Link to an atomic result (observation resource)</Data></Cell>
     <Cell><Data ss:Type="String">reference</Data></Cell>
     <Cell><Data ss:Type="String">DiagnosticReport.results.result | DiagnosticReport.results.group.result</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">code</Data></Cell>
-    <Cell><Data ss:Type="String">a coded diagnosis on the report</Data></Cell>
+    <Cell><Data ss:Type="String">A coded diagnosis on the report</Data></Cell>
     <Cell><Data ss:Type="String">token</Data></Cell>
     <Cell><Data ss:Type="String">DiagnosticReport.codedDiagnosis</Data></Cell>
    </Row>
@@ -1005,8 +1024,8 @@
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>5</ActiveRow>
-     <ActiveCol>3</ActiveCol>
+     <ActiveRow>9</ActiveRow>
+     <ActiveCol>1</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -1014,7 +1033,7 @@
   </WorksheetOptions>
  </Worksheet>
  <Worksheet ss:Name="Bindings">
-  <Table ss:ExpandedColumnCount="6" ss:ExpandedRowCount="7" x:FullColumns="1"
+  <Table ss:ExpandedColumnCount="6" ss:ExpandedRowCount="8" x:FullColumns="1"
    x:FullRows="1" ss:StyleID="s75" ss:DefaultRowHeight="15">
    <Column ss:StyleID="s75" ss:AutoFitWidth="0" ss:Width="149.25"/>
    <Column ss:StyleID="s75" ss:AutoFitWidth="0" ss:Width="336.75"/>
@@ -1045,7 +1064,7 @@
     <Cell><Data ss:Type="String">valueset-report-names</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">LOINC Codes for Diagnostic Reports</Data></Cell>
    </Row>
-   <Row>
+   <Row ss:AutoFitHeight="0">
     <Cell ss:StyleID="s64"><Data ss:Type="String">DiagnosticRequests</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Codes for tests/services that can be performed by diagnostic services</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">value set</Data></Cell>
@@ -1077,6 +1096,12 @@
     <Cell><Data ss:Type="String">valueset-body-site</Data></Cell>
     <Cell><Data ss:Type="String">SNOMED CT Body site concepts</Data></Cell>
    </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">DiagnosticReportStatus</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">The status of the diagnostic report as a whole</Data></Cell>
+    <Cell><Data ss:Type="String">code list</Data></Cell>
+    <Cell ss:Index="5"><Data ss:Type="String">#diagnostic-report-status</Data></Cell>
+   </Row>
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
    <PageSetup>
@@ -1094,7 +1119,8 @@
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>1</ActiveRow>
+     <ActiveRow>7</ActiveRow>
+     <ActiveCol>4</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -1210,6 +1236,80 @@
     <Pane>
      <Number>3</Number>
      <RangeSelection>R1:R2</RangeSelection>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+ <Worksheet ss:Name="diagnostic-report-status">
+  <Table ss:ExpandedColumnCount="4" ss:ExpandedRowCount="9" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultRowHeight="15">
+   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="65.25"/>
+   <Column ss:AutoFitWidth="0" ss:Width="594"/>
+   <Column ss:AutoFitWidth="0" ss:Width="563.25"/>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s77"><Data ss:Type="String">Id</Data></Cell>
+    <Cell ss:StyleID="s77"><Data ss:Type="String">Code</Data></Cell>
+    <Cell ss:StyleID="s77"><Data ss:Type="String">Definition</Data></Cell>
+    <Cell ss:StyleID="s77"><Data ss:Type="String">Comments</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="30">
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">registered</Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">The existence of the report is registered, but there is nothing yet available</Data></Cell>
+    <Cell ss:StyleID="s74"><Data ss:Type="String">This is used where an observation record is created before it is made as a place holder. Some times called &quot;To Follow&quot;</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">partial</Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">This is a partial (e.g. initial, interim or preliminary) report: data in the report may be incomplete or unverified</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">final</Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">The report is complete and verified by an authorised person</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">corrected</Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">The report has been modified subsequent to being Final, and is complete and verified by an authorised person</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="30">
+    <Cell><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">amended</Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">The report has been modified subsequent to being Final, and is complete and verified by an authorised person, and data has been changed</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="30">
+    <Cell><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">appended</Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">The report has been modified subsequent to being Final, and is complete and verified by an authorised person. New content has been added, but existing content hasn't changed</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">cancelled</Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">The report is unavailable because the measurement was not started or not completed (also sometimes called &quot;aborted&quot;)</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="30">
+    <Cell><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">entered in error</Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="String">The report has been withdrawn following previous Final release</Data></Cell>
+    <Cell ss:StyleID="s74"><Data ss:Type="String">Usually this is because the report was entered against the wrong patient</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Header x:Margin="0.3"/>
+    <Footer x:Margin="0.3"/>
+    <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
+   </PageSetup>
+   <Unsynced/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>1</ActiveRow>
+     <ActiveCol>1</ActiveCol>
+     <RangeSelection>R2C2:R9C2</RangeSelection>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>

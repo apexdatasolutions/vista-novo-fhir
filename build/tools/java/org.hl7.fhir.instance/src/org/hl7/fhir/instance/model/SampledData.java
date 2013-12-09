@@ -29,8 +29,9 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
 
+import java.util.*;
 
 import java.math.*;
 /**
@@ -73,49 +74,91 @@ public class SampledData extends Type {
      */
     protected String_ data;
 
+    public SampledData() {
+      super();
+    }
+
+    public SampledData(Quantity origin, Decimal period, Integer dimensions, String_ data) {
+      super();
+      this.origin = origin;
+      this.period = period;
+      this.dimensions = dimensions;
+      this.data = data;
+    }
+
+    /**
+     * @return {@link #origin} (The base quantity that a measured value of zero represents. In addition, this provides the units of the entire measurement series.)
+     */
     public Quantity getOrigin() { 
       return this.origin;
     }
 
-    public void setOrigin(Quantity value) { 
+    /**
+     * @param value {@link #origin} (The base quantity that a measured value of zero represents. In addition, this provides the units of the entire measurement series.)
+     */
+    public SampledData setOrigin(Quantity value) { 
       this.origin = value;
+      return this;
     }
 
+    /**
+     * @return {@link #period} (The length of time between sampling times, measured in milliseconds.)
+     */
     public Decimal getPeriod() { 
       return this.period;
     }
 
-    public void setPeriod(Decimal value) { 
+    /**
+     * @param value {@link #period} (The length of time between sampling times, measured in milliseconds.)
+     */
+    public SampledData setPeriod(Decimal value) { 
       this.period = value;
+      return this;
     }
 
+    /**
+     * @return The length of time between sampling times, measured in milliseconds.
+     */
     public BigDecimal getPeriodSimple() { 
       return this.period == null ? null : this.period.getValue();
     }
 
-    public void setPeriodSimple(BigDecimal value) { 
-      if (value == null)
-        this.period = null;
-      else {
+    /**
+     * @param value The length of time between sampling times, measured in milliseconds.
+     */
+    public SampledData setPeriodSimple(BigDecimal value) { 
         if (this.period == null)
           this.period = new Decimal();
         this.period.setValue(value);
-      }
+      return this;
     }
 
+    /**
+     * @return {@link #factor} (A correction factor that is applied to the sampled data points before they are added to the origin.)
+     */
     public Decimal getFactor() { 
       return this.factor;
     }
 
-    public void setFactor(Decimal value) { 
+    /**
+     * @param value {@link #factor} (A correction factor that is applied to the sampled data points before they are added to the origin.)
+     */
+    public SampledData setFactor(Decimal value) { 
       this.factor = value;
+      return this;
     }
 
+    /**
+     * @return A correction factor that is applied to the sampled data points before they are added to the origin.
+     */
     public BigDecimal getFactorSimple() { 
       return this.factor == null ? null : this.factor.getValue();
     }
 
-    public void setFactorSimple(BigDecimal value) { 
+    /**
+     * @param value A correction factor that is applied to the sampled data points before they are added to the origin.
+     */
+    public SampledData setFactorSimple(BigDecimal value) { 
       if (value == null)
         this.factor = null;
       else {
@@ -123,21 +166,35 @@ public class SampledData extends Type {
           this.factor = new Decimal();
         this.factor.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #lowerLimit} (The lower limit of detection of the measured points. This is needed if any of the data points have the value "L" (lower than detection limit).)
+     */
     public Decimal getLowerLimit() { 
       return this.lowerLimit;
     }
 
-    public void setLowerLimit(Decimal value) { 
+    /**
+     * @param value {@link #lowerLimit} (The lower limit of detection of the measured points. This is needed if any of the data points have the value "L" (lower than detection limit).)
+     */
+    public SampledData setLowerLimit(Decimal value) { 
       this.lowerLimit = value;
+      return this;
     }
 
+    /**
+     * @return The lower limit of detection of the measured points. This is needed if any of the data points have the value "L" (lower than detection limit).
+     */
     public BigDecimal getLowerLimitSimple() { 
       return this.lowerLimit == null ? null : this.lowerLimit.getValue();
     }
 
-    public void setLowerLimitSimple(BigDecimal value) { 
+    /**
+     * @param value The lower limit of detection of the measured points. This is needed if any of the data points have the value "L" (lower than detection limit).
+     */
+    public SampledData setLowerLimitSimple(BigDecimal value) { 
       if (value == null)
         this.lowerLimit = null;
       else {
@@ -145,21 +202,35 @@ public class SampledData extends Type {
           this.lowerLimit = new Decimal();
         this.lowerLimit.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #upperLimit} (The upper limit of detection of the measured points. This is needed if any of the data points have the value "U" (higher than detection limit).)
+     */
     public Decimal getUpperLimit() { 
       return this.upperLimit;
     }
 
-    public void setUpperLimit(Decimal value) { 
+    /**
+     * @param value {@link #upperLimit} (The upper limit of detection of the measured points. This is needed if any of the data points have the value "U" (higher than detection limit).)
+     */
+    public SampledData setUpperLimit(Decimal value) { 
       this.upperLimit = value;
+      return this;
     }
 
+    /**
+     * @return The upper limit of detection of the measured points. This is needed if any of the data points have the value "U" (higher than detection limit).
+     */
     public BigDecimal getUpperLimitSimple() { 
       return this.upperLimit == null ? null : this.upperLimit.getValue();
     }
 
-    public void setUpperLimitSimple(BigDecimal value) { 
+    /**
+     * @param value The upper limit of detection of the measured points. This is needed if any of the data points have the value "U" (higher than detection limit).
+     */
+    public SampledData setUpperLimitSimple(BigDecimal value) { 
       if (value == null)
         this.upperLimit = null;
       else {
@@ -167,51 +238,83 @@ public class SampledData extends Type {
           this.upperLimit = new Decimal();
         this.upperLimit.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #dimensions} (The Number of sample points at each time point. If this value is greater than one, then the dimensions will be interlaced - all the sample points for a point in time will be recorded at once.)
+     */
     public Integer getDimensions() { 
       return this.dimensions;
     }
 
-    public void setDimensions(Integer value) { 
+    /**
+     * @param value {@link #dimensions} (The Number of sample points at each time point. If this value is greater than one, then the dimensions will be interlaced - all the sample points for a point in time will be recorded at once.)
+     */
+    public SampledData setDimensions(Integer value) { 
       this.dimensions = value;
+      return this;
     }
 
+    /**
+     * @return The Number of sample points at each time point. If this value is greater than one, then the dimensions will be interlaced - all the sample points for a point in time will be recorded at once.
+     */
     public int getDimensionsSimple() { 
       return this.dimensions == null ? null : this.dimensions.getValue();
     }
 
-    public void setDimensionsSimple(int value) { 
-      if (value == -1)
-        this.dimensions = null;
-      else {
+    /**
+     * @param value The Number of sample points at each time point. If this value is greater than one, then the dimensions will be interlaced - all the sample points for a point in time will be recorded at once.
+     */
+    public SampledData setDimensionsSimple(int value) { 
         if (this.dimensions == null)
           this.dimensions = new Integer();
         this.dimensions.setValue(value);
-      }
+      return this;
     }
 
+    /**
+     * @return {@link #data} (A series of data points separated by a single space (character u20). The special values "E" (error), "L" (below detection limit) and "U" (above detection limit) can also be used.)
+     */
     public String_ getData() { 
       return this.data;
     }
 
-    public void setData(String_ value) { 
+    /**
+     * @param value {@link #data} (A series of data points separated by a single space (character u20). The special values "E" (error), "L" (below detection limit) and "U" (above detection limit) can also be used.)
+     */
+    public SampledData setData(String_ value) { 
       this.data = value;
+      return this;
     }
 
+    /**
+     * @return A series of data points separated by a single space (character u20). The special values "E" (error), "L" (below detection limit) and "U" (above detection limit) can also be used.
+     */
     public String getDataSimple() { 
       return this.data == null ? null : this.data.getValue();
     }
 
-    public void setDataSimple(String value) { 
-      if (value == null)
-        this.data = null;
-      else {
+    /**
+     * @param value A series of data points separated by a single space (character u20). The special values "E" (error), "L" (below detection limit) and "U" (above detection limit) can also be used.
+     */
+    public SampledData setDataSimple(String value) { 
         if (this.data == null)
           this.data = new String_();
         this.data.setValue(value);
-      }
+      return this;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("origin", "Quantity", "The base quantity that a measured value of zero represents. In addition, this provides the units of the entire measurement series.", 0, java.lang.Integer.MAX_VALUE, origin));
+        childrenList.add(new Property("period", "decimal", "The length of time between sampling times, measured in milliseconds.", 0, java.lang.Integer.MAX_VALUE, period));
+        childrenList.add(new Property("factor", "decimal", "A correction factor that is applied to the sampled data points before they are added to the origin.", 0, java.lang.Integer.MAX_VALUE, factor));
+        childrenList.add(new Property("lowerLimit", "decimal", "The lower limit of detection of the measured points. This is needed if any of the data points have the value 'L' (lower than detection limit).", 0, java.lang.Integer.MAX_VALUE, lowerLimit));
+        childrenList.add(new Property("upperLimit", "decimal", "The upper limit of detection of the measured points. This is needed if any of the data points have the value 'U' (higher than detection limit).", 0, java.lang.Integer.MAX_VALUE, upperLimit));
+        childrenList.add(new Property("dimensions", "integer", "The Number of sample points at each time point. If this value is greater than one, then the dimensions will be interlaced - all the sample points for a point in time will be recorded at once.", 0, java.lang.Integer.MAX_VALUE, dimensions));
+        childrenList.add(new Property("data", "string", "A series of data points separated by a single space (character u20). The special values 'E' (error), 'L' (below detection limit) and 'U' (above detection limit) can also be used.", 0, java.lang.Integer.MAX_VALUE, data));
+      }
 
       public SampledData copy() {
         SampledData dst = new SampledData();

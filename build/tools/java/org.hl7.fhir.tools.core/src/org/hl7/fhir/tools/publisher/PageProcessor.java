@@ -69,6 +69,7 @@ import org.hl7.fhir.definitions.model.ProfileDefn;
 import org.hl7.fhir.definitions.model.RegisteredProfile;
 import org.hl7.fhir.definitions.model.ResourceDefn;
 import org.hl7.fhir.definitions.model.SearchParameter;
+import org.hl7.fhir.definitions.model.SearchParameter.SearchType;
 import org.hl7.fhir.definitions.model.TypeRef;
 import org.hl7.fhir.definitions.parsers.BindingNameRegistry;
 import org.hl7.fhir.definitions.parsers.TypeParser;
@@ -129,6 +130,8 @@ public class PageProcessor implements Logger  {
   private String publicationNotice = "";
   private BindingNameRegistry registry;
   private String id; // technical identifier associated with the page being built
+  private EPubManager epub;
+;
   
   public final static String PUB_NOTICE =
       "<p style=\"background-color: gold; border:1px solid maroon; padding: 5px;\">\r\n"+
@@ -140,7 +143,7 @@ public class PageProcessor implements Logger  {
   
   private String dictForDt(String dt) throws Exception {
 	  File tmp = File.createTempFile("tmp", ".tmp");
-	  DictHTMLGenerator gen = new DictHTMLGenerator(new FileOutputStream(tmp), definitions);
+	  DictHTMLGenerator gen = new DictHTMLGenerator(new FileOutputStream(tmp), this);
 	  TypeParser tp = new TypeParser();
 	  TypeRef t = tp.parse(dt).get(0);
 	  
@@ -185,7 +188,9 @@ public class PageProcessor implements Logger  {
   private String xmlForDt(String dt, String pn) throws Exception {
 	  File tmp = File.createTempFile("tmp", ".tmp");
 	  tmp.deleteOnExit();
-	  XmlSpecGenerator gen = new XmlSpecGenerator(new FileOutputStream(tmp), pn == null ? null : pn.substring(0, pn.indexOf("."))+"-definitions.html", null, definitions);
+	  if (dt.equals("ResourceReference") || dt.equals("Narrative") || dt.equals("Extension"))
+	    pn = "base.html";
+	  XmlSpecGenerator gen = new XmlSpecGenerator(new FileOutputStream(tmp), pn == null ? null : pn.substring(0, pn.indexOf("."))+"-definitions.html", null, this);
 	  TypeParser tp = new TypeParser();
 	  TypeRef t = tp.parse(dt).get(0);
 	  ElementDefn e = definitions.getElementDefn(t.getName());
@@ -340,7 +345,7 @@ public class PageProcessor implements Logger  {
       else if (com[0].equals("svg"))
         src = s1+svgs.get(com[1])+s3;
       else if (com[0].equals("diagram"))
-        src = s1+new SvgGenerator(definitions).generate(folders.srcDir+ com[1])+s3;
+        src = s1+new SvgGenerator(this).generate(folders.srcDir+ com[1])+s3;
       else if (com[0].equals("file"))
         src = s1+TextFile.fileToString(folders.srcDir + com[1]+".html")+s3;
       else if (com[0].equals("v2xref"))
@@ -353,6 +358,10 @@ public class PageProcessor implements Logger  {
         src = s1+s3;
       } else if (com[0].equals("dtmappings")) {
         src = s1 + genDataTypeMappings(com[1]) + s3;
+      } else if (com[0].equals("dtusage")) {
+        src = s1 + genDataTypeUsage(com[1]) + s3;
+      }  else if (com[0].equals("v3xref")) {
+        src = s1 + xreferencesForV3(name, com[1].equals("true")) + s3;      
       } else if (com[0].equals("setlevel")) {
         level = Integer.parseInt(com[1]);
         src = s1+s3;
@@ -506,8 +515,6 @@ public class PageProcessor implements Logger  {
         src = s1 + publicationNotice + s3;      
       else if (com[0].equals("vsxref"))
         src = s1 + xreferencesForFhir(name) + s3;      
-      else if (com[0].equals("v3xref"))
-        src = s1 + xreferencesForV3(name) + s3;      
       else if (com[0].equals("vsexpansion"))
         src = s1 + expandValueSet(Utilities.fileTitle(file)) + s3;
       else if (com[0].equals("v3expansion"))
@@ -550,15 +557,16 @@ public class PageProcessor implements Logger  {
     return b.toString()+". ";
   }
 
-  private String xreferencesForV3(String name) {
+  private String xreferencesForV3(String name, boolean vs) {
     String n = name.replace("-", "").replace(" ", "").replace("_", "").toLowerCase();
     StringBuilder b = new StringBuilder();
     AtomEntry<ValueSet> ae = findRelatedValueset(n, valueSets, "http://hl7.org/fhir/v2/vs/");
+    String path = vs ? "../../../" : "../../";
     if (ae != null)
-      b.append(". Related v2 content: <a href=\"../../"+ae.getLinks().get("path")+"\">"+ae.getResource().getNameSimple()+"</a>");
+      b.append(". Related v2 content: <a href=\""+path+ae.getLinks().get("path")+"\">"+ae.getResource().getNameSimple()+"</a>");
     ae = findRelatedValueset(n, valueSets, "http://hl7.org/fhir/vs/");
     if (ae != null)
-      b.append(". Related FHIR content: <a href=\"../../"+ae.getLinks().get("path")+"\">"+ae.getResource().getNameSimple()+"</a>");
+      b.append(". Related FHIR content: <a href=\""+path+ae.getLinks().get("path")+"\">"+ae.getResource().getNameSimple()+"</a>");
     return b.toString()+". ";
   }
 
@@ -650,7 +658,7 @@ public class PageProcessor implements Logger  {
     new XmlComposer().compose(new FileOutputStream(folders.dstDir+"v3"+File.separator+name+File.separator+"v3-"+name+".xml"), vs, true);
     cloneToXhtml(folders.dstDir+"v3"+File.separator+name+File.separator+"v3-"+name+".xml", folders.dstDir+"v3"+File.separator+name+File.separator+"v3-"+name+".xml.html", vs.getNameSimple(), vs.getDescriptionSimple(), 2, false);
     new JsonComposer().compose(new FileOutputStream(folders.dstDir+"v3"+File.separator+name+File.separator+"v3-"+name+".json"), vs, false);
-    jsonToXhtml(folders.dstDir+"v3"+File.separator+name+File.separator+"v3-"+name+".json", folders.dstDir+"v3"+File.separator+name+File.separator+"v3-"+name+".json.html", vs.getNameSimple(), vs.getDescriptionSimple(), 2, r2Json(vs));
+    jsonToXhtml(Utilities.path(folders.dstDir, "v3", name, "v3-"+name+".json"), Utilities.path("v3", name, "v3-"+name+".json.html"), "v3-"+name+".json", vs.getNameSimple(), vs.getDescriptionSimple(), 2, r2Json(vs));
 
     return new XhtmlComposer().compose(vs.getText().getDiv());
   }
@@ -658,11 +666,11 @@ public class PageProcessor implements Logger  {
   private String genV3ValueSet(String name) throws Exception {
     ValueSet vs = (ValueSet) valueSets.get("http://hl7.org/fhir/v3/vs/"+name).getResource();
     XmlComposer xml = new XmlComposer();
-    xml.compose(new FileOutputStream(folders.dstDir+"v3"+File.separator+name+File.separator+"v3-"+name+".xml"), vs, true);
-    cloneToXhtml(folders.dstDir+"v3"+File.separator+name+File.separator+"v3-"+name+".xml", folders.dstDir+"v3"+File.separator+name+File.separator+"v3-"+name+".xml.html", vs.getNameSimple(), vs.getDescriptionSimple(), 2, false);
+    xml.compose(new FileOutputStream(folders.dstDir+"v3"+File.separator+"vs"+File.separator+name+File.separator+"v3-"+name+".xml"), vs, true);
+    cloneToXhtml(folders.dstDir+"v3"+File.separator+"vs"+File.separator+name+File.separator+"v3-"+name+".xml", folders.dstDir+"v3"+File.separator+"vs"+File.separator+name+File.separator+"v3-"+name+".xml.html", vs.getNameSimple(), vs.getDescriptionSimple(), 2, false);
     JsonComposer json = new JsonComposer();
-    json.compose(new FileOutputStream(folders.dstDir+"v3"+File.separator+name+File.separator+"v3-"+name+".json"), vs, false);
-    jsonToXhtml(folders.dstDir+"v3"+File.separator+name+File.separator+"v3-"+name+".json", folders.dstDir+"v3"+File.separator+name+File.separator+"v3-"+name+".json.html", vs.getNameSimple(), vs.getDescriptionSimple(), 2, r2Json(vs));
+    json.compose(new FileOutputStream(folders.dstDir+"v3"+File.separator+"vs"+File.separator+name+File.separator+"v3-"+name+".json"), vs, false);
+    jsonToXhtml(Utilities.path(folders.dstDir, "vs", name, "v3-"+name+".json"), Utilities.path("v3", "vs", name, "v3-"+name+".json.html"), "v3-"+name+".json", vs.getNameSimple(), vs.getDescriptionSimple(), 2, r2Json(vs));
 
     return new XhtmlComposer().compose(vs.getText().getDiv()).replace("href=\"v3/", "href=\"../");
   }
@@ -675,7 +683,7 @@ public class PageProcessor implements Logger  {
     cloneToXhtml(folders.dstDir+"v2"+File.separator+n[0]+File.separator+n[1]+File.separator+"v2-"+n[0]+"-"+n[1]+".xml", folders.dstDir+"v2"+File.separator+n[0]+File.separator+n[1]+File.separator+"v2-"+n[0]+"-"+n[1]+".xml.html", vs.getNameSimple(), vs.getDescriptionSimple(), 3, false);
     JsonComposer json = new JsonComposer();
     json.compose(new FileOutputStream(folders.dstDir+"v2"+File.separator+n[0]+File.separator+n[1]+File.separator+"v2-"+n[0]+"-"+n[1]+".json"), vs, false);
-    jsonToXhtml(folders.dstDir+"v2"+File.separator+n[0]+File.separator+n[1]+File.separator+"v2-"+n[0]+"-"+n[1]+".json", folders.dstDir+"v2"+File.separator+n[0]+File.separator+n[1]+File.separator+"v2-"+n[0]+"-"+n[1]+".json.html", vs.getNameSimple(), vs.getDescriptionSimple(), 3, r2Json(vs));
+    jsonToXhtml(Utilities.path(folders.dstDir, "v2", n[0], n[1], "v2-"+n[0]+"-"+n[1]+".json"), Utilities.path("v2", n[0], n[1], "v2-"+n[0]+"-"+n[1]+".json.html"), "v2-"+n[0]+"-"+n[1]+".json", vs.getNameSimple(), vs.getDescriptionSimple(), 3, r2Json(vs));
     addToValuesets(v2Valuesets, vs, vs.getIdentifierSimple());
 
     return new XhtmlComposer().compose(vs.getText().getDiv());
@@ -688,7 +696,7 @@ public class PageProcessor implements Logger  {
     cloneToXhtml(folders.dstDir+"v2"+File.separator+name+File.separator+"v2-"+name+".xml", folders.dstDir+"v2"+File.separator+name+File.separator+"v2-"+name+".xml.html", vs.getNameSimple(), vs.getDescriptionSimple(), 2, false);
     JsonComposer json = new JsonComposer();
     json.compose(new FileOutputStream(folders.dstDir+"v2"+File.separator+name+File.separator+"v2-"+name+".json"), vs, false);
-    jsonToXhtml(folders.dstDir+"v2"+File.separator+name+File.separator+"v2-"+name+".json", folders.dstDir+"v2"+File.separator+name+File.separator+"v2-"+name+".json.html", vs.getNameSimple(), vs.getDescriptionSimple(), 2, r2Json(vs));
+    jsonToXhtml(Utilities.path(folders.dstDir, "v2", name, "v2-"+name+".json"), Utilities.path("v2", name, "v2-"+name+".json.html"), "v2-"+name+".json", vs.getNameSimple(), vs.getDescriptionSimple(), 2, r2Json(vs));
     addToValuesets(v2Valuesets, vs, vs.getIdentifierSimple());
     return new XhtmlComposer().compose(vs.getText().getDiv());
   }
@@ -707,11 +715,12 @@ public class PageProcessor implements Logger  {
     Document xdoc = builder.parse(new CSFileInputStream(new CSFile(src)));
     XhtmlGenerator xhtml = new XhtmlGenerator(null);
     xhtml.generate(xdoc, new CSFile(dst), name, description, level, adorn);
+    epub.registerFile(dst, description, EPubManager.XHTML_TYPE);
   }
 
-  public void jsonToXhtml(String src, String dst, String name, String description, int level, String json) throws Exception {
+  public void jsonToXhtml(String src, String dst, String link, String name, String description, int level, String json) throws Exception {
 
-    FileOutputStream outs = new FileOutputStream(dst.contains(File.separator) ? dst : folders.dstDir+ dst);
+    FileOutputStream outs = new FileOutputStream(folders.dstDir+ dst);
     OutputStreamWriter out = new OutputStreamWriter(outs);
     
     out.write("<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\r\n");
@@ -726,7 +735,7 @@ public class PageProcessor implements Logger  {
     out.write("<p>&nbsp;</p>\r\n"); 
     out.write("<div class=\"example\">\r\n");
     out.write("<p>"+Utilities.escapeXml(description)+"</p>\r\n"); 
-    out.write("<p><a href=\""+dst.substring(0, dst.length()-4)+"\">Raw JSON</a></p>\r\n"); 
+    out.write("<p><a href=\""+link+"\">Raw JSON</a></p>\r\n"); 
     out.write("<pre class=\"json\">\r\n");
     out.write(Utilities.escapeXml(json));    
     out.write("</pre>\r\n");
@@ -735,6 +744,7 @@ public class PageProcessor implements Logger  {
     out.write("</html>\r\n");
     out.flush();
     outs.close();
+    epub.registerFile(dst, description, EPubManager.XHTML_TYPE);
   }
 
   
@@ -767,7 +777,8 @@ public class PageProcessor implements Logger  {
             c = XMLUtil.getNextSibling(c);
           }
           for (String v : versions)
-            s.append(" <li><a href=\"v2/"+id+"/"+v+"/index.html\">"+v+"</a></li>");            
+            if (!Utilities.noString(v))
+              s.append(" <li><a href=\"v2/"+id+"/"+v+"/index.html\">"+v+"</a></li>");            
           s.append("</ul></td></tr>\r\n");
         } else
           s.append(" <tr><td><a href=\"v2/"+id+"/index.html\">http://hl7.org/fhir/v2/"+id+"</a></td><td>"+name+"</td><td></td></tr>\r\n");
@@ -812,7 +823,7 @@ public class PageProcessor implements Logger  {
   private String genV3VSIndex() {
     StringBuilder s = new StringBuilder();
     s.append("<table class=\"grid\">\r\n");
-    s.append(" <tr><td><b>Uri</b></td><td><b>Name</b></td><td><b>OID</b></td></tr>\r\n");
+    s.append(" <tr><td><b>Name (URI = http://hl7.org/fhir/v3/vs/...) </b></td><td><b>Name</b></td><td><b>OID</b></td></tr>\r\n");
     
     List<String> names = new ArrayList<String>();
     Map<String, AtomEntry> map = new HashMap<String, AtomEntry>();
@@ -833,7 +844,7 @@ public class PageProcessor implements Logger  {
       String id = tail(vs.getIdentifierSimple());
       String oid = e.getLinks().get("oid");
       String[] desc = vs.getDescriptionSimple().split("\\(OID \\= ");
-      s.append(" <tr><td><a href=\"v3/"+id+"/index.html\">"+vs.getIdentifierSimple()+"</a></td><td>"+desc[0]+"</td><td>"+oid+"</td></tr>\r\n");
+      s.append(" <tr><td><a href=\"v3/vs/"+id+"/index.html\">"+id+"</a></td><td>"+desc[0]+"</td><td>"+oid+"</td></tr>\r\n");
     }
     
     s.append("</table>\r\n");
@@ -1206,7 +1217,7 @@ public class PageProcessor implements Logger  {
     StringBuilder b2 = new StringBuilder();
     for (DefinedCode c : definitions.getConstraints().values()) {
       if (c.getComment().equals(name)) {
-        b.append("<a name=\""+c.getCode()+"\"> </a>\r\n");
+        b.append("<a name=\""+c.getCode()+"\"> </a><a name=\""+c.getCode().toLowerCase()+"\"> </a>\r\n");
         b2.append(" <tr><td>"+c.getCode()+"</td><td>"+Utilities.escapeXml(c.getDefinition())+"</td></tr>\r\n");
       }
     }
@@ -1556,7 +1567,7 @@ public class PageProcessor implements Logger  {
         String uri = c.getSystemSimple();
         String n = "Other";
         if (uri != null) {
-          if ("http://snomed.info/id".equals(uri)) n = "SNOMED CT"; 
+          if ("http://snomed.info/sct".equals(uri)) n = "SNOMED CT"; 
           if ("http://loinc.org".equals(uri)) n = "LOINC";
           if ("http://nema.org/dicom/dcid".equals(uri)) n = "DICOM";
           if ("http://hl7.org/fhir/resource-types".equals(uri)) n = "FHIR";
@@ -1722,12 +1733,12 @@ public class PageProcessor implements Logger  {
     Collections.sort(codes);
     StringBuilder s = new StringBuilder();
     s.append("<table class=\"grid\">\r\n");
-    s.append(" <tr><th>Code</th><th>Description</th><th>Request</th><th>Response</th><th>Notes</th></tr>\r\n");
+    s.append(" <tr><th>Code</th><th>Category</th><th>Description</th><th>Request</th><th>Response</th><th>Notes</th></tr>\r\n");
     for (String c : codes) {
       EventDefn e = definitions.getEvents().get(c);
       if (e.getUsages().size() == 1) {
         EventUsage u = e.getUsages().get(0);
-        s.append(" <tr><td>"+e.getCode()+"</td><td>"+e.getDefinition()+"</td>");
+        s.append(" <tr><td>"+e.getCode()+"</td><td>"+(e.getCategory() == null ? "??" : e.getCategory().toString())+"</td><td>"+e.getDefinition()+"</td>");
         s.append("<td>"+describeMsg(u.getRequestResources(), u.getRequestAggregations())+"</td><td>"+
             describeMsg(u.getResponseResources(), u.getResponseAggregations())+"</td><td>"+
             combineNotes(e.getFollowUps(), u.getNotes())+"</td></tr>\r\n");
@@ -1867,6 +1878,8 @@ public class PageProcessor implements Logger  {
       }
       else if (com[0].equals("dtmappings"))
         src = s1 + genDataTypeMappings(com[1]) + s3;
+      else if (com[0].equals("dtusage")) 
+        src = s1 + genDataTypeUsage(com[1]) + s3;
       else if (com.length != 1)
         throw new Exception("Instruction <%"+s2+"%> not understood parsing page "+file);
       else if (com[0].equals("wiki"))
@@ -2023,7 +2036,7 @@ public class PageProcessor implements Logger  {
   
   private String expandV3ValueSet(String name) throws Exception {
     ValueSet vs = (ValueSet) valueSets.get("http://hl7.org/fhir/v3/vs/"+name).getResource();
-    return expandVS(vs, "../../");
+    return expandVS(vs, "../../../");
   }
   
   private String expandVS(ValueSet vs, String prefix) {
@@ -2108,6 +2121,8 @@ public class PageProcessor implements Logger  {
         src = s1+s3;
       else if (com[0].equals("dtmappings"))
         src = s1 + genDataTypeMappings(com[1]) + s3;
+      else if (com[0].equals("dtusage")) 
+        src = s1 + genDataTypeUsage(com[1]) + s3;
       else if (com[0].equals("codelist"))
         src = s1+codelist(name, com.length > 1 ? com[1] : null)+s3;
       else if (com[0].equals("maponthispage"))
@@ -2127,7 +2142,7 @@ public class PageProcessor implements Logger  {
       else if (com[0].equals("svg"))
         src = s1+svgs.get(com[1])+s3;
       else if (com[0].equals("diagram"))
-        src = s1+new SvgGenerator(definitions).generate(folders.srcDir+ com[1])+s3;
+        src = s1+new SvgGenerator(this).generate(folders.srcDir+ com[1])+s3;
       else if (com[0].equals("file"))
         src = s1+/*TextFile.fileToString(folders.srcDir + com[1]+".html")+*/s3;
       else if (com[0].equals("setwiki")) {
@@ -2281,6 +2296,43 @@ public class PageProcessor implements Logger  {
 
 
 
+  private String genDataTypeUsage(String tn) {
+    StringBuilder b = new StringBuilder();
+    for (ElementDefn e : definitions.getTypes().values()) {
+      if (usesType(e, tn)) {
+        b.append(", <a href=\"#"+e.getName()+"\">"+e.getName()+"</a>");
+      }
+    }
+    for (ResourceDefn e : definitions.getResources().values()) {
+      if (usesType(e.getRoot(), tn)) {
+        b.append(", <a href=\""+e.getName().toLowerCase()+".html\">"+e.getName()+"</a>");
+      }
+    }
+    String s = b.toString().substring(2);
+    int i = s.lastIndexOf(", ");
+    if ( i > 1)
+      s = s.substring(0, i)+" and"+s.substring(i+1);
+    return s;
+  }
+
+  private boolean usesType(ElementDefn e, String tn) {
+    if (usesType(e.getTypes(), tn)) 
+      return true;
+    for (ElementDefn c : e.getElements()) 
+      if (usesType(c, tn))
+        return true;
+    return false;
+  }
+
+  private boolean usesType(List<TypeRef> types, String tn) {
+    for (TypeRef t : types) {
+      if (t.getName().equals(tn)) 
+        return true; 
+      // no need to check parameters
+    }
+    return false;
+  }
+
   String processResourceIncludes(String name, ResourceDefn resource, String xml, String tx, String dict, String src, String mappings, String mappingsList, String type) throws Exception {
     String wikilink = "http://wiki.hl7.org/index.php?title=FHIR_"+prepWikiName(name)+"_Page";
     String workingTitle = Utilities.escapeXml(resource.getName());
@@ -2379,7 +2431,7 @@ public class PageProcessor implements Logger  {
       else if (com[0].equals("mappingslist"))
           src = s1+mappingsList+s3;
       else if (com[0].equals("svg"))
-        src = s1+new SvgGenerator(definitions).generate(resource)+s3;        
+        src = s1+new SvgGenerator(this).generate(resource)+s3;        
       else if (com[0].equals("breadcrumb"))
         src = s1 + breadCrumbManager.make(name) + s3;
       else if (com[0].equals("navlist"))
@@ -2394,8 +2446,12 @@ public class PageProcessor implements Logger  {
         src = s1 + genlevel(0) + s3;  
       else if (com[0].equals("pub-type"))
         src = s1 + publicationType + s3;      
+      else if (com[0].equals("example-header"))
+        src = s1 + loadXmlNotesFromFile(Utilities.path(folders.srcDir, name.toLowerCase(), name+"-examples-header.xml"))+s3;
       else if (com[0].equals("pub-notice"))
         src = s1 + publicationNotice + s3;      
+      else if (com[0].equals("resref"))
+        src = s1 + getReferences(resource.getName()) + s3;      
       else if (com[0].equals("resurl")) {
         if (isAggregationEndpoint(resource.getName()))
           src = s1+s3;
@@ -2406,6 +2462,58 @@ public class PageProcessor implements Logger  {
 
     }
     return src;
+  }
+
+  private String getReferences(String name) throws Exception {
+    List<String> refs = new ArrayList<String>();
+    for (String rn : definitions.sortedResourceNames()) {
+      if (!rn.equals(name)) {
+        ResourceDefn r = definitions.getResourceByName(rn);
+        if (usesResource(r.getRoot(), name)) {
+          refs.add(rn);
+        }
+      }
+    }
+    if (refs.size() == 1)
+      return "<p>This resource is referenced by <a href=\""+refs.get(0).toLowerCase()+".html\">"+refs+"</a></p>\r\n";
+    else if (refs.size() > 1)
+      return "<p>This resource is referenced by "+asLinks(refs)+"</p>\r\n";
+    else
+      return "";
+  }
+
+  private String asLinks(List<String> refs) {
+    StringBuilder b = new StringBuilder();
+    for (int i = 0; i < refs.size(); i++) {
+      if (i == refs.size() - 1)
+        b.append(" and ");
+      else if (i > 0)
+        b.append(", ");
+      b.append("<a href=\""+refs.get(i).toLowerCase()+".html\">"+refs.get(i)+"</a>");
+    }
+      return b.toString();
+  }
+
+  private boolean usesResource(ElementDefn e, String name) {
+    if (usesResource(e.getTypes(), name))
+      return true;
+    for (ElementDefn c : e.getElements()) {
+      if (usesResource(c, name))
+        return true;
+    }
+    return false;
+  }
+
+  private boolean usesResource(List<TypeRef> types, String name) {
+    for (TypeRef t : types) {
+      if (t.getName().equals("Resource")) {
+        for (String p : t.getParams()) {
+          if (p.equals(name))
+            return true;
+        }
+      }
+    }
+    return false;
   }
 
   private String prepWikiName(String name) {
@@ -2431,7 +2539,7 @@ public class PageProcessor implements Logger  {
       Collections.sort(names);
       for (String name : names)  {
         SearchParameter p = resource.getSearchParams().get(name);
-        b.append("<tr><td>"+p.getCode()+" : "+p.getType()+"</td><td>"+Utilities.escapeXml(p.getDescription())+"</td><td>"+presentPaths(p.getPaths())+"</td></tr>\r\n");
+        b.append("<tr><td>"+p.getCode()+" : "+p.getType()+"</td><td>"+Utilities.escapeXml(p.getDescription())+"</td><td>"+presentPaths(p.getPaths())+(p.getType() == SearchType.reference ? p.getTargetTypesAsText() : "")+"</td></tr>\r\n");
       }
       b.append("</table>\r\n");
       return b.toString();
@@ -2472,20 +2580,44 @@ public class PageProcessor implements Logger  {
     return s.toString();
   }
 
-  private String produceExampleList(ResourceDefn resource) {
+  private String produceExampleList(ResourceDefn resource) throws Exception {
     StringBuilder s = new StringBuilder();
     boolean started = false;
     for (Example e: resource.getExamples()) {
-   //   if (!e.isInBook()) {
+      //   if (!e.isInBook()) {
+      if (!started)
+        s.append("<p>Example Index:</p>\r\n<table class=\"list\">\r\n");
+      started = true;
+      s.append("<tr><td>"+Utilities.escapeXml(e.getDescription())+"</td>");
+      s.append("<td><a href=\""+e.getFileTitle()+".xml.html\">XML</a></td>");
+      s.append("<td><a href=\""+e.getFileTitle()+".json.html\">JSON</a></td>");
+      s.append("</tr>");
+    }
+    if (resource.getName().equals("Profile")) {
+      started = true;
+      for (String pn : definitions.getProfiles().keySet()) {
+        ProfileDefn p = definitions.getProfiles().get(pn);
+
+
         if (!started)
           s.append("<p>Example Index:</p>\r\n<table class=\"list\">\r\n");
         started = true;
-        s.append("<tr><td>"+Utilities.escapeXml(e.getDescription())+"</td>");
-        s.append("<td><a href=\""+e.getFileTitle()+".xml.html\">XML</a></td>");
-        s.append("<td><a href=\""+e.getFileTitle()+".json.html\">JSON</a></td>");
+        s.append("<tr><td><a href=\""+pn+".html\">"+Utilities.escapeXml(p.metadata("description"))+"</a></td>");
+        s.append("<td><a href=\""+pn+".profile.xml.html\">XML</a></td>");
+        s.append("<td><a href=\""+pn+".profile.json.html\">JSON</a></td>");
         s.append("</tr>");
       }
-  //  }
+      for (String rn : definitions.sortedResourceNames()) {
+        if (!rn.equals("Profile")) {
+          for (RegisteredProfile p: definitions.getResourceByName(rn).getProfiles()) {
+            s.append("<tr><td><a href=\""+p.getFilename()+".html\">"+Utilities.escapeXml(p.getName())+"</a>:"+Utilities.escapeXml(p.getDescription())+"</td>"+
+             "<td><a href=\""+p.getFilename()+".profile.xml\">XML</a></td><td><a href=\""+p.getFilename()+".profile.json\">JSON</a></td></tr>");
+          }
+        }
+      }
+    }
+
+    //  }
     if (started)
       s.append("</table>\r\n");
     return s.toString();
@@ -2708,10 +2840,15 @@ public class PageProcessor implements Logger  {
 
   public void setFolders(FolderManager folders) {
     this.folders = folders;
+    epub = new EPubManager(this);
   }
 
   public void setIni(IniFile ini) {
     this.ini = ini;
+  }
+
+  public EPubManager getEpub() {
+    return epub;
   }
 
   public Calendar getGenDate() {

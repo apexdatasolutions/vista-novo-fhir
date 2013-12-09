@@ -29,12 +29,22 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
+
+import java.util.*;
 
 /**
  * null
  */
 public class AssessmentDefinition extends Resource {
+
+    public AssessmentDefinition() {
+      super();
+    }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+      }
 
       public AssessmentDefinition copy() {
         AssessmentDefinition dst = new AssessmentDefinition();

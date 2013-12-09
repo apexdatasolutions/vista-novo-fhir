@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
 
 import java.util.*;
 
@@ -68,7 +68,7 @@ public class Query extends Resource {
         }
     }
 
-  public class QueryOutcomeEnumFactory implements EnumFactory {
+  public static class QueryOutcomeEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
@@ -96,7 +96,7 @@ public class Query extends Resource {
       }
     }
 
-    public class QueryResponseComponent extends Element {
+    public static class QueryResponseComponent extends BackboneElement {
         /**
          * Links response to source query.
          */
@@ -142,55 +142,106 @@ public class Query extends Resource {
          */
         protected List<ResourceReference> reference = new ArrayList<ResourceReference>();
 
+      public QueryResponseComponent() {
+        super();
+      }
+
+      public QueryResponseComponent(Uri identifier, Enumeration<QueryOutcome> outcome) {
+        super();
+        this.identifier = identifier;
+        this.outcome = outcome;
+      }
+
+        /**
+         * @return {@link #identifier} (Links response to source query.)
+         */
         public Uri getIdentifier() { 
           return this.identifier;
         }
 
-        public void setIdentifier(Uri value) { 
+        /**
+         * @param value {@link #identifier} (Links response to source query.)
+         */
+        public QueryResponseComponent setIdentifier(Uri value) { 
           this.identifier = value;
+          return this;
         }
 
+        /**
+         * @return Links response to source query.
+         */
         public String getIdentifierSimple() { 
           return this.identifier == null ? null : this.identifier.getValue();
         }
 
-        public void setIdentifierSimple(String value) { 
+        /**
+         * @param value Links response to source query.
+         */
+        public QueryResponseComponent setIdentifierSimple(String value) { 
             if (this.identifier == null)
               this.identifier = new Uri();
             this.identifier.setValue(value);
+          return this;
         }
 
+        /**
+         * @return {@link #outcome} (Outcome of processing the query.)
+         */
         public Enumeration<QueryOutcome> getOutcome() { 
           return this.outcome;
         }
 
-        public void setOutcome(Enumeration<QueryOutcome> value) { 
+        /**
+         * @param value {@link #outcome} (Outcome of processing the query.)
+         */
+        public QueryResponseComponent setOutcome(Enumeration<QueryOutcome> value) { 
           this.outcome = value;
+          return this;
         }
 
+        /**
+         * @return Outcome of processing the query.
+         */
         public QueryOutcome getOutcomeSimple() { 
           return this.outcome == null ? null : this.outcome.getValue();
         }
 
-        public void setOutcomeSimple(QueryOutcome value) { 
+        /**
+         * @param value Outcome of processing the query.
+         */
+        public QueryResponseComponent setOutcomeSimple(QueryOutcome value) { 
             if (this.outcome == null)
               this.outcome = new Enumeration<QueryOutcome>();
             this.outcome.setValue(value);
+          return this;
         }
 
+        /**
+         * @return {@link #total} (Total number of matching records.)
+         */
         public Integer getTotal() { 
           return this.total;
         }
 
-        public void setTotal(Integer value) { 
+        /**
+         * @param value {@link #total} (Total number of matching records.)
+         */
+        public QueryResponseComponent setTotal(Integer value) { 
           this.total = value;
+          return this;
         }
 
+        /**
+         * @return Total number of matching records.
+         */
         public int getTotalSimple() { 
           return this.total == null ? null : this.total.getValue();
         }
 
-        public void setTotalSimple(int value) { 
+        /**
+         * @param value Total number of matching records.
+         */
+        public QueryResponseComponent setTotalSimple(int value) { 
           if (value == -1)
             this.total = null;
           else {
@@ -198,76 +249,126 @@ public class Query extends Resource {
               this.total = new Integer();
             this.total.setValue(value);
           }
+          return this;
         }
 
+        /**
+         * @return {@link #parameter} (Parameters server used.)
+         */
         public List<Extension> getParameter() { 
           return this.parameter;
         }
 
     // syntactic sugar
+        /**
+         * @return {@link #parameter} (Parameters server used.)
+         */
         public Extension addParameter() { 
           Extension t = new Extension();
           this.parameter.add(t);
           return t;
         }
 
+        /**
+         * @return {@link #first} (To get first page (if paged).)
+         */
         public List<Extension> getFirst() { 
           return this.first;
         }
 
     // syntactic sugar
+        /**
+         * @return {@link #first} (To get first page (if paged).)
+         */
         public Extension addFirst() { 
           Extension t = new Extension();
           this.first.add(t);
           return t;
         }
 
+        /**
+         * @return {@link #previous} (To get previous page (if paged).)
+         */
         public List<Extension> getPrevious() { 
           return this.previous;
         }
 
     // syntactic sugar
+        /**
+         * @return {@link #previous} (To get previous page (if paged).)
+         */
         public Extension addPrevious() { 
           Extension t = new Extension();
           this.previous.add(t);
           return t;
         }
 
+        /**
+         * @return {@link #next} (To get next page (if paged).)
+         */
         public List<Extension> getNext() { 
           return this.next;
         }
 
     // syntactic sugar
+        /**
+         * @return {@link #next} (To get next page (if paged).)
+         */
         public Extension addNext() { 
           Extension t = new Extension();
           this.next.add(t);
           return t;
         }
 
+        /**
+         * @return {@link #last} (To get last page (if paged).)
+         */
         public List<Extension> getLast() { 
           return this.last;
         }
 
     // syntactic sugar
+        /**
+         * @return {@link #last} (To get last page (if paged).)
+         */
         public Extension addLast() { 
           Extension t = new Extension();
           this.last.add(t);
           return t;
         }
 
+        /**
+         * @return {@link #reference} (Resources that are the results of the search.)
+         */
         public List<ResourceReference> getReference() { 
           return this.reference;
         }
 
     // syntactic sugar
+        /**
+         * @return {@link #reference} (Resources that are the results of the search.)
+         */
         public ResourceReference addReference() { 
           ResourceReference t = new ResourceReference();
           this.reference.add(t);
           return t;
         }
 
+        protected void listChildren(List<Property> childrenList) {
+          super.listChildren(childrenList);
+          childrenList.add(new Property("identifier", "uri", "Links response to source query.", 0, java.lang.Integer.MAX_VALUE, identifier));
+          childrenList.add(new Property("outcome", "code", "Outcome of processing the query.", 0, java.lang.Integer.MAX_VALUE, outcome));
+          childrenList.add(new Property("total", "integer", "Total number of matching records.", 0, java.lang.Integer.MAX_VALUE, total));
+          childrenList.add(new Property("parameter", "Extension", "Parameters server used.", 0, java.lang.Integer.MAX_VALUE, parameter));
+          childrenList.add(new Property("first", "Extension", "To get first page (if paged).", 0, java.lang.Integer.MAX_VALUE, first));
+          childrenList.add(new Property("previous", "Extension", "To get previous page (if paged).", 0, java.lang.Integer.MAX_VALUE, previous));
+          childrenList.add(new Property("next", "Extension", "To get next page (if paged).", 0, java.lang.Integer.MAX_VALUE, next));
+          childrenList.add(new Property("last", "Extension", "To get last page (if paged).", 0, java.lang.Integer.MAX_VALUE, last));
+          childrenList.add(new Property("reference", "Resource(Any)", "Resources that are the results of the search.", 0, java.lang.Integer.MAX_VALUE, reference));
+        }
+
       public QueryResponseComponent copy(Query e) {
-        QueryResponseComponent dst = e.new QueryResponseComponent();
+        QueryResponseComponent dst = new QueryResponseComponent();
         dst.identifier = identifier == null ? null : identifier.copy();
         dst.outcome = outcome == null ? null : outcome.copy();
         dst.total = total == null ? null : total.copy();
@@ -309,42 +410,85 @@ public class Query extends Resource {
      */
     protected QueryResponseComponent response;
 
+    public Query() {
+      super();
+    }
+
+    public Query(Uri identifier) {
+      super();
+      this.identifier = identifier;
+    }
+
+    /**
+     * @return {@link #identifier} (Links query and its response(s).)
+     */
     public Uri getIdentifier() { 
       return this.identifier;
     }
 
-    public void setIdentifier(Uri value) { 
+    /**
+     * @param value {@link #identifier} (Links query and its response(s).)
+     */
+    public Query setIdentifier(Uri value) { 
       this.identifier = value;
+      return this;
     }
 
+    /**
+     * @return Links query and its response(s).
+     */
     public String getIdentifierSimple() { 
       return this.identifier == null ? null : this.identifier.getValue();
     }
 
-    public void setIdentifierSimple(String value) { 
+    /**
+     * @param value Links query and its response(s).
+     */
+    public Query setIdentifierSimple(String value) { 
         if (this.identifier == null)
           this.identifier = new Uri();
         this.identifier.setValue(value);
+      return this;
     }
 
+    /**
+     * @return {@link #parameter} (Set of query parameters with values.)
+     */
     public List<Extension> getParameter() { 
       return this.parameter;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #parameter} (Set of query parameters with values.)
+     */
     public Extension addParameter() { 
       Extension t = new Extension();
       this.parameter.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #response} (If this is a response to a query.)
+     */
     public QueryResponseComponent getResponse() { 
       return this.response;
     }
 
-    public void setResponse(QueryResponseComponent value) { 
+    /**
+     * @param value {@link #response} (If this is a response to a query.)
+     */
+    public Query setResponse(QueryResponseComponent value) { 
       this.response = value;
+      return this;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("identifier", "uri", "Links query and its response(s).", 0, java.lang.Integer.MAX_VALUE, identifier));
+        childrenList.add(new Property("parameter", "Extension", "Set of query parameters with values.", 0, java.lang.Integer.MAX_VALUE, parameter));
+        childrenList.add(new Property("response", "", "If this is a response to a query.", 0, java.lang.Integer.MAX_VALUE, response));
+      }
 
       public Query copy() {
         Query dst = new Query();

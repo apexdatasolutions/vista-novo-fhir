@@ -4,7 +4,7 @@
 
   <!-- this element is tax for using atom. it has no meaningful use in FHIR, but it's required in atom -->
   <title>Query Reponse</title>
-  <!-- this is the envelope id - see the Message resource for a discussion of its use -->
+  <!-- this is the envelope id - see the Messaging page for a discussion of its use -->
   <id>urn:uuid:e5a9e400-f36f-4e00-a17c-bff52cfdcf55</id>
   <updated>2013-05-18T08:35:00+10:00</updated>
   <!-- more Atom tax: author is not meaningful here, but it's required by Atom -->
@@ -12,16 +12,17 @@
     <name>Health Intersections Server</name>
     <uri>http://hl7connect.healthintersections.com.au/svc/fhir</uri>
   </author>
+  <category term="http://hl7.org/fhir/tag/message" scheme="http://hl7.org/fhir/tag"/> 
 
   <!-- first entry: the message response -->
   <entry>
     <!-- these elements are tax for using atom. they has no meaningful use in FHIR, but are required in atom -->
-    <title>Message Response</title>
+    <title>Message Header for Response</title>
     <id>urn:uuid:b651eebd-aaa8-4b72-854b-7e543abb99e3</id>
     <updated>2013-05-18T08:35:00+10:00</updated>
    <content type="text/xml">
-      <Message xmlns="http://hl7.org/fhir">
-        <!-- this is the message id - see the Message resource for a discussion of its use -->
+      <MessageHeader xmlns="http://hl7.org/fhir">
+        <!-- this is the message id - see the Messaging page for a discussion of its use -->
         <identifier value="c321589c-9146-4e94-81c4-b142343f77aa"/>
         <timestamp value="2013-05-18T08:14:00+10:00"/>
 
@@ -42,7 +43,7 @@
         <source>
           <software value="Health Intersections Server"/>
           <!-- the response was actually generated (originally) by that server -->
-          <endpoint value="http://hl7connect.healthintersections.com.au/svc/fhir/mailbox"/>
+          <endpoint value="http://hl7connect.healthintersections.com.au/svc/fhir/Mailbox"/>
         </source>
         <destination>
           <name value="notepad"/>
@@ -55,7 +56,7 @@
         <data>
           <reference value="urn:uuid:16fddf81-f792-47ba-b02e-3fa2a3024519"/>
         </data>
-      </Message>
+      </MessageHeader>
     </content>
   </entry>
 
@@ -73,12 +74,10 @@
         <identifier value="urn:uuid:16fddf81-f792-47ba-b02e-3fa2a3024519"/>
 
         <!-- the parameters that the server received -->
-        <parameter>
-          <url value="http://hl7.org/fhir/query#_type"/>
+        <parameter url="http://hl7.org/fhir/query#_type">
           <valueString value="patient"/>
         </parameter>
-        <parameter>
-          <url value="http://hl7.org/fhir/query#gender"/>
+        <parameter url="http://hl7.org/fhir/query#gender">
           <valueString value="m"/>
         </parameter>
 
@@ -89,51 +88,40 @@
           <!-- the total number of matching records -->
 
           <!-- the parameters that the server processed -->
-          <parameter>
-            <url value="http://hl7.org/fhir/query#_type"/>
+          <parameter url="http://hl7.org/fhir/query#_type">
             <valueString value="patient"/>
           </parameter>
-          <parameter>
-            <url value="http://hl7.org/fhir/query#gender"/>
+          <parameter url="http://hl7.org/fhir/query#gender">
             <valueString value="m"/>
           </parameter>
 
           <!-- now, first, next, and last links. Because this is the first page, there's no previous link -->
           <!-- note that this server tracks the query internally after the first execution -->
-          <first>
-            <url value="http://hl7.org/fhir/query#search-id"/>
+          <first url="http://hl7.org/fhir/query#search-id">
             <valueString value="8452a2dd-446b-4a46-b4c2-db704f8ac5ee"/>
           </first>
-          <first>
-            <url value="http://hl7.org/fhir/query#search-offset"/>
+          <first url="http://hl7.org/fhir/query#search-offset">
             <valueString value="0"/>
           </first>
-          <first>
-            <url value="http://hl7.org/fhir/query#_count"/>
+          <first url="http://hl7.org/fhir/query#_count">
             <valueString value="50"/>
           </first>
-          <next>
-            <url value="http://hl7.org/fhir/query#search-id"/>
+          <next url="http://hl7.org/fhir/query#search-id">
             <valueString value="8452a2dd-446b-4a46-b4c2-db704f8ac5ee"/>
           </next>
-          <next>
-            <url value="http://hl7.org/fhir/query#search-offset"/>
+          <next url="http://hl7.org/fhir/query#search-offset">
             <valueString value="50"/>
           </next>
-          <next>
-            <url value="http://hl7.org/fhir/query#_count"/>
+          <next url="http://hl7.org/fhir/query#_count">
             <valueString value="50"/>
           </next>
-          <last>
-            <url value="http://hl7.org/fhir/query#search-id"/>
+          <last url="http://hl7.org/fhir/query#search-id">
             <valueString value="8452a2dd-446b-4a46-b4c2-db704f8ac5ee"/>
           </last>
-          <last>
-            <url value="http://hl7.org/fhir/query#search-offset"/>
+          <last url="http://hl7.org/fhir/query#search-offset">
             <valueString value="603"/>
           </last>
-          <last>
-            <url value="http://hl7.org/fhir/query#_count"/>
+          <last url="http://hl7.org/fhir/query#_count">
             <valueString value="50"/>
           </last>
           <!-- now, a list of all the patients in this page of the search. 
@@ -348,10 +336,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-1/history/10"
       rel="self"/>
     <updated>2013-05-05T16:13:03Z</updated>
-    <published>2013-05-17T22:09:20Z</published>
     <author>
       <name>68.151.217.168</name>
     </author>
+    <published>2013-05-17T22:09:20Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -386,9 +374,9 @@
             <line value="2222 Home Street"/>
           </address>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/hl7"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -404,10 +392,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-10/history/4"
       rel="self"/>
     <updated>2013-05-05T13:04:31Z</updated>
-    <published>2013-05-17T22:09:20Z</published>
     <author>
       <name>68.151.217.168</name>
     </author>
+    <published>2013-05-17T22:09:20Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -443,9 +431,9 @@
             <line value="2222 Home Street"/>
           </address>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/hl7"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -459,10 +447,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-100/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:20Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:20Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -489,9 +477,9 @@
           </gender>
           <birthDate value="1935-05-08"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -505,10 +493,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-101/history/10"
       rel="self"/>
     <updated>2013-05-03T22:27:30Z</updated>
-    <published>2013-05-17T22:09:20Z</published>
     <author>
       <name>68.151.217.168</name>
     </author>
+    <published>2013-05-17T22:09:20Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -535,9 +523,9 @@
           </gender>
           <birthDate value="1938-08-29"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -551,10 +539,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-102/history/2"
       rel="self"/>
     <updated>2013-05-03T22:34:47Z</updated>
-    <published>2013-05-17T22:09:20Z</published>
     <author>
       <name>68.151.217.168</name>
     </author>
+    <published>2013-05-17T22:09:20Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -581,9 +569,9 @@
           </gender>
           <birthDate value="1949-05-08"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -597,10 +585,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-103/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:20Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:20Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -627,9 +615,9 @@
           </gender>
           <birthDate value="1933-03-02"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -643,10 +631,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-104/history/6"
       rel="self"/>
     <updated>2013-05-05T03:36:43Z</updated>
-    <published>2013-05-17T22:09:20Z</published>
     <author>
       <name>68.151.217.168</name>
     </author>
+    <published>2013-05-17T22:09:20Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -673,9 +661,9 @@
           </gender>
           <birthDate value="1988-05-22"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -689,10 +677,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-105/history/5"
       rel="self"/>
     <updated>2013-05-07T14:19:15Z</updated>
-    <published>2013-05-17T22:09:20Z</published>
     <author>
       <name>68.151.217.168</name>
     </author>
+    <published>2013-05-17T22:09:20Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -719,9 +707,9 @@
           </gender>
           <birthDate value="1937-02-14"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -735,10 +723,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-106/history/10"
       rel="self"/>
     <updated>2013-05-05T04:05:09Z</updated>
-    <published>2013-05-17T22:09:20Z</published>
     <author>
       <name>216.138.103.10</name>
     </author>
+    <published>2013-05-17T22:09:20Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -770,9 +758,9 @@
           </gender>
           <birthDate value="1946-06-08"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -786,10 +774,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-107/history/2"
       rel="self"/>
     <updated>2013-05-05T03:40:59Z</updated>
-    <published>2013-05-17T22:09:20Z</published>
     <author>
       <name>68.151.217.168</name>
     </author>
+    <published>2013-05-17T22:09:20Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -816,9 +804,9 @@
           </gender>
           <birthDate value="1945-02-15"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -832,10 +820,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-108/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:20Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:20Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -862,9 +850,9 @@
           </gender>
           <birthDate value="1940-01-08"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -878,10 +866,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-109/history/2"
       rel="self"/>
     <updated>2013-05-05T03:44:25Z</updated>
-    <published>2013-05-17T22:09:20Z</published>
     <author>
       <name>68.151.217.168</name>
     </author>
+    <published>2013-05-17T22:09:20Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -908,9 +896,9 @@
           </gender>
           <birthDate value="1945-06-11"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -924,10 +912,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-11/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:38Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Grahame Grieve</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -961,9 +949,9 @@
             <line value="4444 Home Street"/>
           </address>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/hl7"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -977,10 +965,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-110/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1007,9 +995,9 @@
           </gender>
           <birthDate value="1960-01-12"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1023,10 +1011,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-111/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1053,9 +1041,9 @@
           </gender>
           <birthDate value="1945-06-04"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1069,10 +1057,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-112/history/2"
       rel="self"/>
     <updated>2013-05-05T03:53:20Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>68.151.217.168</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1099,9 +1087,9 @@
           </gender>
           <birthDate value="1995-01-06"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1115,10 +1103,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-113/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1145,9 +1133,9 @@
           </gender>
           <birthDate value="1943-02-08"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1161,10 +1149,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-114/history/10"
       rel="self"/>
     <updated>2013-05-05T04:34:50Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>68.151.217.168</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1191,9 +1179,9 @@
           </gender>
           <birthDate value="1990-08-11"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1207,10 +1195,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-115/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1237,9 +1225,9 @@
           </gender>
           <birthDate value="1939-03-08"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1253,10 +1241,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-116/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1283,9 +1271,9 @@
           </gender>
           <birthDate value="1960-06-08"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1299,10 +1287,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-117/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1329,9 +1317,9 @@
           </gender>
           <birthDate value="1935-06-05"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1345,10 +1333,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-118/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1375,9 +1363,9 @@
           </gender>
           <birthDate value="1963-06-08"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1391,10 +1379,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-119/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1421,9 +1409,9 @@
           </gender>
           <birthDate value="1963-02-08"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1438,10 +1426,10 @@
       href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-11edef91-601c-461c-bbf2-3b99b9a48ae0/history/3"
       rel="self"/>
     <updated>2013-05-07T20:44:39Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>216.138.103.10</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1483,10 +1471,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-12/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:38Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Grahame Grieve</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1520,9 +1508,9 @@
             <line value="5555 Home Street"/>
           </address>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/hl7"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1536,10 +1524,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-120/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1566,9 +1554,9 @@
           </gender>
           <birthDate value="1960-06-08"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1582,10 +1570,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-121/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1612,9 +1600,9 @@
           </gender>
           <birthDate value="1930-04-02"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1628,10 +1616,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-122/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1658,9 +1646,9 @@
           </gender>
           <birthDate value="1980-04-08"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1674,10 +1662,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-123/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1704,9 +1692,9 @@
           </gender>
           <birthDate value="1976-06-01"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1720,10 +1708,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-124/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1750,9 +1738,9 @@
           </gender>
           <birthDate value="1963-02-12"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1766,10 +1754,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-125/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1796,9 +1784,9 @@
           </gender>
           <birthDate value="1943-09-18"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1812,10 +1800,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-126/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1842,9 +1830,9 @@
           </gender>
           <birthDate value="1952-03-26"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1858,10 +1846,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-127/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1888,9 +1876,9 @@
           </gender>
           <birthDate value="1942-04-24"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1904,10 +1892,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-128/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1934,9 +1922,9 @@
           </gender>
           <birthDate value="1968-11-27"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1950,10 +1938,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-129/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -1980,9 +1968,9 @@
           </gender>
           <birthDate value="1959-08-02"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -1996,10 +1984,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-130/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -2026,9 +2014,9 @@
           </gender>
           <birthDate value="1967-12-29"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -2042,10 +2030,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-131/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -2072,9 +2060,9 @@
           </gender>
           <birthDate value="1964-07-18"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -2088,10 +2076,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-132/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -2118,9 +2106,9 @@
           </gender>
           <birthDate value="1968-07-10"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -2134,10 +2122,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-133/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -2164,9 +2152,9 @@
           </gender>
           <birthDate value="1979-07-18"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -2180,10 +2168,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-134/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -2210,9 +2198,9 @@
           </gender>
           <birthDate value="1980-04-23"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -2226,10 +2214,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-135/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -2256,9 +2244,9 @@
           </gender>
           <birthDate value="1956-11-28"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -2272,10 +2260,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-136/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -2302,9 +2290,9 @@
           </gender>
           <birthDate value="1970-04-13"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -2318,10 +2306,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-137/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -2348,9 +2336,9 @@
           </gender>
           <birthDate value="1945-10-01"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -2364,10 +2352,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-138/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -2394,9 +2382,9 @@
           </gender>
           <birthDate value="1969-02-03"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -2410,10 +2398,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-139/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -2440,9 +2428,9 @@
           </gender>
           <birthDate value="1942-09-28"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -2456,10 +2444,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-140/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -2486,9 +2474,9 @@
           </gender>
           <birthDate value="1958-05-14"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -2502,10 +2490,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-141/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -2532,9 +2520,9 @@
           </gender>
           <birthDate value="1952-08-19"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -2548,10 +2536,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-142/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -2578,9 +2566,9 @@
           </gender>
           <birthDate value="1996-03-31"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -2594,10 +2582,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-143/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -2624,9 +2612,9 @@
           </gender>
           <birthDate value="1993-12-02"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>
@@ -2640,10 +2628,10 @@
     <link href="http://hl7connect.healthintersections.com.au/svc/fhir/Patient/q-144/history/1"
       rel="self"/>
     <updated>2013-05-03T10:25:34Z</updated>
-    <published>2013-05-17T22:09:21Z</published>
     <author>
       <name>Cypress Project</name>
     </author>
+    <published>2013-05-17T22:09:21Z</published>
     <content type="text/xml">
       <Patient xmlns="http://hl7.org/fhir">
         <text>
@@ -2670,9 +2658,9 @@
           </gender>
           <birthDate value="1997-06-17"/>
         
-        <provider>
+        <managingOrganization>
           <reference value="Organization/1"/>
-        </provider>
+        </managingOrganization>
         <active value="true"/>
       </Patient>
     </content>

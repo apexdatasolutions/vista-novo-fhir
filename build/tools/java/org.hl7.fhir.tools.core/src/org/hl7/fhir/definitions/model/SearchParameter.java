@@ -1,6 +1,7 @@
 package org.hl7.fhir.definitions.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 /*
 Copyright (c) 2011-2013, HL7, Inc
@@ -30,13 +31,15 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
 */
+import java.util.Set;
+
+import javax.print.attribute.HashAttributeSet;
 
 public class SearchParameter {
   public enum SearchType {
     composite, // search parameter is a composite of others
-    integer,  // search parameter must be a simple name 
+    number,  // search parameter must be a simple name 
     string,   // search parameter is a simple string, like a name part
-    text,     // search parameter is into a long string - text filter
     date,     // search parameter is onto a date
     quantity, // search parameter is onto a quantity (= token + -lower & -upper, and canonical)
     reference,// search parameter refers to a resource reference
@@ -48,6 +51,7 @@ public class SearchParameter {
   private SearchType type;
   private List<String> paths = new ArrayList<String>();
   private List<String> composites = new ArrayList<String>();
+  private Set<String> targets = new HashSet<String>();
   
   // operational tracking
   private String xPath;
@@ -106,6 +110,31 @@ public class SearchParameter {
 
   public void setXPath(String xPath) {
     this.xPath = xPath;
+  }
+
+  public String getTargetTypesAsText() {
+    StringBuilder b = new StringBuilder();
+    boolean first = true;
+    for (String rn : targets) {
+      if (first) {
+        first = false;
+        b.append("<br/>(");
+      } else
+        b.append(", ");
+      if (rn.equals("Any")) 
+        b.append("Any");
+      else if (rn.equals("Binary")) 
+        b.append("<a href=\"extras.html#Binary\">"+rn+"</a>");
+      else
+        b.append("<a href=\""+rn.toLowerCase()+".html\">"+rn+"</a>");
+    }
+    if (!first)
+      b.append(")");
+    return b.toString();
+  }
+
+  public Set<String> getTargets() {
+    return targets;
   }
   
   

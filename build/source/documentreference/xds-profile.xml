@@ -556,7 +556,7 @@
   <Names>
    <NamedRange ss:Name="_Ref287361564" ss:RefersTo="=crap!R15C1"/>
   </Names>
-  <Table ss:ExpandedColumnCount="14" ss:ExpandedRowCount="35" x:FullColumns="1"
+  <Table ss:ExpandedColumnCount="14" ss:ExpandedRowCount="37" x:FullColumns="1"
    x:FullRows="1" ss:StyleID="s70" ss:DefaultRowHeight="15">
    <Column ss:StyleID="s70" ss:AutoFitWidth="0" ss:Width="126"/>
    <Column ss:StyleID="s70" ss:AutoFitWidth="0" ss:Width="198.75"/>
@@ -597,9 +597,10 @@
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s78">
     <Cell ss:Index="2" ss:StyleID="s80"><Data ss:Type="String">DocumentReference.identifier</Data></Cell>
-    <Cell><Data ss:Type="String">0..0</Data></Cell>
+    <Cell><Data ss:Type="String">0..*</Data></Cell>
     <Cell ss:Index="5"><Data ss:Type="String">Identifier</Data></Cell>
     <Cell><Data ss:Type="String">Other identifiers for the document</Data></Cell>
+    <Cell><Data ss:Type="String">XDSDocumentEntry.referenceIdList</Data></Cell>
     <Cell ss:Index="9"><Data ss:Type="String">Does this get used in XDS?</Data></Cell>
     <Cell ss:Index="12" ss:StyleID="s83"/>
    </Row>
@@ -618,15 +619,16 @@
     <Cell ss:StyleID="Default"/>
     <Cell><Data ss:Type="String">CodeableConcept</Data></Cell>
     <Cell><Data ss:Type="String">The code specifying the particular kind of document (e.g., Prescription, Discharge Summary, Report). It is suggested that the XDS Affinity Domain draws these values from a coding scheme providing a coarse level of granularity (about 10 to 100 entries). Shall have a single value</Data></Cell>
-    <Cell><Data ss:Type="String">XDSDocumentEntry.classCode</Data></Cell>
+    <Cell><Data ss:Type="String">XDSDocumentEntry.typeCode</Data></Cell>
     <Cell ss:Index="12" ss:StyleID="s83"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="30" ss:StyleID="s78">
-    <Cell ss:Index="2" ss:StyleID="s80"><Data ss:Type="String">DocumentReference.subtype</Data></Cell>
+    <Cell ss:Index="2" ss:StyleID="s80"><Data ss:Type="String">DocumentReference.class</Data></Cell>
     <Cell><Data ss:Type="String">1..1</Data></Cell>
     <Cell ss:StyleID="Default"/>
     <Cell><Data ss:Type="String">CodeableConcept</Data></Cell>
-    <Cell ss:StyleID="s72"><Data ss:Type="String">The code specifying the precise kind of document (e.g., Pulmonary History and Physical, Discharge Summary, Ultrasound Report).  It is suggested that the creating entity draw these values from a coding scheme providing a fine level of granularity.  </Data></Cell>
+    <Cell><Data ss:Type="String">A categorisation for the type of the document. This may be implied by or derived from the code specified in the Document Type</Data></Cell>
+    <Cell><Data ss:Type="String">XDSDocumentEntry.classCode</Data></Cell>
     <Cell><Data ss:Type="String">XDSDocumentEntry.typeCode</Data></Cell>
     <Cell ss:Index="14" ss:StyleID="s83"/>
    </Row>
@@ -701,12 +703,25 @@
     <Cell ss:Index="12" ss:StyleID="s83"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="30" ss:StyleID="s78">
-    <Cell ss:Index="2" ss:StyleID="s80"><Data ss:Type="String">DocumentReference.supercedes</Data></Cell>
-    <Cell><Data ss:Type="String">0..0</Data></Cell>
+    <Cell ss:Index="2" ss:StyleID="s80"><Data ss:Type="String">DocumentReference.relatesTo</Data></Cell>
+    <Cell><Data ss:Type="String">0..*</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Relationships to other documents</Data></Cell>
+    <Cell><Data ss:Type="String">Relationships that this document has with other document references that already exist</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="30" ss:StyleID="s78">
+    <Cell ss:Index="2" ss:StyleID="s80"><Data ss:Type="String">DocumentReference.relatesTo.code</Data></Cell>
+    <Cell><Data ss:Type="String">1..1</Data></Cell>
+    <Cell ss:Index="5"><Data ss:Type="String">code</Data></Cell>
+    <Cell><Data ss:Type="String">supercedes | transforms | signs | appends</Data></Cell>
+    <Cell><Data ss:Type="String">The type of relationship that this document has with anther document</Data></Cell>
+    <Cell><Data ss:Type="String">If this document appends another document, then the document cannot be fully understood without also accessing the referenced document</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="30" ss:StyleID="s78">
+    <Cell ss:Index="2" ss:StyleID="s80"><Data ss:Type="String">DocumentReference.relatesTo.target</Data></Cell>
+    <Cell><Data ss:Type="String">1..1</Data></Cell>
     <Cell ss:Index="5"><Data ss:Type="String">Resource(DocumentReference)</Data></Cell>
-    <Cell><Data ss:Type="String">If this document replaces another</Data></Cell>
-    <Cell><Data ss:Type="String">todo</Data></Cell>
-    <Cell ss:Index="9"><Data ss:Type="String">check</Data></Cell>
+    <Cell><Data ss:Type="String">Target of the relationship</Data></Cell>
+    <Cell><Data ss:Type="String">The target document of this relationship</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="60" ss:StyleID="s78">
     <Cell ss:Index="2" ss:StyleID="s80"><Data ss:Type="String">DocumentReference.description</Data></Cell>
@@ -793,7 +808,7 @@
     <Cell><Data ss:Type="String">event codes, service Start &amp; Stop time, and facility type</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="30" ss:StyleID="s78">
-    <Cell ss:Index="2" ss:StyleID="s80"><Data ss:Type="String">DocumentReference.context.code</Data></Cell>
+    <Cell ss:Index="2" ss:StyleID="s80"><Data ss:Type="String">DocumentReference.context.event</Data></Cell>
     <Cell><Data ss:Type="String">0..*</Data></Cell>
     <Cell ss:Index="5"><Data ss:Type="String">CodeableConcept</Data></Cell>
     <Cell><Data ss:Type="String">This list of codes represents the main clinical acts, such as a colonoscopy or an appendectomy, being documented. In some cases, the event is inherent in the typeCode, such as a &quot;History and Physical Report&quot; in which the procedure being documented is necessarily a &quot;History and Physical&quot; act</Data></Cell>
@@ -816,7 +831,7 @@
     <Cell><Data ss:Type="String">XDSDocumentEntry.healthCareFacilityTypeCode</Data></Cell>
     <Cell><Data ss:Type="String">In some cases, the setting of the encounter is inherent in the typeCode, such as &quot;Diabetes Clinic Progress Note&quot;. healthcareFacilityTypeCode shall be equivalent to or further specialize the value inherent in the typeCode; for example, where the typeCode is simply &quot;Clinic Progress Note&quot; and the value of healthcareFacilityTypeCode is &quot;private clinic&quot;. The value shall not conflict with the value inherent in the typeCode, as such a conflict would create an ambiguous situation</Data></Cell>
    </Row>
-   <Row ss:Index="35" ss:AutoFitHeight="0">
+   <Row ss:Index="37" ss:AutoFitHeight="0">
     <Cell ss:Index="7" ss:StyleID="s86"/>
    </Row>
   </Table>
@@ -836,8 +851,8 @@
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>17</ActiveRow>
-     <ActiveCol>2</ActiveCol>
+     <ActiveRow>3</ActiveRow>
+     <ActiveCol>5</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -1251,14 +1266,14 @@
     <Cell><Data ss:Type="String">Committee Notes</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="30">
-    <Cell><Data ss:Type="String">!homeCommunityId</Data></Cell>
+    <Cell><Data ss:Type="String">homeCommunityId</Data></Cell>
     <Cell ss:StyleID="s78"><Data ss:Type="String">Resource</Data></Cell>
     <Cell ss:StyleID="s78"><Data ss:Type="String">DocumentReference</Data></Cell>
     <Cell><Data ss:Type="String">0..1</Data></Cell>
     <Cell><Data ss:Type="String">uri</Data></Cell>
     <Cell ss:Index="7"><Data ss:Type="String">XDSDocumentEntry.homeCommunityId</Data></Cell>
     <Cell><Data ss:Type="String">A globally unique identifier for a community</Data></Cell>
-    <Cell><Data ss:Type="String">Existing XDS usage is poorly understood</Data></Cell>
+    <Cell><Data ss:Type="String">Existing XDS usage is poorly characterised</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="135">
     <Cell><Data ss:Type="String">!repositoryUniqueId</Data></Cell>
@@ -1271,33 +1286,16 @@
     <Cell><Data ss:Type="String">In FHIR, the repository is explicit in the location and/or service URL</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell><Data ss:Type="String">relationship</Data></Cell>
-    <Cell ss:StyleID="s78"><Data ss:Type="String">Resource</Data></Cell>
-    <Cell ss:StyleID="s78"><Data ss:Type="String">DocumentReference</Data></Cell>
-    <Cell><Data ss:Type="String">0..*</Data></Cell>
-    <Cell ss:Index="7"><Data ss:Type="String">Document Relationships</Data></Cell>
-    <Cell><Data ss:Type="String">A relationship between this document and another</Data></Cell>
-    <Cell><Data ss:Type="String">See discussion in associated text</Data></Cell>
+    <Cell ss:Index="2" ss:StyleID="s78"/>
+    <Cell ss:StyleID="s78"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell><Data ss:Type="String">relationship.type</Data></Cell>
-    <Cell ss:StyleID="s78"><Data ss:Type="String">Extension</Data></Cell>
-    <Cell ss:StyleID="s78"><Data ss:Type="String">#relationship</Data></Cell>
-    <Cell><Data ss:Type="String">1..1</Data></Cell>
-    <Cell><Data ss:Type="String">code</Data></Cell>
-    <Cell><Data ss:Type="String">XDSRelationshipType</Data></Cell>
-    <Cell><Data ss:Type="String">APND | RPLC | XFRM | XFRM_RPLC | signs</Data></Cell>
-    <Cell><Data ss:Type="String">The kind of relationship between the documents</Data></Cell>
-    <Cell><Data ss:Type="String">transform with replace is both a transform and a replace</Data></Cell>
+    <Cell ss:Index="2" ss:StyleID="s78"/>
+    <Cell ss:StyleID="s78"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="30">
-    <Cell><Data ss:Type="String">relationship.target</Data></Cell>
-    <Cell ss:StyleID="s78"><Data ss:Type="String">Extension</Data></Cell>
-    <Cell ss:StyleID="s78"><Data ss:Type="String">#relationship</Data></Cell>
-    <Cell><Data ss:Type="String">1..1</Data></Cell>
-    <Cell><Data ss:Type="String">Resource(DocumentReference)</Data></Cell>
-    <Cell ss:Index="7"><Data ss:Type="String">Target Document</Data></Cell>
-    <Cell><Data ss:Type="String">The target document in a relationship</Data></Cell>
+    <Cell ss:Index="2" ss:StyleID="s78"/>
+    <Cell ss:StyleID="s78"/>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell ss:Index="3" ss:StyleID="s78"/>
@@ -1351,6 +1349,7 @@
     <Pane>
      <Number>3</Number>
      <ActiveRow>2</ActiveRow>
+     <ActiveCol>8</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>

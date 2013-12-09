@@ -35,33 +35,27 @@ using System.Text;
 
 namespace Hl7.Fhir.Support
 {
-    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
-    sealed class FhirResourceAttribute : Attribute
+    [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
+    public sealed class NotMappedAttribute : Attribute
     {
-        readonly string name;
-
         // This is a positional argument
-        public FhirResourceAttribute(string name)
+        public NotMappedAttribute()
         {
-            this.name = name;
+            // This attribute is just a marker, no functionality or data
         }
-
-        public string Name
-        {
-            get { return name; }
-        }
-
-        // This is a named argument
-        //public int NamedInt { get; set; }
     }
 
-    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
-    sealed class FhirCompositeAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
+    public sealed class FhirTypeAttribute : Attribute
     {
         readonly string name;
 
-        // This is a positional argument
-        public FhirCompositeAttribute(string name)
+        public FhirTypeAttribute()
+        {
+            // No arg constructor - use defaults
+        }
+
+        public FhirTypeAttribute(string name)
         {
             this.name = name;
         }
@@ -70,5 +64,113 @@ namespace Hl7.Fhir.Support
         {
             get { return name; }
         }
+
+        public string Profile { get; set; }
+
+        public bool IsResource { get; set; }
+    }
+
+
+    [AttributeUsage(AttributeTargets.Enum, Inherited = false, AllowMultiple = false)]
+    public sealed class FhirEnumerationAttribute : Attribute
+    {
+        readonly string bindingName;
+
+        // This is a positional argument
+        public FhirEnumerationAttribute(string bindingName)
+        {
+            this.bindingName = bindingName;
+        }
+
+        public string BindingName
+        {
+            get { return bindingName; }
+        }
+    }
+
+
+    /// <summary>
+    /// Xml Serialization used for primitive values
+    /// </summary>
+    public enum XmlSerializationHint
+    {
+        None,
+        Attribute, 
+        TextNode,
+        XhtmlElement
+    }
+
+
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    public sealed class FhirElementAttribute : Attribute
+    {
+        readonly string name;
+
+        // This is a positional argument
+        public FhirElementAttribute(string name)
+        {
+            this.name = name;
+            this.XmlSerialization = XmlSerializationHint.None;
+        }
+
+        public string Name
+        {
+            get { return name; }
+        }
+
+        public bool IsPrimitiveValue { get; set; }
+
+        public XmlSerializationHint XmlSerialization { get; set; }
+
+        public int Order { get; set; }
+    }
+
+
+
+    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
+    public sealed class EnumLiteralAttribute : Attribute
+    {
+        readonly string literal;
+
+        // This is a positional argument
+        public EnumLiteralAttribute(string literal)
+        {
+            this.literal = literal;
+        }
+
+        public string Literal
+        {
+            get { return literal; }
+        }
+    }
+
+
+    public enum WildcardChoice
+    {
+        AnyResource,
+        AnyDatatype
+    }
+
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = true)]
+    public sealed class ChoiceAttribute : Attribute
+    {
+        // This is a positional argument
+        public ChoiceAttribute(string typeName, Type type)
+        {
+            TypeName = typeName;
+            Type = type;
+            Wildcard = null;
+        }
+
+        public ChoiceAttribute(WildcardChoice choice)
+        {
+            Wildcard = choice;
+        }
+
+        public WildcardChoice? Wildcard { get; private set; }
+
+        public string TypeName { get; private set; }
+
+        public Type Type { get; private set; }
     }
 }

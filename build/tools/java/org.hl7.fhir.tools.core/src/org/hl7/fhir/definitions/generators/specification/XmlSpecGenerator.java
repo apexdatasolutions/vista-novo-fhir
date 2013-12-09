@@ -28,6 +28,7 @@ package org.hl7.fhir.definitions.generators.specification;
  POSSIBILITY OF SUCH DAMAGE.
 
  */
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -43,7 +44,10 @@ import org.hl7.fhir.definitions.model.Invariant;
 import org.hl7.fhir.definitions.model.ProfileDefn;
 import org.hl7.fhir.definitions.model.ResourceDefn;
 import org.hl7.fhir.definitions.model.TypeRef;
+import org.hl7.fhir.instance.model.AtomEntry;
 import org.hl7.fhir.instance.model.Profile;
+import org.hl7.fhir.instance.model.ValueSet;
+import org.hl7.fhir.tools.publisher.PageProcessor;
 import org.hl7.fhir.utilities.Utilities;
 
 public class XmlSpecGenerator extends OutputStreamWriter {
@@ -51,13 +55,15 @@ public class XmlSpecGenerator extends OutputStreamWriter {
 	private String defPage;
 	private String dtRoot;
 	private Definitions definitions;
+  private PageProcessor page;
 
 	public XmlSpecGenerator(OutputStream out, String defPage, String dtRoot,
-			Definitions definitions) throws UnsupportedEncodingException {
+			PageProcessor page) throws UnsupportedEncodingException {
 		super(out, "UTF-8");
 		this.defPage = defPage;
 		this.dtRoot = dtRoot == null ? "" : dtRoot;
-		this.definitions = definitions;
+		this.definitions = page.getDefinitions();
+		this.page = page;
 	}
 
 	public void generate(ElementDefn root) throws Exception {
@@ -99,16 +105,25 @@ public class XmlSpecGenerator extends OutputStreamWriter {
 		if (hasXmlLang)
 		  write(" xml:lang?");
 		if (resource)
-	    write(" xmlns=\"http://hl7.org/fhir\"&gt; <span style=\"float: right\"><a title=\"Documentation for this format\" href=\"formats.html\"><img src=\"help.png\" alt=\"doco\"/></a></span>\r\n");
+	    write(" xmlns=\"http://hl7.org/fhir\"");
 		else
-	    write(" xmlns=\"http://hl7.org/fhir\"&gt;\r\n");
+	    write(" xmlns=\"http://hl7.org/fhir\"");
+		for (ElementDefn elem : root.getElements()) {
+		  if (elem.isXmlAttribute()) {
+		    generateAttribute(elem);
+		  }
+		}
+		if (resource)
+		  write("&gt; <span style=\"float: right\"><a title=\"Documentation for this format\" href=\"formats.html\"><img src=\"help.png\" alt=\"doco\"/></a></span>\r\n");
+		else 
+		  write("&gt;\r\n");
     if (rn.equals(root.getName()) && resource) {
       write(" &lt;!-- from <a href=\"resources.html\">Resource</a>: <a href=\"extensibility.html\">extension</a>, <a href=\"extensibility.html#modifierExtension\">modifierExtension</a>, language, <a href=\"narrative.html#Narrative\">text</a>, and <a href=\"references.html#contained\">contained</a> -->\r\n");
     } else {
       write(" &lt;!-- from Element: <a href=\"extensibility.html\">extension</a> -->\r\n");
     }
 		for (ElementDefn elem : root.getElements()) {
-		  if (!elem.typeCode().equals("xml:lang"))
+		  if (!elem.typeCode().equals("xml:lang") && !elem.isXmlAttribute())
 		    generateCoreElem(elem, 1, rn, root.getName(), rn.equals(root.getName()) && resource);
 		}
 
@@ -117,7 +132,16 @@ public class XmlSpecGenerator extends OutputStreamWriter {
 		write("&gt;\r\n");
 	}
 
-	public void generate(ProfileDefn profile) throws Exception {
+	private void generateAttribute(ElementDefn elem) throws Exception {
+    // TODO Auto-generated method stub  
+    write(" "+elem.getName()+"=\"");
+
+    write("<span style=\"color: navy\">" + Utilities.escapeXml(elem.getShortDefn())+"</span>");
+    String t = elem.typeCode();
+    write(" (<span style=\"color: darkgreen\"><a href=\"" + (dtRoot + GeneratorUtils.getSrcFile(t)+ ".html#" + t) + "\">" + t + "</a></span>)\"");
+  }
+
+  public void generate(ProfileDefn profile) throws Exception {
 		write("<pre class=\"spec\"> <span style=\"float: right\"><a title=\"Documentation for this format\" href=\"formats.html\"><img src=\"help.png\" alt=\"doco\"/></a></span>\r\n");
 
 		if (profile.getResources().size() > 0) {
@@ -186,7 +210,7 @@ public class XmlSpecGenerator extends OutputStreamWriter {
 		    write("&gt;");
 		    write("<span style=\" color: Gray\">&lt;!-- </span>");
 		    write(" <span style=\"color: brown;\"><b>0..1</b></span> ");
-		    writeTypeLinks(ex.getDefinition());
+		    writeTypeLinks(ex.getDefinition(), 0);
 		    write(" <span style=\"color: navy\">"+Utilities.escapeXml(ex.getDefinition().getShortDefn())+"</span>");
 		    write(" <span style=\" color: Gray\">--&gt; </span>&lt;/" + vn + ">\r\n");
 		  } else if (ex.getDefinition().getTypes().size() == 1) {
@@ -257,6 +281,7 @@ public class XmlSpecGenerator extends OutputStreamWriter {
 
 		boolean listed = false;
 		boolean doneType = false;
+		int width = 0;
     // If this is an unrolled element, show its profile name
     if (elem.getProfileName() != null
         && !elem.getProfileName().equals("")) {
@@ -367,7 +392,7 @@ public class XmlSpecGenerator extends OutputStreamWriter {
 				writeCardinality(elem);
 				listed = true;
 				if (!doneType) {
-				  writeTypeLinks(elem);
+				  width = writeTypeLinks(elem, indent);
 				}
 			} else if (elem.getName().equals("extension")) {
 				write(" <a href=\"extensibility.html\"><span style=\"color: navy\">See Extensions</span></a> ");
@@ -398,16 +423,17 @@ public class XmlSpecGenerator extends OutputStreamWriter {
 				    if (bs.getBinding() == Binding.CodeList || bs.getBinding() == Binding.Special)
 				      write("<span style=\"color: navy\"><a href=\""+bs.getReference().substring(1)+".html\" style=\"color: navy\">" + Utilities.escapeXml(elem.getShortDefn())+getIsSummaryFlag(elem) + "</a></span>");
 				    else if (bs.getReference().startsWith("http://hl7.org/fhir")) {
-				      if (bs.getReference().startsWith("http://hl7.org/fhir/v3/vs/"))
-				        write("<a href=\"v3/"+bs.getReference().substring(26)+"/index.html\" style=\"color: navy\">" + Utilities.escapeXml(elem.getShortDefn())+getIsSummaryFlag(elem) + "</a>");
-				      else if (bs.getReference().startsWith("http://hl7.org/fhir/vs/"))
+				      if (bs.getReference().startsWith("http://hl7.org/fhir/v3/vs/")) {
+				        AtomEntry<ValueSet> vs = page.getValueSets().get(bs.getReference());
+				        write("<a href=\""+vs.getLinks().get("path").replace(File.separatorChar, '/')+"\" style=\"color: navy\">" + Utilities.escapeXml(elem.getShortDefn())+getIsSummaryFlag(elem) + "</a>");
+				      } else if (bs.getReference().startsWith("http://hl7.org/fhir/vs/"))
 				        write("<a href=\""+bs.getReference().substring(23)+".html\" style=\"color: navy\">" + Utilities.escapeXml(elem.getShortDefn())+getIsSummaryFlag(elem) + "</a>");
 				      else
 				        throw new Exception("Internal reference "+bs.getReference()+" not handled yet");
 				    } else
 				      write("<span style=\"color: navy\"><a href=\""+bs.getReference()+".html\" style=\"color: navy\">" + Utilities.escapeXml(elem.getShortDefn())+getIsSummaryFlag(elem) + "</a></span>");				  
 				  } else
-					  write("<span style=\"color: navy\">" + Utilities.escapeXml(elem.getShortDefn())+getIsSummaryFlag(elem) + "</span>");
+					  write("<span style=\"color: navy\">" + docPrefix(width, indent, elem)+Utilities.escapeXml(elem.getShortDefn())+getIsSummaryFlag(elem) + "</span>");
           if (elem.getMaxCardinality() != null && elem.getMaxCardinality() == 0) 
             write("</span>");
 				}
@@ -487,6 +513,18 @@ public class XmlSpecGenerator extends OutputStreamWriter {
 		}
 	}
 
+	private String docPrefix(int widthSoFar, int indent, ElementDefn elem) {
+	  if (widthSoFar + elem.getShortDefn().length()+8+elem.getName().length() > 105) {
+	    String ret = "\r\n  ";
+	    for (int i = 0; i < indent+2; i++)
+	      ret = ret + " ";
+
+	    return ret;
+	  }
+	  else
+	    return "";
+	}
+
   private String getIsSummaryFlag(ElementDefn elem) {
     if (elem.isSummaryItem())
       return "<span title=\"This element is included in a summary view (See Search/Query)\" style=\"color: Navy\"> §</span>";
@@ -494,15 +532,22 @@ public class XmlSpecGenerator extends OutputStreamWriter {
       return "";
   }
 
-  private void writeTypeLinks(ElementDefn elem) throws Exception {
+  private int writeTypeLinks(ElementDefn elem, int indent) throws Exception {
     write(" <span style=\"color: darkgreen\">");
     int i = 0;
-    int d = elem.getTypes().size() / 2;
+    int w = indent + 12 + elem.getName().length(); // this is wrong if the type is an attribute, but the wrapping concern shouldn't apply in this case, so this is ok
     for (TypeRef t : elem.getTypes()) {
-      if (i > 0)
+      if (i > 0) {
         write("|");
-      if (elem.getTypes().size() > 5 && i == d)
-        write("\r\n              ");
+        w++;
+      }
+      if (w + t.getName().length() > 80) {
+        write("\r\n  ");
+        for (int j = 0; j < indent; j++)
+          write(" ");
+        w = indent+2;
+      }
+      w = w + t.getName().length(); // again, could be wrong if this is an extension, but then it won't wrap
       if (t.isXhtml() || t.getName().equals("list"))
         write(t.getName());
       else if (t.getName().equals("Extension") && t.getParams().size() == 0 && !Utilities.noString(elem.getProfile()))
@@ -515,9 +560,20 @@ public class XmlSpecGenerator extends OutputStreamWriter {
         write("(");
         boolean firstp = true;
         for (String p : t.getParams()) {
-          if (!firstp)
+          if (!firstp) {
             write("|");
+            w++;
+          }
 
+          // again, p.length() could be wrong if this is an extension, but then it won't wrap
+          if (w + p.length() > 80) {
+            write("\r\n  ");
+            for (int j = 0; j < indent; j++)
+              write(" ");
+            w = indent+2;
+          }
+          w = w + p.length(); 
+          
           // TODO: There has to be an aggregation
           // specification per t.getParams()
           if (elem.hasAggregation()) {
@@ -543,17 +599,19 @@ public class XmlSpecGenerator extends OutputStreamWriter {
           firstp = false;
         }
         write(")");
+        w++;
       }
 
       i++;
     }
     write("</span>");
+    return w;
   }
 
 	private void writeCardinality(ElementDefn elem) throws IOException {
 		if (elem.getStatedInvariants().size() > 0)
-			write(" <span style=\"color: deeppink\" title=\""
-					+ Utilities.escapeXml(getInvariants(elem)) + "\"><b>"
+			write(" <span style=\"color: brown\" title=\""
+					+ Utilities.escapeXml(getInvariants(elem)) + "\"><b><img alt=\"??\" src=\"lock.png\"/> "
 					+ elem.describeCardinality() + "</b></span>");
 		else
 			write(" <span style=\"color: brown\"><b>"

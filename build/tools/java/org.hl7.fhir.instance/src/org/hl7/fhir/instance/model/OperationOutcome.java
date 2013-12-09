@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
 
 import java.util.*;
 
@@ -68,7 +68,7 @@ public class OperationOutcome extends Resource {
         }
     }
 
-  public class IssueSeverityEnumFactory implements EnumFactory {
+  public static class IssueSeverityEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
@@ -96,7 +96,7 @@ public class OperationOutcome extends Resource {
       }
     }
 
-    public class OperationOutcomeIssueComponent extends Element {
+    public static class OperationOutcomeIssueComponent extends BackboneElement {
         /**
          * Indicates whether the issue indicates a variation from successful processing.
          */
@@ -117,45 +117,88 @@ public class OperationOutcome extends Resource {
          */
         protected List<String_> location = new ArrayList<String_>();
 
+      public OperationOutcomeIssueComponent() {
+        super();
+      }
+
+      public OperationOutcomeIssueComponent(Enumeration<IssueSeverity> severity) {
+        super();
+        this.severity = severity;
+      }
+
+        /**
+         * @return {@link #severity} (Indicates whether the issue indicates a variation from successful processing.)
+         */
         public Enumeration<IssueSeverity> getSeverity() { 
           return this.severity;
         }
 
-        public void setSeverity(Enumeration<IssueSeverity> value) { 
+        /**
+         * @param value {@link #severity} (Indicates whether the issue indicates a variation from successful processing.)
+         */
+        public OperationOutcomeIssueComponent setSeverity(Enumeration<IssueSeverity> value) { 
           this.severity = value;
+          return this;
         }
 
+        /**
+         * @return Indicates whether the issue indicates a variation from successful processing.
+         */
         public IssueSeverity getSeveritySimple() { 
           return this.severity == null ? null : this.severity.getValue();
         }
 
-        public void setSeveritySimple(IssueSeverity value) { 
+        /**
+         * @param value Indicates whether the issue indicates a variation from successful processing.
+         */
+        public OperationOutcomeIssueComponent setSeveritySimple(IssueSeverity value) { 
             if (this.severity == null)
               this.severity = new Enumeration<IssueSeverity>();
             this.severity.setValue(value);
+          return this;
         }
 
+        /**
+         * @return {@link #type} (A code indicating the type of error, warning or information message.)
+         */
         public Coding getType() { 
           return this.type;
         }
 
-        public void setType(Coding value) { 
+        /**
+         * @param value {@link #type} (A code indicating the type of error, warning or information message.)
+         */
+        public OperationOutcomeIssueComponent setType(Coding value) { 
           this.type = value;
+          return this;
         }
 
+        /**
+         * @return {@link #details} (Additional description of the issue.)
+         */
         public String_ getDetails() { 
           return this.details;
         }
 
-        public void setDetails(String_ value) { 
+        /**
+         * @param value {@link #details} (Additional description of the issue.)
+         */
+        public OperationOutcomeIssueComponent setDetails(String_ value) { 
           this.details = value;
+          return this;
         }
 
+        /**
+         * @return Additional description of the issue.
+         */
         public String getDetailsSimple() { 
           return this.details == null ? null : this.details.getValue();
         }
 
-        public void setDetailsSimple(String value) { 
+        /**
+         * @param value Additional description of the issue.
+         */
+        public OperationOutcomeIssueComponent setDetailsSimple(String value) { 
           if (value == null)
             this.details = null;
           else {
@@ -163,19 +206,29 @@ public class OperationOutcome extends Resource {
               this.details = new String_();
             this.details.setValue(value);
           }
+          return this;
         }
 
+        /**
+         * @return {@link #location} (A simple XPath limited to element names, repetition indicators and the default child access that identifies one of the elements in the resource that caused this issue to be raised.)
+         */
         public List<String_> getLocation() { 
           return this.location;
         }
 
     // syntactic sugar
+        /**
+         * @return {@link #location} (A simple XPath limited to element names, repetition indicators and the default child access that identifies one of the elements in the resource that caused this issue to be raised.)
+         */
         public String_ addLocation() { 
           String_ t = new String_();
           this.location.add(t);
           return t;
         }
 
+        /**
+         * @param value {@link #location} (A simple XPath limited to element names, repetition indicators and the default child access that identifies one of the elements in the resource that caused this issue to be raised.)
+         */
         public String_ addLocationSimple(String value) { 
           String_ t = new String_();
           t.setValue(value);
@@ -183,8 +236,16 @@ public class OperationOutcome extends Resource {
           return t;
         }
 
+        protected void listChildren(List<Property> childrenList) {
+          super.listChildren(childrenList);
+          childrenList.add(new Property("severity", "code", "Indicates whether the issue indicates a variation from successful processing.", 0, java.lang.Integer.MAX_VALUE, severity));
+          childrenList.add(new Property("type", "Coding", "A code indicating the type of error, warning or information message.", 0, java.lang.Integer.MAX_VALUE, type));
+          childrenList.add(new Property("details", "string", "Additional description of the issue.", 0, java.lang.Integer.MAX_VALUE, details));
+          childrenList.add(new Property("location", "string", "A simple XPath limited to element names, repetition indicators and the default child access that identifies one of the elements in the resource that caused this issue to be raised.", 0, java.lang.Integer.MAX_VALUE, location));
+        }
+
       public OperationOutcomeIssueComponent copy(OperationOutcome e) {
-        OperationOutcomeIssueComponent dst = e.new OperationOutcomeIssueComponent();
+        OperationOutcomeIssueComponent dst = new OperationOutcomeIssueComponent();
         dst.severity = severity == null ? null : severity.copy();
         dst.type = type == null ? null : type.copy();
         dst.details = details == null ? null : details.copy();
@@ -201,16 +262,31 @@ public class OperationOutcome extends Resource {
      */
     protected List<OperationOutcomeIssueComponent> issue = new ArrayList<OperationOutcomeIssueComponent>();
 
+    public OperationOutcome() {
+      super();
+    }
+
+    /**
+     * @return {@link #issue} (An error, warning or information message that results from a system action.)
+     */
     public List<OperationOutcomeIssueComponent> getIssue() { 
       return this.issue;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #issue} (An error, warning or information message that results from a system action.)
+     */
     public OperationOutcomeIssueComponent addIssue() { 
       OperationOutcomeIssueComponent t = new OperationOutcomeIssueComponent();
       this.issue.add(t);
       return t;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("issue", "", "An error, warning or information message that results from a system action.", 0, java.lang.Integer.MAX_VALUE, issue));
+      }
 
       public OperationOutcome copy() {
         OperationOutcome dst = new OperationOutcome();

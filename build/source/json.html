@@ -25,7 +25,7 @@ The formal mime type for this format is application/json+fhir.
 <p>
 Clients are free to choose whether to implement in XML or JSON. Servers SHALL support XML, and can 
 choose to support JSON. Note that systems SHALL declare which format(s) they 
-support in their <a href="conformance.htm">Conformance Statement</a>. 
+support in their <a href="conformance.html">Conformance Statement</a>. 
 </p>
 <p>
 The JSON representation is described relative to the XML representation:
@@ -33,6 +33,7 @@ The JSON representation is described relative to the XML representation:
 <ul>
  <li>The names for the JSON object members are the same as the names of the elements and attributes in XML, including for elements that may repeat. Property names are case sensitive</li>
  <li>Just as in XML, JSON property attributes never have empty values; omit a value if it is empty</li>
+ <li>JSON whitespace is not part of the contents of a resource. Applications MAY preserve the whitespace when handling resources, but are not required to do so. Note that digital signatures may depend on the whitespace</li>
 </ul>
 
 <p>There are differences too:</p>
@@ -57,10 +58,10 @@ done by using an array type. Note that:
 <ul>
  <li>The name of the array is singular - the same as the XML element</li>
  <li>An item that may repeat is represented as an array even in the case that it doesn't so that the process of parsing the resource is the same either way</li>
-</ul>
+ </ul>
 <pre class="xml">
  &lt;<b>coding</b>&gt;
-   &lt;<b>system</b> value="http://snomed.info/id"/&gt;
+   &lt;<b>system</b> value="http://snomed.info/sct"/&gt;
    &lt;<b>code</b> value="104934005"/&gt;
  &lt;/<b>coding</b>/&gt;
  &lt;<b>coding</b>&gt;
@@ -72,7 +73,7 @@ done by using an array type. Note that:
 <pre class="json">
  "coding": [
    {
-     "system" : "http://snomed.info/id",
+     "system" : "http://snomed.info/sct",
      "code" : "104934005"
    },
    {
@@ -93,8 +94,7 @@ FHIR elements with primitive values are represented in two parts:
 <p>
 The FHIR types <a href="datatypes.html#integer">integer</a> and <a href="datatypes.html#decimal">decimal</a> are represented as a JSON number, the FHIR type <a href="datatypes.html#boolean">boolean</a>
 as a JSON boolean, and all other types are represented as a JSON String which has the same content as that specified for the relevant data type. Whitespace is always significant 
-(i.e. no leading and trailing spaces for non-strings). 
-</p>
+(i.e. no leading and trailing spaces for non-strings).</p>
 <pre class="xml">
  &lt;<b>code</b> value="abc"/&gt; &lt;!-- code --&gt;
  &lt;<b>date</b> value="1972-11-30"/&gt; &lt;!-- dateTime --&gt;
@@ -108,13 +108,17 @@ as a JSON boolean, and all other types are represented as a JSON String which ha
  "deceased" : false,
  "count" : 23
 </pre>
+<blockquote>
+<p>When using a JavaScript JSON.parse() implementation, keep in mind that JavaScript natively supports only one numeric datatype, which is a floating point number. 
+This can cause loss of precision for FHIR numbers. You may want to use a custom parser and big number library 
+(e.g. <a href="https://github.com/jtobey/javascript-bignum">https://github.com/jtobey/javascript-bignum</a>) if this is a concern.</p>
+</blockquote>
 <p>
 If the value has an id attribute, or extensions, then this is represented as follows:
 </p>
 <pre class="xml">
  &lt;<b>dob</b> id="314159" value="1970-03-30" &gt;
-   &lt;extension&gt;
-     &lt;url value="http://example.org/fhir/extensions#text"/&gt;
+   &lt;extension url="http://example.org/fhir/extensions#text"&gt;
      &lt;valueString value="Easter 1970"/&gt;     
    &lt;/extension&gt;
  &lt;/<b>dob</b>&gt;
@@ -124,23 +128,23 @@ If the value has an id attribute, or extensions, then this is represented as fol
  "dob": "1972-11-30",
  "_dob": { 
    "id": "314159", 
-   "extension": {
+   "extension": [{
       "url" : "http://example.org/fhir/extensions#text",
       "valueString" : "Easter 1970"
-   }
+   }]
  }
 </pre>
+<p>Note: If the primitive has an id attribute or extension, but no value, only the property with the "_" is rendered.</p>
 <p>
 In the case where the primitive element may repeat, it is represented 
-in two arrays. null values are used to fill out the second array so 
+in two arrays. null values are used to fill out both arrays so 
 that the id and/or extension are aligned with the matching value in 
 the first array, as demonstrated in this example:
 </p>
 <pre class="xml">
  &lt;<b>code</b> value="au"/&gt;
  &lt;<b>code</b> value="nz"&gt;
-   &lt;extension&gt;
-     &lt;url value="http://hl7.org/fhir/tools/extensions#display"/&gt;
+   &lt;extension url="http://hl7.org/fhir/tools/extensions#display"&gt;
      &lt;valueString value="New Zealand a.k.a Kiwiland"/&gt;     
    &lt;/extension&gt;
  &lt;/<b>code</b>&gt;
@@ -148,14 +152,17 @@ the first array, as demonstrated in this example:
 <p>is represented in JSON as:</p>
 <pre class="json">
  "code": [ "au", "nz" ],
- "_code": [
+ "_code": [ 
    null, 
-   { "extension": {
+   { "extension": [{
       "url" : "http://example.org/fhir/extensions#text",
       "valueString" : "New Zealand a.k.a Kiwiland"
-   } ]
+   }] }
+  ]
  }
 </pre>
+<p>Note: when one of the repeating elements has no value, it is represented in the first array using a null. When
+an element has a value but no extension/id, the second array will have a null at the position of that element.</p>
 <blockquote>
 <p>
 Design Note: The representation of primitive data types has been 
@@ -235,9 +242,14 @@ However some JSON generators do not give the authoring application control of th
 property values, and so these implementations cannot inter-operate with implementations that make
 assumptions about order. Given that JSON says that the property values are an unordered map of name/value
 pairs, this specification cannot require that properties come in any particular order, though implementers
-may choose to fix the property order if they are able.
+may choose to fix the property order if they are able (and the reference platforms provided with this 
+specification do so).
 </p>
 </blockquote>
+
+<p>
+There is <a href="json-edge-cases.json">a sample file</a> with many edge cases to help test JSON parsers.
+</p>
 
 <a name="bundle"> </a>
 <a name="atom"> </a>
@@ -247,7 +259,8 @@ may choose to fix the property order if they are able.
 <p>
 In JSON <a href="extras.html#bundle">bundles</a> are represented using a JSON format that is tailored to the specific needs for bundles. 
 Each element in the Xml feed definition has a JSON corresponding JSON object member with the same name. For convenience, a bundle has a 
-"resourceType" property with the value of "Bundle". Here is an example feed returning search results for a person query:
+"resourceType" property with the value of "Bundle" ("resourceType" is used for consistency with resources, even though a bundle is 
+not a resource, but a container of resources). Here is an example feed returning search results for a person query:
 </p>
 
 <pre class="json">
@@ -284,7 +297,8 @@ Each element in the Xml feed definition has a JSON corresponding JSON object mem
       &quot;scheme&quot; : &quot;[Tag Type]&quot;
     }],
     &quot;content&quot; : {
-      &quot;Person&quot; : { ...person content in JSON... }
+      &quot;resourceType&quot; : &quot;Patient&quot;,
+      { ...patient content in JSON... }
     },
     &quot;summary&quot; : &quot;&lt;div xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;(text summary)&lt;/div&gt;&quot;,
   },
@@ -326,25 +340,36 @@ The entry is known to be deleted because a date of deletion is given. An id SHAL
 <a name="binary"> </a>
 <h4>Binary Resources</h4>
 <p>
-There are situations where it is useful or required to handle pure binary content 
-as resources. Typically, this is when the binary content is referred to from other FHIR 
-Resources. The resource can contain any content, whether text, image, pdf, zip archive, etc. 
-These resources are <a href="http.html#binary">served in their native form on the rest interface</a>,
-but can also be represented in XML or JSON, such as when including these resources in a bundle
-(used when it is convenient to include these in the feed directly rather than leaving them by reference).
-</p>
-<p>
-In JSON, Binary resources are represented like this:
+When a <a href="extras.html#binary">binary resource</a> is represented in an JSON bundle, 
+it is represented as base64 encoded content along with a content-type, which is the mime-type 
+as it would be specified in HTTP, like this:
 </p>
 <pre class="json">
-  &quot;Binary&quot; : {
-    &quot;contentType&quot; : &quot;[mime type]&quot;,
-    &quot;content&quot; : &quot;[base64 of data]&quot;
-  }
+{
+  &quot;resourceType&quot; : &quot;Binary&quot;,
+  &quot;contentType&quot; : &quot;[mime type]&quot;,
+  &quot;content&quot; : &quot;[base64 of data]&quot;
+}
+</pre>
+
+<a name="sig"> </a>
+<h4>Signatures</h4>
+<p>
+If a bundle has a signature, the signature as a JSON property "signature", 
+whose property value is an XML string that is a valid
+<a href="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/#sec-Signature">XML signature</a>
+element.
+</p>
+
+<pre class="json">
+{
+  &quot;resourceType&quot; : &quot;Bundle&quot;,
+  ... metadata and entries as described above....
+  &quot;signature&quot; : &quot;&lt;signature xmlns=\&quot;http://www.w3.org/2000/09/xmldsig\&quot;&gt;...&lt;/signature&gt;&quot;
+}
 </pre>
 
 </div>
-[%onthispage Resource Definition#root|Narrative#Narrative|Internal References#idref|JSON#json|Atom (Bundle)#atom|JSON (Bundle)#json-bundles|Schema#schema%]
 
 [%file newfooter%]
 </body>

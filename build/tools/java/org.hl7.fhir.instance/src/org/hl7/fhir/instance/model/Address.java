@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
 
 import java.util.*;
 
@@ -68,7 +68,7 @@ public class Address extends Type {
         }
     }
 
-  public class AddressUseEnumFactory implements EnumFactory {
+  public static class AddressUseEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
@@ -97,7 +97,7 @@ public class Address extends Type {
     }
 
     /**
-     * Identifies the intended purpose of this address.
+     * The use of this address.
      */
     protected Enumeration<AddressUse> use;
 
@@ -137,19 +137,36 @@ P.O. Box number, delivery hints, and similar address information.
      */
     protected Period period;
 
+    public Address() {
+      super();
+    }
+
+    /**
+     * @return {@link #use} (The use of this address.)
+     */
     public Enumeration<AddressUse> getUse() { 
       return this.use;
     }
 
-    public void setUse(Enumeration<AddressUse> value) { 
+    /**
+     * @param value {@link #use} (The use of this address.)
+     */
+    public Address setUse(Enumeration<AddressUse> value) { 
       this.use = value;
+      return this;
     }
 
+    /**
+     * @return The use of this address.
+     */
     public AddressUse getUseSimple() { 
       return this.use == null ? null : this.use.getValue();
     }
 
-    public void setUseSimple(AddressUse value) { 
+    /**
+     * @param value The use of this address.
+     */
+    public Address setUseSimple(AddressUse value) { 
       if (value == null)
         this.use = null;
       else {
@@ -157,21 +174,35 @@ P.O. Box number, delivery hints, and similar address information.
           this.use = new Enumeration<AddressUse>();
         this.use.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #text} (A full text representation of the address.)
+     */
     public String_ getText() { 
       return this.text;
     }
 
-    public void setText(String_ value) { 
+    /**
+     * @param value {@link #text} (A full text representation of the address.)
+     */
+    public Address setText(String_ value) { 
       this.text = value;
+      return this;
     }
 
+    /**
+     * @return A full text representation of the address.
+     */
     public String getTextSimple() { 
       return this.text == null ? null : this.text.getValue();
     }
 
-    public void setTextSimple(String value) { 
+    /**
+     * @param value A full text representation of the address.
+     */
+    public Address setTextSimple(String value) { 
       if (value == null)
         this.text = null;
       else {
@@ -179,19 +210,32 @@ P.O. Box number, delivery hints, and similar address information.
           this.text = new String_();
         this.text.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #line} (This component contains the house number, apartment number, street name, street direction, 
+P.O. Box number, delivery hints, and similar address information.)
+     */
     public List<String_> getLine() { 
       return this.line;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #line} (This component contains the house number, apartment number, street name, street direction, 
+P.O. Box number, delivery hints, and similar address information.)
+     */
     public String_ addLine() { 
       String_ t = new String_();
       this.line.add(t);
       return t;
     }
 
+    /**
+     * @param value {@link #line} (This component contains the house number, apartment number, street name, street direction, 
+P.O. Box number, delivery hints, and similar address information.)
+     */
     public String_ addLineSimple(String value) { 
       String_ t = new String_();
       t.setValue(value);
@@ -199,19 +243,32 @@ P.O. Box number, delivery hints, and similar address information.
       return t;
     }
 
+    /**
+     * @return {@link #city} (The name of the city, town, village or other community or delivery center.)
+     */
     public String_ getCity() { 
       return this.city;
     }
 
-    public void setCity(String_ value) { 
+    /**
+     * @param value {@link #city} (The name of the city, town, village or other community or delivery center.)
+     */
+    public Address setCity(String_ value) { 
       this.city = value;
+      return this;
     }
 
+    /**
+     * @return The name of the city, town, village or other community or delivery center.
+     */
     public String getCitySimple() { 
       return this.city == null ? null : this.city.getValue();
     }
 
-    public void setCitySimple(String value) { 
+    /**
+     * @param value The name of the city, town, village or other community or delivery center.
+     */
+    public Address setCitySimple(String value) { 
       if (value == null)
         this.city = null;
       else {
@@ -219,21 +276,35 @@ P.O. Box number, delivery hints, and similar address information.
           this.city = new String_();
         this.city.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #state} (Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (i.e. US 2 letter state codes).)
+     */
     public String_ getState() { 
       return this.state;
     }
 
-    public void setState(String_ value) { 
+    /**
+     * @param value {@link #state} (Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (i.e. US 2 letter state codes).)
+     */
+    public Address setState(String_ value) { 
       this.state = value;
+      return this;
     }
 
+    /**
+     * @return Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (i.e. US 2 letter state codes).
+     */
     public String getStateSimple() { 
       return this.state == null ? null : this.state.getValue();
     }
 
-    public void setStateSimple(String value) { 
+    /**
+     * @param value Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (i.e. US 2 letter state codes).
+     */
+    public Address setStateSimple(String value) { 
       if (value == null)
         this.state = null;
       else {
@@ -241,21 +312,35 @@ P.O. Box number, delivery hints, and similar address information.
           this.state = new String_();
         this.state.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #zip} (A postal code designating a region defined by the postal service.)
+     */
     public String_ getZip() { 
       return this.zip;
     }
 
-    public void setZip(String_ value) { 
+    /**
+     * @param value {@link #zip} (A postal code designating a region defined by the postal service.)
+     */
+    public Address setZip(String_ value) { 
       this.zip = value;
+      return this;
     }
 
+    /**
+     * @return A postal code designating a region defined by the postal service.
+     */
     public String getZipSimple() { 
       return this.zip == null ? null : this.zip.getValue();
     }
 
-    public void setZipSimple(String value) { 
+    /**
+     * @param value A postal code designating a region defined by the postal service.
+     */
+    public Address setZipSimple(String value) { 
       if (value == null)
         this.zip = null;
       else {
@@ -263,21 +348,35 @@ P.O. Box number, delivery hints, and similar address information.
           this.zip = new String_();
         this.zip.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #country} (Country. ISO 3166 3 letter codes can be used in place of a full country name.)
+     */
     public String_ getCountry() { 
       return this.country;
     }
 
-    public void setCountry(String_ value) { 
+    /**
+     * @param value {@link #country} (Country. ISO 3166 3 letter codes can be used in place of a full country name.)
+     */
+    public Address setCountry(String_ value) { 
       this.country = value;
+      return this;
     }
 
+    /**
+     * @return Country. ISO 3166 3 letter codes can be used in place of a full country name.
+     */
     public String getCountrySimple() { 
       return this.country == null ? null : this.country.getValue();
     }
 
-    public void setCountrySimple(String value) { 
+    /**
+     * @param value Country. ISO 3166 3 letter codes can be used in place of a full country name.
+     */
+    public Address setCountrySimple(String value) { 
       if (value == null)
         this.country = null;
       else {
@@ -285,15 +384,35 @@ P.O. Box number, delivery hints, and similar address information.
           this.country = new String_();
         this.country.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #period} (Time period when address was/is in use.)
+     */
     public Period getPeriod() { 
       return this.period;
     }
 
-    public void setPeriod(Period value) { 
+    /**
+     * @param value {@link #period} (Time period when address was/is in use.)
+     */
+    public Address setPeriod(Period value) { 
       this.period = value;
+      return this;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("use", "code", "The use of this address.", 0, java.lang.Integer.MAX_VALUE, use));
+        childrenList.add(new Property("text", "string", "A full text representation of the address.", 0, java.lang.Integer.MAX_VALUE, text));
+        childrenList.add(new Property("line", "string", "This component contains the house number, apartment number, street name, street direction, \nP.O. Box number, delivery hints, and similar address information.", 0, java.lang.Integer.MAX_VALUE, line));
+        childrenList.add(new Property("city", "string", "The name of the city, town, village or other community or delivery center.", 0, java.lang.Integer.MAX_VALUE, city));
+        childrenList.add(new Property("state", "string", "Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (i.e. US 2 letter state codes).", 0, java.lang.Integer.MAX_VALUE, state));
+        childrenList.add(new Property("zip", "string", "A postal code designating a region defined by the postal service.", 0, java.lang.Integer.MAX_VALUE, zip));
+        childrenList.add(new Property("country", "string", "Country. ISO 3166 3 letter codes can be used in place of a full country name.", 0, java.lang.Integer.MAX_VALUE, country));
+        childrenList.add(new Property("period", "Period", "Time period when address was/is in use.", 0, java.lang.Integer.MAX_VALUE, period));
+      }
 
       public Address copy() {
         Address dst = new Address();

@@ -2,7 +2,7 @@
        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
       
-[%settitle Resource Definitions%]
+[%settitle Resource References%]
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 [%file newheader%]
@@ -12,16 +12,26 @@
 
 <div class="col-9">
 
+<h2>Resource References</h2>
+
+<p>
+Resources contain two types of references:
+</p>
+<ul>
+ <li><b>Internal references</b> - references between the elements in a resource</li>
+ <li><b>External references</b> - references from one resource to another</li>
+</ul>
+
 <a name="idref"></a>
 <a name="id"></a>
-<h2>Internal References</h2>
+<h3>Internal References</h3>
 <p>
 There are 3 cases where elements inside a resource reference each other:
 </p>
 <ul>
  <li>Between a ResourceReference and an <a href="references.html#contained">contained resource</a></li>
  <li>Between elements in the narrative and structured data elements</li>
- <li>An &lt;img src=""/&gt; reference in the narrative, referring to an image found in the resource (as a contained <a href="media.html">Media</a> or <a href="binary.html">Binary</a> resource)</li>
+ <li>An &lt;img src=""/&gt; reference in the narrative, referring to an image found in the resource (as a contained <a href="media.html">Media</a> or <a href="extras.html#binary">Binary</a> resource)</li>
 </ul>
 <p>
 These references are done using an id/idref based approach, where a source element indicates that it 
@@ -58,6 +68,7 @@ to the XML attribute "id".
 </p>
 
 <a name="ResourceReference"> </a>
+<a name="resourcereference"> </a>
 <a name="Resource"> </a>
 <a name="references"> </a>
 <a name="Identification"> </a>
@@ -106,7 +117,7 @@ The actual reference looks like this:
  <li>The <i>reference</i> element contains a url that is either 
    <ul>
      <li>an absolute URL</li>
-     <li>a relative URL, which is relative to the <a href="http.html#root">Service Base URL</a>, or, in a bundle, <a href="atom-refs">the bundle context</a></li>
+     <li>a relative URL, which is relative to the <a href="http.html#root">Service Base URL</a>, or, in a bundle, <a href="#atom-refs">the bundle context</a></li>
      <li>an internal fragment reference (see "Contained Resources" below)</li>
    </ul>
  </li>
@@ -205,15 +216,14 @@ An example of a contained resource:
 The same example in JSON:
 </p>
 <pre class="json"> 
-{ "Document" : {
+{ "resourceType" : "Document",
   "extension" : { ... },
   "text" : { .. },
   "contained: [
-    {"Organization" : {
+    { "resourceType" : "Organization",
       "id" : "org1",
       .. whatever information is available ...
-	}}
-  ]
+	}  ]
   "information: {
     ... other attributes ...
     "custodian" : {
@@ -221,7 +231,7 @@ The same example in JSON:
 	}
     ... other attributes ...
   }
-}}
+}
 </pre>
 </div>
 <blockquote>
@@ -315,7 +325,7 @@ other implementation-specific method for resolving how to find the resource.
 </p>
 <p>
 Note that internal references are allowed to be URIs rather than literal
-URLs. A typical case is the use of <a href="http.htm#transaction">cid: URIs in a transaction</a>.
+URLs. A typical case is the use of <a href="http.html#transaction">cid: URIs in a transaction</a>.
 </p>
 <a name="atom-rel"> </a>
 <h4>Relative References</h4>
@@ -364,7 +374,7 @@ Service Base URL must be known. This is represented in a link named
 <p>
 When the application encounters the reference "Organization/23",
 it looks up the "fhir-base" URL, which is http://example.org.
-The <a href="http.htm#root">base service URL is represented without a trailing slash</a>,
+The <a href="http.html#root">base service URL is represented without a trailing slash</a>,
 so the application concatenates the two with a "/" between them, giving
 and absolute reference of "http://example.org/Organization/23", which 
 it can resolve in this bundle. Note: the method is the same for JSON bundles.
@@ -383,8 +393,8 @@ a search or a history operation, the service root URL SHOULD match
 the URL that that client used (it is allowed not to in order to 
 cater for proxies of various kinds). However in other 
 circumstances, where the bundle itself has been exchanged onwards
-from the point of origin, and/or stored as an entity in it's own 
-right (e.g. a <a href="document.htm">clinical document</a>) the 
+from the point of origin, and/or stored as an entity in its own 
+right (e.g. a <a href="documents.html">clinical document</a>) the 
 service root URL is merely a logical construct that holds within the 
 bundle when resolving resources, and will have no meaning outside 
 the bundle. 

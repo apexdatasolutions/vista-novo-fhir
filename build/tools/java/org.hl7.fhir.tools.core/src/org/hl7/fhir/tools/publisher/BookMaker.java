@@ -113,7 +113,7 @@ public class BookMaker {
 					  found = true;
 				  else if (href.startsWith("http:") || href.startsWith("https:") || href.startsWith("mailto:") || href.startsWith("ftp:"))
 					  found = true;
-				  else if (href.startsWith("v2/") || href.startsWith("v3/")) {
+				  else if (href.startsWith("v2/") || href.startsWith("v3/") || href.startsWith("../")) {
 				    found = true;
 				    node.setAttribute("href", "http://hl7.org/fhir"+href);
 				  }
@@ -425,7 +425,7 @@ public class BookMaker {
           } else if (s.endsWith(".html")) {
             s = "#"+s.substring(0, i);
           } else {
-            if (!s.endsWith(".zip") && !s.endsWith(".xsd") && !s.endsWith(".json") && !s.endsWith(".png") && !s.endsWith(".xml") && !s.endsWith(".eap") && !s.endsWith(".xmi")) {
+            if (!s.endsWith(".zip") && !s.endsWith(".xsd") && !s.endsWith(".xml") && !s.endsWith(".json") && !s.endsWith(".png") && !s.endsWith(".xml") && !s.endsWith(".eap") && !s.endsWith(".xmi")) {
               System.out.println("odd ref: "+s+" in "+node.allText());
               //s = s;
             } else {

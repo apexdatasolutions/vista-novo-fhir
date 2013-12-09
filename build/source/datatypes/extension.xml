@@ -58,11 +58,16 @@
    <Interior ss:Color="#D9D9D9" ss:Pattern="Solid"/>
   </Style>
   <Style ss:ID="s66">
+   <Alignment ss:Vertical="Top"/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"
+    ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s67">
    <Alignment ss:Vertical="Top" ss:ShrinkToFit="1" ss:WrapText="1"/>
   </Style>
  </Styles>
  <Worksheet ss:Name="Data Elements">
-  <Table ss:ExpandedColumnCount="14" ss:ExpandedRowCount="6" x:FullColumns="1"
+  <Table ss:ExpandedColumnCount="14" ss:ExpandedRowCount="5" x:FullColumns="1"
    x:FullRows="1" ss:StyleID="s62" ss:DefaultRowHeight="15">
    <Column ss:StyleID="s63" ss:AutoFitWidth="0" ss:Width="130.5"/>
    <Column ss:StyleID="s62" ss:AutoFitWidth="0" ss:Width="39.75"/>
@@ -102,24 +107,12 @@
     <Cell ss:Index="11"><Data ss:Type="String">N/A</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="60">
-    <Cell><Data ss:Type="String">Extension.url</Data></Cell>
+    <Cell ss:StyleID="s66"><Data ss:Type="String">Extension.@url</Data></Cell>
     <Cell><Data ss:Type="String">1..1</Data></Cell>
-    <Cell><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:Index="5"><Data ss:Type="String">uri</Data></Cell>
     <Cell ss:Index="7"><Data ss:Type="String">identifies the meaning of the extension</Data></Cell>
     <Cell><Data ss:Type="String">Source of the definition for the extension code - a logical name or a URL</Data></Cell>
     <Cell ss:Index="10"><Data ss:Type="String">The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition should be version specific.  This will ideally be the URI for the Resource Profile defining the extension, with the code for the extension after a #</Data></Cell>
-    <Cell><Data ss:Type="String">N/A</Data></Cell>
-   </Row>
-   <Row ss:AutoFitHeight="0" ss:Height="60">
-    <Cell><Data ss:Type="String">!Extension.isModifier</Data></Cell>
-    <Cell><Data ss:Type="String">0..1</Data></Cell>
-    <Cell><Data ss:Type="Number">2</Data></Cell>
-    <Cell><Data ss:Type="String">y</Data></Cell>
-    <Cell><Data ss:Type="String">boolean</Data></Cell>
-    <Cell ss:Index="7"><Data ss:Type="String">If extension modifies other elements/extensions</Data></Cell>
-    <Cell><Data ss:Type="String">This value should be set to true if the value of the extension qualifies or negates data in other content</Data></Cell>
-    <Cell ss:Index="10"><Data ss:Type="String">If this element is set to true, then the containing resource/element and its children are only safe to process if the reader understands this extension, and knows what the potential impact is. This does not mean that the application is required to do anything with the value, it is just not permitted to act inappropriately for any possible value in the element </Data></Cell>
     <Cell><Data ss:Type="String">N/A</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="60">
@@ -130,14 +123,7 @@
     <Cell><Data ss:Type="String">Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)</Data></Cell>
     <Cell ss:Index="11"><Data ss:Type="String">N/A</Data></Cell>
    </Row>
-   <Row ss:AutoFitHeight="0" ss:Height="30">
-    <Cell><Data ss:Type="String">!Extension.extension</Data></Cell>
-    <Cell><Data ss:Type="String">0..*</Data></Cell>
-    <Cell><Data ss:Type="Number">1</Data></Cell>
-    <Cell ss:Index="5"><Data ss:Type="String">Extension</Data></Cell>
-    <Cell ss:Index="7"><Data ss:Type="String">Nested values for extension</Data></Cell>
-    <Cell><Data ss:Type="String">Nested Complex extensions</Data></Cell>
-   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="30"/>
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
    <PageSetup>
@@ -150,7 +136,8 @@
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>1</ActiveRow>
+     <ActiveRow>2</ActiveRow>
+     <ActiveCol>2</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -158,13 +145,13 @@
   </WorksheetOptions>
  </Worksheet>
  <Worksheet ss:Name="Invariants">
-  <Table ss:ExpandedColumnCount="6" ss:ExpandedRowCount="3" x:FullColumns="1"
-   x:FullRows="1" ss:StyleID="s66" ss:DefaultRowHeight="15">
-   <Column ss:StyleID="s66" ss:AutoFitWidth="0" ss:Width="27"/>
-   <Column ss:StyleID="s66" ss:Width="66"/>
-   <Column ss:StyleID="s66" ss:Width="51"/>
-   <Column ss:StyleID="s66" ss:AutoFitWidth="0" ss:Width="243.75"/>
-   <Column ss:Index="6" ss:StyleID="s66" ss:AutoFitWidth="0" ss:Width="198.75"/>
+  <Table ss:ExpandedColumnCount="6" ss:ExpandedRowCount="1" x:FullColumns="1"
+   x:FullRows="1" ss:StyleID="s67" ss:DefaultRowHeight="15">
+   <Column ss:StyleID="s67" ss:AutoFitWidth="0" ss:Width="27"/>
+   <Column ss:StyleID="s67" ss:Width="66"/>
+   <Column ss:StyleID="s67" ss:Width="51"/>
+   <Column ss:StyleID="s67" ss:AutoFitWidth="0" ss:Width="243.75"/>
+   <Column ss:Index="6" ss:StyleID="s67" ss:AutoFitWidth="0" ss:Width="198.75"/>
    <Row ss:AutoFitHeight="0" ss:StyleID="s64">
     <Cell><Data ss:Type="String">Id</Data></Cell>
     <Cell><Data ss:Type="String">Name</Data></Cell>
@@ -172,16 +159,6 @@
     <Cell><Data ss:Type="String">English</Data></Cell>
     <Cell><Data ss:Type="String">OCL</Data></Cell>
     <Cell><Data ss:Type="String">XPath</Data></Cell>
-   </Row>
-   <Row ss:AutoFitHeight="0" ss:Height="30">
-    <Cell><Data ss:Type="Number">1</Data></Cell>
-    <Cell><Data ss:Type="String">No Internal extensions</Data></Cell>
-    <Cell><Data ss:Type="String">Extension</Data></Cell>
-    <Cell ss:StyleID="s62"><Data ss:Type="String">No extensions on url</Data></Cell>
-    <Cell ss:Index="6"><Data ss:Type="String">not(exists(f:url/f:extension))</Data></Cell>
-   </Row>
-   <Row ss:AutoFitHeight="0" ss:Height="30">
-    <Cell ss:Index="4" ss:StyleID="s62"/>
    </Row>
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
@@ -195,7 +172,6 @@
     <Pane>
      <Number>3</Number>
      <ActiveRow>1</ActiveRow>
-     <ActiveCol>3</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>

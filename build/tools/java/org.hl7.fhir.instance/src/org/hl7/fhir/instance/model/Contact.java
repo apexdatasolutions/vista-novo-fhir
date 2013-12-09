@@ -29,7 +29,9 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
+
+import java.util.*;
 
 /**
  * All kinds of technology mediated contact details for a person or organisation, including telephone, email, etc.
@@ -66,7 +68,7 @@ public class Contact extends Type {
         }
     }
 
-  public class ContactSystemEnumFactory implements EnumFactory {
+  public static class ContactSystemEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
@@ -128,7 +130,7 @@ public class Contact extends Type {
         }
     }
 
-  public class ContactUseEnumFactory implements EnumFactory {
+  public static class ContactUseEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
@@ -180,19 +182,36 @@ public class Contact extends Type {
      */
     protected Period period;
 
+    public Contact() {
+      super();
+    }
+
+    /**
+     * @return {@link #system} (Telecommunications form for contact - what communications system is required to make use of the contact.)
+     */
     public Enumeration<ContactSystem> getSystem() { 
       return this.system;
     }
 
-    public void setSystem(Enumeration<ContactSystem> value) { 
+    /**
+     * @param value {@link #system} (Telecommunications form for contact - what communications system is required to make use of the contact.)
+     */
+    public Contact setSystem(Enumeration<ContactSystem> value) { 
       this.system = value;
+      return this;
     }
 
+    /**
+     * @return Telecommunications form for contact - what communications system is required to make use of the contact.
+     */
     public ContactSystem getSystemSimple() { 
       return this.system == null ? null : this.system.getValue();
     }
 
-    public void setSystemSimple(ContactSystem value) { 
+    /**
+     * @param value Telecommunications form for contact - what communications system is required to make use of the contact.
+     */
+    public Contact setSystemSimple(ContactSystem value) { 
       if (value == null)
         this.system = null;
       else {
@@ -200,21 +219,35 @@ public class Contact extends Type {
           this.system = new Enumeration<ContactSystem>();
         this.system.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #value} (The actual contact details, in a form that is meaningful to the designated communication system (i.e. phone number or email address).)
+     */
     public String_ getValue() { 
       return this.value;
     }
 
-    public void setValue(String_ value) { 
+    /**
+     * @param value {@link #value} (The actual contact details, in a form that is meaningful to the designated communication system (i.e. phone number or email address).)
+     */
+    public Contact setValue(String_ value) { 
       this.value = value;
+      return this;
     }
 
+    /**
+     * @return The actual contact details, in a form that is meaningful to the designated communication system (i.e. phone number or email address).
+     */
     public String getValueSimple() { 
       return this.value == null ? null : this.value.getValue();
     }
 
-    public void setValueSimple(String value) { 
+    /**
+     * @param value The actual contact details, in a form that is meaningful to the designated communication system (i.e. phone number or email address).
+     */
+    public Contact setValueSimple(String value) { 
       if (value == null)
         this.value = null;
       else {
@@ -222,21 +255,35 @@ public class Contact extends Type {
           this.value = new String_();
         this.value.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #use} (Identifies the context for the address.)
+     */
     public Enumeration<ContactUse> getUse() { 
       return this.use;
     }
 
-    public void setUse(Enumeration<ContactUse> value) { 
+    /**
+     * @param value {@link #use} (Identifies the context for the address.)
+     */
+    public Contact setUse(Enumeration<ContactUse> value) { 
       this.use = value;
+      return this;
     }
 
+    /**
+     * @return Identifies the context for the address.
+     */
     public ContactUse getUseSimple() { 
       return this.use == null ? null : this.use.getValue();
     }
 
-    public void setUseSimple(ContactUse value) { 
+    /**
+     * @param value Identifies the context for the address.
+     */
+    public Contact setUseSimple(ContactUse value) { 
       if (value == null)
         this.use = null;
       else {
@@ -244,15 +291,31 @@ public class Contact extends Type {
           this.use = new Enumeration<ContactUse>();
         this.use.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #period} (Time period when the contact was/is in use.)
+     */
     public Period getPeriod() { 
       return this.period;
     }
 
-    public void setPeriod(Period value) { 
+    /**
+     * @param value {@link #period} (Time period when the contact was/is in use.)
+     */
+    public Contact setPeriod(Period value) { 
       this.period = value;
+      return this;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("system", "code", "Telecommunications form for contact - what communications system is required to make use of the contact.", 0, java.lang.Integer.MAX_VALUE, system));
+        childrenList.add(new Property("value", "string", "The actual contact details, in a form that is meaningful to the designated communication system (i.e. phone number or email address).", 0, java.lang.Integer.MAX_VALUE, value));
+        childrenList.add(new Property("use", "code", "Identifies the context for the address.", 0, java.lang.Integer.MAX_VALUE, use));
+        childrenList.add(new Property("period", "Period", "Time period when the contact was/is in use.", 0, java.lang.Integer.MAX_VALUE, period));
+      }
 
       public Contact copy() {
         Contact dst = new Contact();

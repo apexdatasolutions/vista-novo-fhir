@@ -29,7 +29,9 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
+
+import java.util.*;
 
 /**
  * A set of ordered Quantities defined by a low and high limit.
@@ -46,21 +48,45 @@ public class Range extends Type {
      */
     protected Quantity high;
 
+    public Range() {
+      super();
+    }
+
+    /**
+     * @return {@link #low} (The low limit. The boundary is inclusive.)
+     */
     public Quantity getLow() { 
       return this.low;
     }
 
-    public void setLow(Quantity value) { 
+    /**
+     * @param value {@link #low} (The low limit. The boundary is inclusive.)
+     */
+    public Range setLow(Quantity value) { 
       this.low = value;
+      return this;
     }
 
+    /**
+     * @return {@link #high} (The high limit. The boundary is inclusive.)
+     */
     public Quantity getHigh() { 
       return this.high;
     }
 
-    public void setHigh(Quantity value) { 
+    /**
+     * @param value {@link #high} (The high limit. The boundary is inclusive.)
+     */
+    public Range setHigh(Quantity value) { 
       this.high = value;
+      return this;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("low", "Quantity", "The low limit. The boundary is inclusive.", 0, java.lang.Integer.MAX_VALUE, low));
+        childrenList.add(new Property("high", "Quantity", "The high limit. The boundary is inclusive.", 0, java.lang.Integer.MAX_VALUE, high));
+      }
 
       public Range copy() {
         Range dst = new Range();

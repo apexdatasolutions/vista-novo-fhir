@@ -82,7 +82,7 @@
     </species>
     <breed>
       <coding>
-        <system value="http://snomed.info/id"/>
+        <system value="http://snomed.info/sct"/>
         <code value="58108001"/>
         <display value="Golden retriever"/>
       </coding>
@@ -100,9 +100,9 @@
     </genderStatus>
   </animal>
 
-  <provider>
+  <managingOrganization>
     <display value="Pete's Vetinary Services"/>
-  </provider>
+  </managingOrganization>
 
   <active value="true"/>
 </Patient>

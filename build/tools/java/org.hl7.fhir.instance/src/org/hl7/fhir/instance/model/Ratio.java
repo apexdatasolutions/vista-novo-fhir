@@ -29,7 +29,9 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
+
+import java.util.*;
 
 /**
  * A ratio of two Quantity values - a numerator and a denominator.
@@ -46,21 +48,45 @@ public class Ratio extends Type {
      */
     protected Quantity denominator;
 
+    public Ratio() {
+      super();
+    }
+
+    /**
+     * @return {@link #numerator} (The numerator.)
+     */
     public Quantity getNumerator() { 
       return this.numerator;
     }
 
-    public void setNumerator(Quantity value) { 
+    /**
+     * @param value {@link #numerator} (The numerator.)
+     */
+    public Ratio setNumerator(Quantity value) { 
       this.numerator = value;
+      return this;
     }
 
+    /**
+     * @return {@link #denominator} (The denominator.)
+     */
     public Quantity getDenominator() { 
       return this.denominator;
     }
 
-    public void setDenominator(Quantity value) { 
+    /**
+     * @param value {@link #denominator} (The denominator.)
+     */
+    public Ratio setDenominator(Quantity value) { 
       this.denominator = value;
+      return this;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("numerator", "Quantity", "The numerator.", 0, java.lang.Integer.MAX_VALUE, numerator));
+        childrenList.add(new Property("denominator", "Quantity", "The denominator.", 0, java.lang.Integer.MAX_VALUE, denominator));
+      }
 
       public Ratio copy() {
         Ratio dst = new Ratio();

@@ -64,7 +64,6 @@ import org.hl7.fhir.utilities.CSFile;
 import org.hl7.fhir.utilities.Logger;
 import org.hl7.fhir.utilities.TextFile;
 import org.hl7.fhir.utilities.ZipGenerator;
-//import org.hl7.fhir.instance.formats.JsonComposer;
 
 public class JavaGenerator extends BaseGenerator implements PlatformGenerator {
 
@@ -174,9 +173,9 @@ public void generate(Definitions definitions, String destDir, String implDir, St
     zip.addFiles(implDir+"org.hl7.fhir.utilities"+sl+"src"+ sl+"org"+sl+"hl7"+sl+"fhir"+sl+"utilities"+sl, "org/hl7/fhir/utilities/", ".java", null);
     zip.addFiles(implDir+"org.hl7.fhir.utilities"+sl+"src"+ sl+"org"+sl+"hl7"+sl+"fhir"+sl+"utilities"+sl+"xhtml"+sl, "org/hl7/fhir/utilities/xhtml/", ".java", null);
     zip.addFiles(implDir+"org.hl7.fhir.utilities"+sl+"src"+ sl+"org"+sl+"hl7"+sl+"fhir"+sl+"utilities"+sl+"xml"+sl, "org/hl7/fhir/utilities/xml/", ".java", null);
-    zip.addFileName("imports"+sl+"xpp3-1.1.3.4.O.jar", implDir+sl+"imports"+sl+"xpp3-1.1.3.4.O.jar");
-    zip.addFileName("imports"+sl+"gson-2.2.4.jar", implDir+sl+"imports"+sl+"gson-2.2.4.jar");
-    zip.addFileName("imports"+sl+"commons-codec-1.3.jar", implDir+sl+"imports"+sl+"commons-codec-1.3.jar");
+    zip.addFileName("imports"+sl+"xpp3-1.1.3.4.O.jar", implDir+sl+"imports"+sl+"xpp3-1.1.3.4.O.jar", false);
+    zip.addFileName("imports"+sl+"gson-2.2.4.jar", implDir+sl+"imports"+sl+"gson-2.2.4.jar", false);
+    zip.addFileName("imports"+sl+"commons-codec-1.3.jar", implDir+sl+"imports"+sl+"commons-codec-1.3.jar", false);
     
     zip.close();
     jjComposerGen.close();
@@ -245,7 +244,7 @@ public boolean isECoreGenerator() {
 
   @Override
 public void generate(org.hl7.fhir.definitions.ecore.fhir.Definitions definitions, String destDir,
-      String implDir, Logger logger) throws Exception {
+      String implDir, Logger logger, String svnRevision) throws Exception {
     throw new UnsupportedOperationException("Java generator uses ElementDefn-style definitions.");	
   }
 
@@ -264,7 +263,7 @@ public boolean doesCompile() {
   }
   
   @Override
-public boolean compile(String rootDir, List<String> errors) throws Exception {
+public boolean compile(String rootDir, List<String> errors, Logger logger) throws Exception {
     this.rootDir = rootDir;
     char sc = File.separatorChar;
     List<File> classes = new ArrayList<File>();
@@ -504,7 +503,7 @@ public String checkFragments(String rootDir, String fragments) throws Exception 
     command.add(file.getAbsolutePath());
     command.add(filed.getAbsolutePath());
 
-    ProcessBuilder builder = new ProcessBuilder(command);
+    ProcessBuilder builder = new ProcessBuilder().inheritIO().command(command);
     builder.directory(new File(rootDir));
 
     final Process process = builder.start();
