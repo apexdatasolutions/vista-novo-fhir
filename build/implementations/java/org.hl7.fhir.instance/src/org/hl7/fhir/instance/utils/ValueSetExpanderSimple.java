@@ -37,7 +37,7 @@ public class ValueSetExpanderSimple implements ValueSetExpander {
   
   public ValueSet expand(ValueSet source) throws Exception {
     focus = source.copy();
-    focus.setExpansion(focus.new ValueSetExpansionComponent());
+    focus.setExpansion(new ValueSet.ValueSetExpansionComponent());
     focus.getExpansion().setTimestampSimple(Calendar.getInstance());
     
   	
@@ -80,7 +80,7 @@ public class ValueSetExpanderSimple implements ValueSetExpander {
   }
 
 	private void includeCodes(ConceptSetComponent inc) throws Exception {
-    if (inc.getSystemSimple().equals("http://snomed.info/id"))
+    if (inc.getSystemSimple().equals("http://snomed.info/sct"))
       throw new Exception("Snomed Expansion is not yet supported (which release?)");
     if (inc.getSystemSimple().equals("http://loinc.org"))
       throw new Exception("LOINC Expansion is not yet supported (todo)");
@@ -111,10 +111,12 @@ public class ValueSetExpanderSimple implements ValueSetExpander {
   }
 
 	private void addCodeAndDescendents(String system, ValueSetDefineConceptComponent def) {
-	  if (def.getAbstract() == null || !def.getAbstractSimple())
-	  	addCode(system, def.getCodeSimple(), def.getDisplaySimple());
-	  for (ValueSetDefineConceptComponent c : def.getConcept()) 
-	  	addCodeAndDescendents(system, c);	  
+		if (!ToolingExtensions.hasDeprecated(def)) {  
+			if (def.getAbstract() == null || !def.getAbstractSimple())
+				addCode(system, def.getCodeSimple(), def.getDisplaySimple());
+			for (ValueSetDefineConceptComponent c : def.getConcept()) 
+				addCodeAndDescendents(system, c);
+		}
   }
 
 	private void excludeCodes(ConceptSetComponent inc) throws Exception {
@@ -173,15 +175,18 @@ public class ValueSetExpanderSimple implements ValueSetExpander {
 	}
 
 	private void addDefinedCode(ValueSet vs, String system, ValueSetDefineConceptComponent c) {
-		if (c.getAbstract() == null || !c.getAbstractSimple()) {
-			addCode(system, c.getCodeSimple(), c.getDisplaySimple());
+		if (!ToolingExtensions.hasDeprecated(c)) { 
+
+			if (c.getAbstract() == null || !c.getAbstractSimple()) {
+				addCode(system, c.getCodeSimple(), c.getDisplaySimple());
+			}
+			for (ValueSetDefineConceptComponent g : c.getConcept()) 
+				addDefinedCode(vs, vs.getDefine().getSystemSimple(), g);
 		}
-  	for (ValueSetDefineConceptComponent g : c.getConcept()) 
-  		addDefinedCode(vs, vs.getDefine().getSystemSimple(), g);
   }
 
 	private void addCode(String system, String code, String display) {
-		ValueSetExpansionContainsComponent n = focus.new ValueSetExpansionContainsComponent();
+		ValueSetExpansionContainsComponent n = new ValueSet.ValueSetExpansionContainsComponent();
 		n.setSystemSimple(system);
 	  n.setCodeSimple(code);
 	  n.setDisplaySimple(display);

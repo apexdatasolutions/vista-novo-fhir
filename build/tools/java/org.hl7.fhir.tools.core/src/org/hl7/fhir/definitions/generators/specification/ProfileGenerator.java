@@ -49,6 +49,7 @@ import org.hl7.fhir.instance.formats.XmlComposer;
 import org.hl7.fhir.instance.model.Contact.ContactSystem;
 import org.hl7.fhir.instance.model.Enumeration;
 import org.hl7.fhir.instance.model.Factory;
+import org.hl7.fhir.instance.model.Id;
 import org.hl7.fhir.instance.model.Narrative;
 import org.hl7.fhir.instance.model.Narrative.NarrativeStatus;
 import org.hl7.fhir.instance.model.Profile;
@@ -61,6 +62,8 @@ import org.hl7.fhir.instance.model.Profile.ElementDefinitionConstraintComponent;
 import org.hl7.fhir.instance.model.Profile.ElementDefinitionMappingComponent;
 import org.hl7.fhir.instance.model.Profile.ExtensionContext;
 import org.hl7.fhir.instance.model.Profile.ProfileExtensionDefnComponent;
+import org.hl7.fhir.instance.model.Profile.ProfileMappingComponent;
+import org.hl7.fhir.instance.model.Profile.PropertyRepresentation;
 import org.hl7.fhir.instance.model.Profile.ResourceAggregationMode;
 import org.hl7.fhir.instance.model.Profile.ResourceSlicingRules;
 import org.hl7.fhir.instance.model.Profile.TypeRefComponent;
@@ -109,7 +112,7 @@ public class ProfileGenerator {
     Set<String> containedSlices = new HashSet<String>();
 
     for (ResourceDefn resource : profile.getResources()) {
-      Profile.ProfileStructureComponent c = p.new ProfileStructureComponent();
+      Profile.ProfileStructureComponent c = new Profile.ProfileStructureComponent();
       p.getStructure().add(c);
       c.setPublishSimple(true); // todo: when should this be set to true?
       c.setType(Factory.newCode(resource.getRoot().getName()));
@@ -121,7 +124,7 @@ public class ProfileGenerator {
     }
     containedSlices.clear();
     for (ElementDefn elem : profile.getElements()) {
-      Profile.ProfileStructureComponent c = p.new ProfileStructureComponent();
+      Profile.ProfileStructureComponent c = new Profile.ProfileStructureComponent();
       p.getStructure().add(c);
       c.setType(Factory.newCode(elem.getName()));
       // we don't profile URI when we generate in this mode - we are generating an actual statement, not a re-reference
@@ -161,7 +164,7 @@ public class ProfileGenerator {
     if (src == null)
       return null;
     
-    ElementDefinitionBindingComponent dst = p.new ElementDefinitionBindingComponent();
+    ElementDefinitionBindingComponent dst = new Profile.ElementDefinitionBindingComponent();
     dst.setName(Factory.newString_(src.getName()));
     dst.setConformanceSimple(convert(src.getBindingStrength()));
     dst.setIsExtensibleSimple(src.getExtensibility() == BindingExtensibility.Extensible);
@@ -213,14 +216,14 @@ public class ProfileGenerator {
   }
 
   private ProfileExtensionDefnComponent generateExtensionDefn(ExtensionDefn src, Profile p) throws Exception {
-    ProfileExtensionDefnComponent dst = p.new ProfileExtensionDefnComponent();
+    ProfileExtensionDefnComponent dst = new Profile.ProfileExtensionDefnComponent();
     dst.setCode(Factory.newCode(src.getCode()));
     dst.setDisplaySimple(src.getDefinition().getShortDefn());
     dst.getContext().add(Factory.newString_(src.getContext()));
     dst.setContextTypeSimple(convertContextType(src.getType()));
 
     ElementDefn dSrc = src.getDefinition();
-    ElementDefinitionComponent dDst = p.new ElementDefinitionComponent();
+    ElementDefinitionComponent dDst = new Profile.ElementDefinitionComponent();
     dst.setDefinition(dDst);
 
     dDst.setShort(Factory.newString_(dSrc.getShortDefn()));
@@ -235,16 +238,13 @@ public class ProfileGenerator {
     dDst.setIsModifier(Factory.newBoolean(dSrc.isModifier()));
     // dDst.
     for (TypeRef t : dSrc.getTypes()) {
-      TypeRefComponent type = p.new TypeRefComponent();
+      TypeRefComponent type = new Profile.TypeRefComponent();
       type.setCode(Factory.newCode(t.summary()));
       dDst.getType().add(type);
     }
     for (String mu : ElementDefn.getAllMappingUris()) {
       if (dSrc.hasMapping(mu)) {
-        ElementDefinitionMappingComponent m = p.new ElementDefinitionMappingComponent();
-        m.setTargetSimple(mu);
-        m.setMapSimple(dSrc.getMapping(mu));
-        dDst.getMapping().add(m);
+        addMapping(p, dDst, mu, dSrc.getMapping(mu));
       }
     }
     if (!Utilities.noString(dSrc.getBindingName()))
@@ -267,23 +267,25 @@ public class ProfileGenerator {
   }
 
   private Profile.ElementComponent defineElement(ProfileDefn pd, Profile p, Profile.ProfileStructureComponent c, ElementDefn e, String path, GenerationMode mode, Set<String> slices) throws Exception {
-    Profile.ElementComponent ce = p.new ElementComponent();
+    Profile.ElementComponent ce = new Profile.ElementComponent();
     c.getElement().add(ce);
     ce.setPath(Factory.newString_(path));
+    if (e.isXmlAttribute())
+      ce.addRepresentationSimple(PropertyRepresentation.xmlAttr);
     if (!Utilities.noString(e.getProfileName())) {
       if (!Utilities.noString(e.getDiscriminator()) && !slices.contains(path)) {
-        ce.setSlicing(p.new ElementSlicingComponent());
+        ce.setSlicing(new Profile.ElementSlicingComponent());
         ce.getSlicing().setDiscriminatorSimple(e.getDiscriminator());
         ce.getSlicing().setOrderedSimple(false);
         ce.getSlicing().setRulesSimple(ResourceSlicingRules.open);
-        ce = p.new ElementComponent();
+        ce = new Profile.ElementComponent();
         c.getElement().add(ce);
         ce.setPath(Factory.newString_(path));
         slices.add(path);
       }
       ce.setName(Factory.newString_(e.getProfileName()));
     }
-    ce.setDefinition(p.new ElementDefinitionComponent());
+    ce.setDefinition(new Profile.ElementDefinitionComponent());
     if (!"".equals(e.getComments()))
       ce.getDefinition().setComments(Factory.newString_(e.getComments()));
     if (!"".equals(e.getShortDefn()))
@@ -299,13 +301,16 @@ public class ProfileGenerator {
     ce.getDefinition().setMin(Factory.newInteger(e.getMinCardinality()));
     ce.getDefinition().setMax(Factory.newString_(e.getMaxCardinality() == null ? "*" : e.getMaxCardinality().toString()));
     for (TypeRef t : e.getTypes()) {
-      TypeRefComponent type = p.new TypeRefComponent();
+      TypeRefComponent type = new Profile.TypeRefComponent();
       type.setCode(Factory.newCode(t.summaryFormal()));
       ce.getDefinition().getType().add(type);
     }
     // ce.setConformance(getType(e.getConformance()));
-    if (!"".equals(e.getCondition()))
-      ce.getDefinition().getCondition().add(Factory.newId(e.getCondition()));
+    if (!"".equals(e.getCondition())) {
+      Id cond = Factory.newId(e.getCondition());
+      if (cond != null)
+        ce.getDefinition().getCondition().add(cond);
+    }
     // we don't know mustSupport here
     ce.getDefinition().setIsModifier(Factory.newBoolean(e.isModifier()));
     addMapping(p, ce.getDefinition(), "http://loinc.org", e.getMapping(ElementDefn.LOINC_MAPPING));
@@ -319,7 +324,7 @@ public class ProfileGenerator {
     addMapping(p, ce.getDefinition(), ElementDefn.PROV_MAPPING, e.getMapping(ElementDefn.PROV_MAPPING));
 
     for (String in : e.getInvariants().keySet()) {
-      ElementDefinitionConstraintComponent con = p.new ElementDefinitionConstraintComponent();
+      ElementDefinitionConstraintComponent con = new Profile.ElementDefinitionConstraintComponent();
       Invariant inv = e.getInvariants().get(in);
       con.setKeySimple(inv.getId());
       con.setNameSimple(inv.getName());
@@ -337,7 +342,7 @@ public class ProfileGenerator {
 
     if( e.hasAggregation() )
     {
-      TypeRefComponent t = p.new TypeRefComponent();
+      TypeRefComponent t = new Profile.TypeRefComponent();
       ce.getDefinition().getType().add(t);
       t.setProfile(Factory.newUri(e.getAggregation()));
       Enumeration<ResourceAggregationMode> en = new Enumeration<ResourceAggregationMode>();
@@ -349,7 +354,7 @@ public class ProfileGenerator {
     if (e.getElementByName("extension") != null) {
       ElementComponent ex = createBaseDefinition(p, path, definitions.getBaseResource().getRoot().getElementByName("extension"));
       ex.setNameSimple("base extension");
-      ex.setSlicing(p.new ElementSlicingComponent());
+      ex.setSlicing(new Profile.ElementSlicingComponent());
       ex.getSlicing().setDiscriminatorSimple("url");
       ex.getSlicing().setOrderedSimple(false);
       ex.getSlicing().setRulesSimple(ResourceSlicingRules.open);
@@ -371,7 +376,7 @@ public class ProfileGenerator {
       if (e.getElementByName("modifierExtension") != null) {
         ElementComponent ex = createBaseDefinition(p, path, definitions.getBaseResource().getRoot().getElementByName("modifierExtension"));
         ex.setNameSimple("base modifier extension");
-        ex.setSlicing(p.new ElementSlicingComponent());
+        ex.setSlicing(new Profile.ElementSlicingComponent());
         ex.getSlicing().setDiscriminatorSimple("url");
         ex.getSlicing().setOrderedSimple(false);
         ex.getSlicing().setRulesSimple(ResourceSlicingRules.open);
@@ -403,17 +408,33 @@ public class ProfileGenerator {
 
   private void addMapping(Profile p, ElementDefinitionComponent definition, String target, String map) {
     if (!Utilities.noString(map)) {
-      ElementDefinitionMappingComponent m = p.new ElementDefinitionMappingComponent();
-      m.setTargetSimple(target);
+      String id = MappingsGenerator.idFor(target);
+      if (!mappingExists(p, id)) {
+        ProfileMappingComponent pm = new ProfileMappingComponent();
+        p.getMapping().add(pm);
+        pm.setIdentitySimple(id);
+        pm.setUriSimple(target);
+        pm.setNameSimple(MappingsGenerator.titleFor(target));
+      }
+      ElementDefinitionMappingComponent m = new Profile.ElementDefinitionMappingComponent();
+      m.setIdentitySimple(id);
       m.setMapSimple(map);
       definition.getMapping().add(m);
     }
   }
 
+  private boolean mappingExists(Profile p, String id) {
+    for (ProfileMappingComponent t : p.getMapping()) {
+      if (id.equals(t.getIdentitySimple()))
+        return true;
+    }
+    return false;
+  }
+
   private ElementComponent createBaseDefinition(Profile p, String path, ElementDefn src) throws URISyntaxException {
-    ElementComponent ce = p.new ElementComponent();
+    ElementComponent ce = new Profile.ElementComponent();
     ce.setPath(Factory.newString_(path+"."+src.getName()));
-    ce.setDefinition(p.new ElementDefinitionComponent());
+    ce.setDefinition(new Profile.ElementDefinitionComponent());
     ce.getDefinition().setShort(Factory.newString_(src.getShortDefn()));
     ce.getDefinition().setFormal(Factory.newString_(src.getDefinition()));
     ce.getDefinition().setComments(Factory.newString_(src.getComments()));
@@ -422,7 +443,7 @@ public class ProfileGenerator {
       ce.getDefinition().getSynonym().add(Factory.newString_(a));
     ce.getDefinition().setMin(Factory.newInteger(src.getMinCardinality()));
     ce.getDefinition().setMax(Factory.newString_(src.getMaxCardinality() == null ? "*" : src.getMaxCardinality().toString()));
-    ce.getDefinition().getType().add(p.new TypeRefComponent());
+    ce.getDefinition().getType().add(new Profile.TypeRefComponent());
     ce.getDefinition().getType().get(0).setCode(Factory.newCode(src.typeCode()));
     // this one should never be used
     if (!Utilities.noString(src.getProfile()))

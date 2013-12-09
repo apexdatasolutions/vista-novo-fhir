@@ -49,6 +49,7 @@
 </div>
 
 <a name="Attachment"></a>
+<a name="attachment"></a>
 <h3 style="margin-bottom: 1px">
 Attachment
 </h3>
@@ -87,6 +88,7 @@ Since the JSON examples have the same structure as the XML, only XML is shown fo
 </div>
 
 <a name="Identifier"></a>
+<a name="identifier"></a>
 <h3 style="margin-bottom: 1px">
 Identifier
 </h3>
@@ -168,6 +170,7 @@ to some organization to further sub-allocate):</p>
 
 
 <a name="Coding"></a>
+<a name="coding"></a>
 <h3 style="margin-bottom: 1px">Coding</h3>
 <p style="background-color: gainsboro; padding: 4px; margin-top: 0px">
 See also <a href="datatypes.html#Coding">Base Definition</a>, <a href="datatypes-definitions.html#Coding">Formal Definitions</a> and <a href="datatypes-mappings.html#Coding">Mappings</a>.
@@ -184,7 +187,7 @@ See also <a href="datatypes.html#Coding">Base Definition</a>, <a href="datatypes
 <p>A SNOMED CT expression:</p>
 <pre class="xml" fragment="Coding">
   &lt;problem&gt;
-    &lt;system value="http://snomed.info/id" /&gt;
+    &lt;system value="http://snomed.info/sct" /&gt;
     &lt;code value="128045006:{363698007=56459004}" /&gt;
   &lt;/problem&gt;
 </pre>
@@ -194,6 +197,7 @@ See also <a href="datatypes.html#Coding">Base Definition</a>, <a href="datatypes
 
 
 <a name="CodeableConcept"></a>
+<a name="codeableconcept"></a>
 <h3 style="margin-bottom: 1px">
 CodeableConcept
 </h3>
@@ -211,7 +215,7 @@ See also <a href="datatypes.html#CodeableConcept">Base Definition</a>, <a href="
       &lt;code value="R51" /&gt;
     &lt;/coding&gt;
     &lt;coding&gt;
-      &lt;system value="http://snomed.info/id" /&gt;
+      &lt;system value="http://snomed.info/sct" /&gt;
       &lt;code value="25064002" /&gt;
       &lt;display value="Headache" /&gt;
       &lt;primary value="true" /&gt;
@@ -236,7 +240,7 @@ See also <a href="datatypes.html#CodeableConcept">Base Definition</a>, <a href="
 <pre class="xml" fragment="CodeableConcept">
   &lt;diagnosis&gt;
     &lt;coding&gt;
-      &lt;system value="http://snomed.info/id" /&gt;
+      &lt;system value="http://snomed.info/sct" /&gt;
       &lt;code value="128045006:{363698007=56459004}" /&gt;
     &lt;/coding&gt;
     &lt;text value="Cellulitis of the foot" /&gt;
@@ -305,6 +309,12 @@ And where the value set would be something like this:
 </pre>
 </div>
 <a name="Quantity"></a>
+<a name="quantity"></a>
+<a name="age"></a>
+<a name="distance"></a>
+<a name="duration"></a>
+<a name="count"></a>
+<a name="money"></a>
 <h3 style="margin-bottom: 1px">
 Quantity
 </h3>
@@ -338,7 +348,7 @@ See also <a href="datatypes.html#Quantity">Base Definition</a>, <a href="datatyp
   &lt;dose&gt;
     &lt;value value="3" /&gt;
     &lt;units value="capsules" /&gt;
-    &lt;system value="http://snomed.info/id" /&gt;
+    &lt;system value="http://snomed.info/sct" /&gt;
     &lt;code value="385049006" /&gt;
   &lt;/dose&gt;
 </pre>
@@ -354,6 +364,7 @@ See also <a href="datatypes.html#Quantity">Base Definition</a>, <a href="datatyp
 </div>
 
 <a name="Range"></a>
+<a name="range"></a>
 <h3 style="margin-bottom: 1px">
 Range
 </h3>
@@ -377,6 +388,7 @@ See also <a href="datatypes.html#Range">Base Definition</a>, <a href="datatypes-
 </pre>
 </div>
 <a name="Ratio"></a>
+<a name="ratio"></a>
 <h3 style="margin-bottom: 1px">
 Ratio
 </h3>
@@ -416,6 +428,7 @@ See also <a href="datatypes.html#Ratio">Base Definition</a>, <a href="datatypes-
 </pre>
 </div>
 <a name="Period"></a>
+<a name="period"></a>
 <h3 style="margin-bottom: 1px">
 Period
 </h3>
@@ -435,6 +448,7 @@ See also <a href="datatypes.html#Period">Base Definition</a>, <a href="datatypes
 </div>
 
 <a name="SampledData"></a>
+<a name="sampleddata"></a>
 <h3 style="margin-bottom: 1px">
 SampledData
 </h3>
@@ -460,6 +474,7 @@ See also <a href="datatypes.html#SampledData">Base Definition</a>, <a href="data
 </pre>
 </div>
 <a name="HumanName"></a>
+<a name="humanname"></a>
 <h3 style="margin-bottom: 1px">
 HumanName
 </h3>
@@ -506,7 +521,7 @@ these cases. Composite names separated by "-" should be treated as a single name
 </pre>
 
 <p>
-This same pattern is often encountered with immigrants, who retains their real name for official use, but adopt a localized name for everyday use:
+This same pattern is often encountered with immigrants, who retain their real name for official use, but adopt a localized name for everyday use:
 </p>
 <pre class="xml" fragment="HumanName">
 &lt;name&gt;
@@ -531,8 +546,7 @@ Karen van Hentenryck is of Dutch origin, and the "van" is a voorvoegsel.
 &lt;name&gt;
   &lt;use value=&quot;official&quot; /&gt;  
   &lt;family value=&quot;van&quot;&gt;
-    &lt;extension&gt;
-	   &lt;url value=&quot;http://hl7.org/fhir/Profileiso-21090#qualifier&quot; /&gt;
+    &lt;extension url=&quot;http://hl7.org/fhir/Profile/iso-21090#name-qualifier&quot; &gt;
 	   &lt;valueCode value=&quot;VV&quot; /&gt;
     &lt;/extension&gt;
   &lt;/family&gt;
@@ -540,7 +554,12 @@ Karen van Hentenryck is of Dutch origin, and the "van" is a voorvoegsel.
   &lt;given value=&quot;Karen&quot; /&gt;
 &lt;/name&gt;
 </pre>
-<p>See <a href="extensibility-examples.html">the Extensibility Example for more information</a></p>
+<p>
+See <a href="extensibility-examples.html">the Extensibility Example for more information</a>. 
+Note that this names has multiple family name parts. Systems that do not support as many name parts 
+as are provided in an instance they are processing may wish to append parts together using spaces,
+so that this becomes "van Hentenryck".
+</p>
 </div>
 
 
@@ -556,21 +575,13 @@ multiple given names, prefixes, suffixes, for academic degrees, nobility titles,
   &lt;given value=&quot;Johanna&quot; /&gt;
   &lt;given value=&quot;Maria&quot; /&gt;
   &lt;prefix value=&quot;Gräfin&quot;&gt;
-    &lt;extension&gt;
-      &lt;url value=&quot;http://hl7.org/fhir/Profileiso-21090#qualifier&quot; /&gt;
-      &lt;valueCoding&gt;
-         &lt;code value=&quot;NB&quot; /&gt;
-         &lt;system value=&quot;http://hl7.org/fhir/v3/EntityNamePartQualifier2&quot; /&gt;
-      &lt;/valueCoding&gt;
+    &lt;extension url=&quot;http://hl7.org/fhir/Profile/iso-21090#name-qualifier&quot; &gt;
+      &lt;valueCode value=&quot;NB&quot; /&gt;
     &lt;/extension&gt;
   &lt;/prefix&gt;
   &lt;prefix value=&quot;Dr. phil.&quot;&gt;
-    &lt;extension&gt;
-      &lt;url value=&quot;http://hl7.org/fhir/Profileiso-21090#qualifier&quot; /&gt;
-      &lt;valueCoding&gt;
-         &lt;code value=&quot;AC&quot; /&gt;
-         &lt;system value=&quot;http://hl7.org/fhir/v3/EntityNamePartQualifier2&quot; /&gt;
-      &lt;/valueCoding&gt;
+    &lt;extension url=&quot;http://hl7.org/fhir/Profile/iso-21090#name-qualifier&quot; &gt;
+      &lt;valueCode value=&quot;AC&quot; /&gt;
     &lt;/extension&gt;
   &lt;/prefix&gt;
   &lt;suffix value=&quot;NCFSA&quot; /&gt;
@@ -637,8 +648,7 @@ Scandinavian example: Erikson is the family name. Jan Erik are the given names, 
   &lt;given value=&quot;Jan&quot; /&gt;
   &lt;given value=&quot;Erik&quot; /&gt;
   &lt;given value=&quot;Östlund&quot;&gt;
-    &lt;extension&gt;
-      &lt;url value=&quot;http://hl7.org/fhir/Profileiso-20190#name-qualifier&quot; /&gt;
+    &lt;extension url=&quot;http://hl7.org/fhir/Profileiso-20190#name-qualifier&quot; &gt;
       &lt;valueCoding&gt;
          &lt;code value=&quot;MID&quot; /&gt;
          &lt;system value=&quot;http://hl7.org/fhir/v3/EntityNamePartQualifier2&quot; /&gt;
@@ -674,8 +684,7 @@ mellomnamn.
   &lt;family value=&quot;Erikson&quot; /&gt;
   &lt;given value=&quot;Karin&quot; /&gt;
   &lt;given value=&quot;Hansen&quot;&gt;
-    &lt;extension&gt;
-      &lt;url value=&quot;http://hl7.org/fhir/Profileiso-20190#name-qualifier&quot; /&gt;
+    &lt;extension url=&quot;http://hl7.org/fhir/Profileiso-20190#name-qualifier&quot; &gt;
       &lt;valueCoding&gt;
          &lt;code value=&quot;MID&quot; /&gt;
          &lt;system value=&quot;http://hl7.org/fhir/v3/EntityNamePartQualifier2&quot; /&gt;
@@ -695,8 +704,7 @@ her mother, her father or other family names as specified by naming laws of the 
   &lt;family value=&quot;Erikson&quot; /&gt;
   &lt;given value=&quot;Karin&quot; /&gt;
   &lt;given value=&quot;Hansen&quot;&gt;
-    &lt;extension&gt;
-      &lt;url value=&quot;http://hl7.org/fhir/Profileiso-20190#name-qualifier&quot; /&gt;
+    &lt;extension url=&quot;http://hl7.org/fhir/Profileiso-20190#name-qualifier&quot; &gt;
       &lt;valueCoding&gt;
         &lt;code value=&quot;MID&quot; /&gt;
         &lt;system value=&quot;http://hl7.org/fhir/v3/EntityNamePartQualifier2&quot; /&gt;
@@ -709,8 +717,7 @@ her mother, her father or other family names as specified by naming laws of the 
   &lt;family value=&quot;Berg&quot; /&gt;
   &lt;given value=&quot;Karin&quot; /&gt;
   &lt;given value=&quot;Erikson&quot;&gt;
-    &lt;extension&gt;
-      &lt;url value=&quot;http://hl7.org/fhir/Profileiso-20190#name-qualifier&quot; /&gt;
+    &lt;extension url=&quot;http://hl7.org/fhir/Profileiso-20190#name-qualifier&quot; &gt;
       &lt;valueCoding&gt;
         &lt;code value=&quot;MID&quot; /&gt;
         &lt;system value=&quot;http://hl7.org/fhir/v3/EntityNamePartQualifier2&quot; /&gt;
@@ -727,6 +734,7 @@ her mother, her father or other family names as specified by naming laws of the 
 </div>
 
 <a name="Address"></a>
+<a name="address"></a>
 <h3 style="margin-bottom: 1px">
 Address
 </h3>
@@ -752,14 +760,25 @@ See also <a href="datatypes.html#Address">Base Definition</a>, <a href="datatype
 <p>A UK example address.</p>
 <pre class="xml" fragment="Address">
   &lt;address&gt;
-    &lt;extension&gt;
-      &lt;url value=&quot;http://hl7.org/fhir/Profileiso-21090/address-parts/county&quot; /&gt; &lt;!-- todo: review this --&gt;
+    &lt;extension url=&quot;http://hl7.org/fhir/Profile/iso-21090#address-part-county&quot; &gt; &lt;!-- todo: review this --&gt;
       &lt;valueString value=&quot;HUDDERSFIELD&quot;/&gt;
     &lt;/extension&gt;
     &lt;text value=&quot;1 Back Lane&amp;#13;&amp;#10;Holmfirth&amp;#13;&amp;#10;HUDDERSFIELD&amp;#13;&amp;#10;HD7 1HQ&quot;/&gt;
     &lt;line value=&quot;1 Back Lane&quot;/&gt;
     &lt;city value=&quot;Holmfirth&quot;/&gt;
     &lt;zip value=&quot;HD7 1HQ&quot;/&gt;
+  &lt;/address&gt;
+</pre>
+
+<p>A Postal address - i.e. an address that it doesn't make sense to try and visit.</p>
+<pre class="xml" fragment="Address">
+  &lt;address&gt;
+    &lt;extension url=&quot;http://hl7.org/fhir/Profile/iso-21090#address-use&quot;&gt; &lt;!-- todo: review this --&gt;
+      &lt;valueCode value=&quot;PST&quot;/&gt;
+    &lt;/extension&gt;
+    &lt;line value=&quot;PO Box 31445&quot;/&gt;
+    &lt;city value=&quot;Erewhon&quot;/&gt;
+    &lt;zip value=&quot;0001&quot;/&gt;
   &lt;/address&gt;
 </pre>
 </div>
@@ -770,6 +789,7 @@ Holmfirth
 
 
 <a name="Contact"></a>
+<a name="contact"></a>
 <h3 style="margin-bottom: 1px">
 Contact
 </h3>
@@ -791,6 +811,7 @@ See also <a href="datatypes.html#Contact">Base Definition</a>, <a href="datatype
 
 
 <a name="Schedule"></a>
+<a name="schedule"></a>
 <h3>
 Schedule
 </h3>

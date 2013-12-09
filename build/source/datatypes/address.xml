@@ -16,11 +16,10 @@
   <AllowPNG/>
  </OfficeDocumentSettings>
  <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
-  <WindowHeight>12270</WindowHeight>
-  <WindowWidth>27795</WindowWidth>
-  <WindowTopX>480</WindowTopX>
-  <WindowTopY>150</WindowTopY>
-  <ActiveSheet>3</ActiveSheet>
+  <WindowHeight>11640</WindowHeight>
+  <WindowWidth>27495</WindowWidth>
+  <WindowTopX>630</WindowTopX>
+  <WindowTopY>630</WindowTopY>
   <ProtectStructure>False</ProtectStructure>
   <ProtectWindows>False</ProtectWindows>
  </ExcelWorkbook>
@@ -109,19 +108,19 @@
    <Interior ss:Color="#EEECE1" ss:Pattern="Solid"/>
   </Style>
   <Style ss:ID="s76">
-   <Alignment ss:Vertical="Bottom" ss:WrapText="1"/>
-  </Style>
-  <Style ss:ID="s78">
-   <Font ss:FontName="Verdana" x:Family="Swiss" ss:Size="9" ss:Color="#333333"
-    ss:Bold="1"/>
-  </Style>
-  <Style ss:ID="s82">
    <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:ShrinkToFit="1"
     ss:WrapText="1"/>
    <Borders/>
    <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"
     ss:Bold="1"/>
    <Interior ss:Color="#EEECE1" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s77">
+   <Alignment ss:Vertical="Bottom" ss:WrapText="1"/>
+  </Style>
+  <Style ss:ID="s78">
+   <Font ss:FontName="Verdana" x:Family="Swiss" ss:Size="9" ss:Color="#333333"
+    ss:Bold="1"/>
   </Style>
  </Styles>
  <Worksheet ss:Name="Data Elements">
@@ -179,8 +178,8 @@
     <Cell ss:Index="4"><Data ss:Type="String">Y</Data></Cell>
     <Cell><Data ss:Type="String">code</Data></Cell>
     <Cell><Data ss:Type="String">AddressUse</Data></Cell>
+    <Cell><Data ss:Type="String">home | work | temp | old - purpose of this address</Data></Cell>
     <Cell><Data ss:Type="String">The use of this address</Data></Cell>
-    <Cell><Data ss:Type="String">Identifies the intended purpose of this address</Data></Cell>
     <Cell><Data ss:Type="String">Home, Work</Data></Cell>
     <Cell><Data ss:Type="String">Allows an appropriate address to be chosen from a list of many</Data></Cell>
     <Cell ss:StyleID="s68"><Data ss:Type="String">This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old address etc for a current/permanent one. Applications can assume that an address is not temporary or old unless it explicitly says that it is</Data></Cell>
@@ -206,7 +205,9 @@
     <Cell ss:Index="5"><Data ss:Type="String">string</Data></Cell>
     <Cell ss:Index="7"><Data ss:Type="String">Street name, number, direction &amp; P.O. Box etc </Data></Cell>
     <Cell ss:StyleID="s72"><Data ss:Type="String">This component contains the house number, apartment number, street name, street direction, &#10;P.O. Box number, delivery hints, and similar address information</Data></Cell>
-    <Cell ss:Index="14" ss:StyleID="s70"><Data ss:Type="String">XAD.1 + XAD.2 (note: XAD.1 and XAD.2 have different meanings for a company address than for a person address)&#10;</Data></Cell>
+    <Cell ss:Index="10"><Data ss:Type="String">home | work | temp | old - purpose of this address</Data></Cell>
+    <Cell ss:Index="13"><Data ss:Type="String">AD.part[parttype = AL]</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">XAD.1 + XAD.2 (note: XAD.1 and XAD.2 have different meanings for a company address than for a person address)&#10;</Data></Cell>
     <Cell><Data ss:Type="String">street address</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="30">
@@ -216,7 +217,8 @@
     <Cell ss:Index="7"><Data ss:Type="String">Name of city, town etc.</Data></Cell>
     <Cell ss:StyleID="s72"><Data ss:Type="String">The name of the city, town, village or other community or delivery center.</Data></Cell>
     <Cell ss:Index="12"><Data ss:Type="String">Muncipality</Data></Cell>
-    <Cell ss:Index="14" ss:StyleID="s70"><Data ss:Type="String">XAD.3</Data></Cell>
+    <Cell><Data ss:Type="String">AD.part[parttype = CTY]</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">XAD.3</Data></Cell>
     <Cell><Data ss:Type="String">locality</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="60">
@@ -226,7 +228,8 @@
     <Cell ss:Index="7"><Data ss:Type="String">Sub-unit of country (abreviations ok)</Data></Cell>
     <Cell ss:StyleID="s72"><Data ss:Type="String">Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (i.e. US 2 letter state codes).</Data></Cell>
     <Cell ss:Index="12"><Data ss:Type="String">Province, Territory</Data></Cell>
-    <Cell ss:Index="14" ss:StyleID="s70"><Data ss:Type="String">XAD.4</Data></Cell>
+    <Cell><Data ss:Type="String">AD.part[parttype = STA]</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">XAD.4</Data></Cell>
     <Cell><Data ss:Type="String">region</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="30">
@@ -236,7 +239,8 @@
     <Cell ss:Index="7"><Data ss:Type="String">Postal code for area</Data></Cell>
     <Cell ss:StyleID="s72"><Data ss:Type="String">A postal code designating a region defined by the postal service.</Data></Cell>
     <Cell ss:Index="12"><Data ss:Type="String">PostCode</Data></Cell>
-    <Cell ss:Index="14" ss:StyleID="s70"><Data ss:Type="String">XAD.5</Data></Cell>
+    <Cell><Data ss:Type="String">AD.part[parttype = ZIP]</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">XAD.5</Data></Cell>
     <Cell><Data ss:Type="String">postal code</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="30">
@@ -245,7 +249,8 @@
     <Cell ss:Index="5"><Data ss:Type="String">string</Data></Cell>
     <Cell ss:Index="7"><Data ss:Type="String">Country (can be ISO 3166 3 letter code)</Data></Cell>
     <Cell ss:StyleID="s72"><Data ss:Type="String">Country. ISO 3166 3 letter codes can be used in place of a full country name.</Data></Cell>
-    <Cell ss:Index="14" ss:StyleID="s70"><Data ss:Type="String">XAD.6</Data></Cell>
+    <Cell ss:Index="13"><Data ss:Type="String">AD.part[parttype = CNT]</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">XAD.6</Data></Cell>
     <Cell><Data ss:Type="String">country name</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="45">
@@ -273,10 +278,12 @@
     <HorizontalResolution>600</HorizontalResolution>
     <VerticalResolution>0</VerticalResolution>
    </Print>
+   <Selected/>
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>5</ActiveRow>
+     <ActiveRow>6</ActiveRow>
+     <ActiveCol>12</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -346,14 +353,14 @@
     <Cell ss:StyleID="s75"><Data ss:Type="String">Binding</Data></Cell>
     <Cell ss:StyleID="s75"><Data ss:Type="String">Reference</Data></Cell>
     <Cell ss:StyleID="s75"><Data ss:Type="String">Description</Data></Cell>
-    <Cell ss:StyleID="s82"><Data ss:Type="String">v3</Data></Cell>
-    <Cell ss:StyleID="s82"><Data ss:Type="String">v2</Data></Cell>
+    <Cell ss:StyleID="s76"><Data ss:Type="String">v3</Data></Cell>
+    <Cell ss:StyleID="s76"><Data ss:Type="String">v2</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell ss:StyleID="s76"><Data ss:Type="String">AddressUse</Data></Cell>
-    <Cell ss:StyleID="s76"><Data ss:Type="String">The use of an address</Data></Cell>
-    <Cell ss:StyleID="s76"><Data ss:Type="String">code list</Data></Cell>
-    <Cell ss:StyleID="s76"><Data ss:Type="String">#address-use</Data></Cell>
+    <Cell ss:StyleID="s77"><Data ss:Type="String">AddressUse</Data></Cell>
+    <Cell ss:StyleID="s77"><Data ss:Type="String">The use of an address</Data></Cell>
+    <Cell ss:StyleID="s77"><Data ss:Type="String">code list</Data></Cell>
+    <Cell ss:StyleID="s77"><Data ss:Type="String">#address-use</Data></Cell>
     <Cell ss:Index="6" ss:StyleID="s78"><Data ss:Type="String">http://hl7.org/fhir/v3/vs/AddressUse</Data></Cell>
     <Cell ss:StyleID="s78"><Data ss:Type="String">http://hl7.org/fhir/v2/vs/0190</Data></Cell>
     <Cell ss:StyleID="s75"/>
@@ -433,7 +440,6 @@
     <HorizontalResolution>300</HorizontalResolution>
     <VerticalResolution>300</VerticalResolution>
    </Print>
-   <Selected/>
    <Panes>
     <Pane>
      <Number>3</Number>

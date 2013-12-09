@@ -29,7 +29,9 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
+
+import java.util.*;
 
 /**
  * A reference to a code defined by a terminology system.
@@ -66,19 +68,36 @@ public class Coding extends Type {
      */
     protected ResourceReference valueSet;
 
+    public Coding() {
+      super();
+    }
+
+    /**
+     * @return {@link #system} (The identification of the code system that defines the meaning of the symbol in the code.)
+     */
     public Uri getSystem() { 
       return this.system;
     }
 
-    public void setSystem(Uri value) { 
+    /**
+     * @param value {@link #system} (The identification of the code system that defines the meaning of the symbol in the code.)
+     */
+    public Coding setSystem(Uri value) { 
       this.system = value;
+      return this;
     }
 
+    /**
+     * @return The identification of the code system that defines the meaning of the symbol in the code.
+     */
     public String getSystemSimple() { 
       return this.system == null ? null : this.system.getValue();
     }
 
-    public void setSystemSimple(String value) { 
+    /**
+     * @param value The identification of the code system that defines the meaning of the symbol in the code.
+     */
+    public Coding setSystemSimple(String value) { 
       if (value == null)
         this.system = null;
       else {
@@ -86,21 +105,35 @@ public class Coding extends Type {
           this.system = new Uri();
         this.system.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #version} (The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured. and when it is not, the version SHOULD be exchanged.)
+     */
     public String_ getVersion() { 
       return this.version;
     }
 
-    public void setVersion(String_ value) { 
+    /**
+     * @param value {@link #version} (The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured. and when it is not, the version SHOULD be exchanged.)
+     */
+    public Coding setVersion(String_ value) { 
       this.version = value;
+      return this;
     }
 
+    /**
+     * @return The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured. and when it is not, the version SHOULD be exchanged.
+     */
     public String getVersionSimple() { 
       return this.version == null ? null : this.version.getValue();
     }
 
-    public void setVersionSimple(String value) { 
+    /**
+     * @param value The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured. and when it is not, the version SHOULD be exchanged.
+     */
+    public Coding setVersionSimple(String value) { 
       if (value == null)
         this.version = null;
       else {
@@ -108,21 +141,35 @@ public class Coding extends Type {
           this.version = new String_();
         this.version.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #code} (A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination).)
+     */
     public Code getCode() { 
       return this.code;
     }
 
-    public void setCode(Code value) { 
+    /**
+     * @param value {@link #code} (A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination).)
+     */
+    public Coding setCode(Code value) { 
       this.code = value;
+      return this;
     }
 
+    /**
+     * @return A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination).
+     */
     public String getCodeSimple() { 
       return this.code == null ? null : this.code.getValue();
     }
 
-    public void setCodeSimple(String value) { 
+    /**
+     * @param value A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination).
+     */
+    public Coding setCodeSimple(String value) { 
       if (value == null)
         this.code = null;
       else {
@@ -130,21 +177,35 @@ public class Coding extends Type {
           this.code = new Code();
         this.code.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #display} (A representation of the meaning of the code in the system, following the rules laid out by the system.)
+     */
     public String_ getDisplay() { 
       return this.display;
     }
 
-    public void setDisplay(String_ value) { 
+    /**
+     * @param value {@link #display} (A representation of the meaning of the code in the system, following the rules laid out by the system.)
+     */
+    public Coding setDisplay(String_ value) { 
       this.display = value;
+      return this;
     }
 
+    /**
+     * @return A representation of the meaning of the code in the system, following the rules laid out by the system.
+     */
     public String getDisplaySimple() { 
       return this.display == null ? null : this.display.getValue();
     }
 
-    public void setDisplaySimple(String value) { 
+    /**
+     * @param value A representation of the meaning of the code in the system, following the rules laid out by the system.
+     */
+    public Coding setDisplaySimple(String value) { 
       if (value == null)
         this.display = null;
       else {
@@ -152,21 +213,35 @@ public class Coding extends Type {
           this.display = new String_();
         this.display.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #primary} (Indicates that this code was chosen by a user directly - i.e. off a pick list of available codes.)
+     */
     public Boolean getPrimary() { 
       return this.primary;
     }
 
-    public void setPrimary(Boolean value) { 
+    /**
+     * @param value {@link #primary} (Indicates that this code was chosen by a user directly - i.e. off a pick list of available codes.)
+     */
+    public Coding setPrimary(Boolean value) { 
       this.primary = value;
+      return this;
     }
 
+    /**
+     * @return Indicates that this code was chosen by a user directly - i.e. off a pick list of available codes.
+     */
     public boolean getPrimarySimple() { 
       return this.primary == null ? null : this.primary.getValue();
     }
 
-    public void setPrimarySimple(boolean value) { 
+    /**
+     * @param value Indicates that this code was chosen by a user directly - i.e. off a pick list of available codes.
+     */
+    public Coding setPrimarySimple(boolean value) { 
       if (value == false)
         this.primary = null;
       else {
@@ -174,15 +249,33 @@ public class Coding extends Type {
           this.primary = new Boolean();
         this.primary.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #valueSet} (The set of possible coded values this coding was chosen from or constrained by.)
+     */
     public ResourceReference getValueSet() { 
       return this.valueSet;
     }
 
-    public void setValueSet(ResourceReference value) { 
+    /**
+     * @param value {@link #valueSet} (The set of possible coded values this coding was chosen from or constrained by.)
+     */
+    public Coding setValueSet(ResourceReference value) { 
       this.valueSet = value;
+      return this;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("system", "uri", "The identification of the code system that defines the meaning of the symbol in the code.", 0, java.lang.Integer.MAX_VALUE, system));
+        childrenList.add(new Property("version", "string", "The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured. and when it is not, the version SHOULD be exchanged.", 0, java.lang.Integer.MAX_VALUE, version));
+        childrenList.add(new Property("code", "code", "A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination).", 0, java.lang.Integer.MAX_VALUE, code));
+        childrenList.add(new Property("display", "string", "A representation of the meaning of the code in the system, following the rules laid out by the system.", 0, java.lang.Integer.MAX_VALUE, display));
+        childrenList.add(new Property("primary", "boolean", "Indicates that this code was chosen by a user directly - i.e. off a pick list of available codes.", 0, java.lang.Integer.MAX_VALUE, primary));
+        childrenList.add(new Property("valueSet", "Resource(ValueSet)", "The set of possible coded values this coding was chosen from or constrained by.", 0, java.lang.Integer.MAX_VALUE, valueSet));
+      }
 
       public Coding copy() {
         Coding dst = new Coding();

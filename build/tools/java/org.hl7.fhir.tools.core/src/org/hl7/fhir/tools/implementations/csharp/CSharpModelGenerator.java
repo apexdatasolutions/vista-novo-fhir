@@ -29,6 +29,9 @@ package org.hl7.fhir.tools.implementations.csharp;
 
 */
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +45,8 @@ import org.hl7.fhir.definitions.ecore.fhir.ElementDefn;
 import org.hl7.fhir.definitions.ecore.fhir.Invariant;
 import org.hl7.fhir.definitions.ecore.fhir.PrimitiveDefn;
 import org.hl7.fhir.definitions.ecore.fhir.TypeRef;
+import org.hl7.fhir.definitions.ecore.fhir.XmlFormatHint;
+import org.hl7.fhir.definitions.ecore.fhir.impl.CompositeTypeDefnImpl;
 import org.hl7.fhir.tools.implementations.GenBlock;
 import org.hl7.fhir.tools.implementations.GeneratorUtils;
 
@@ -101,8 +106,8 @@ public class CSharpModelGenerator extends GenBlock
 			ln("/// <summary>");
 			ln("/// " +  constrained.getAnnotations().getShortDefinition());
 			ln("/// </summary>");
-			ln("[FhirComposite("); nl("\"" + constrained.getName() + "\""); nl(")]");
-			ln("[Serializable]");
+			ln("[FhirType("); nl("\"" + constrained.getName() + "\""); nl(")]");
+			//ln("[Serializable]");
 			ln("public partial class " +  GeneratorUtils.generateCSharpTypeName(constrained.getName()) );
 				nl(" : ");
 				nl(GeneratorUtils.generateCSharpTypeName(constrained.getConstrainedBaseType().getName()));
@@ -164,12 +169,10 @@ public class CSharpModelGenerator extends GenBlock
 				generateExtraPrimitiveMembers(prim, GeneratorUtils.generateCSharpTypeName(composite.getName()));
 			}
 			
-			// Generate this classes properties
-			for( ElementDefn member : composite.getElement() )
-				generateMemberProperty(composite, member);
-
+			generateMembers(composite);
+			
       // Generate Validate() routine			
-			generateValidationMethod(composite);
+			//generateValidationMethod(composite);
 		es("}");
 		ln();
 		
@@ -177,6 +180,49 @@ public class CSharpModelGenerator extends GenBlock
 	}
 
 
+  private void generateMembers(CompositeTypeDefn composite) throws Exception {
+    // Start ordering the elements at 10 (increase by 10)
+    // If there's a base class, start numbering after base class elements
+    int order = 10;
+    if(composite.getBaseType() != null)
+    {
+      CompositeTypeDefn base = (CompositeTypeDefnImpl)composite.resolve(composite.getBaseType());
+      order = (base.getElement().size()+1)*10;
+    }
+   
+    // Make sure elements that need to be serialized as attributes in Xml
+    // are sorted and generated first, since the streaming Xml writer api
+    // will need to have them before the elements come in.
+    List<ElementDefn> sortedElements = new ArrayList<ElementDefn>();
+    
+    for( ElementDefn elem : composite.getElement() )
+      sortedElements.add(elem);
+    
+    Collections.sort(sortedElements, new Comparator<ElementDefn>()
+      {
+        public int compare(ElementDefn e1, ElementDefn e2)
+        {
+          if(e1.getXmlFormatHint() == XmlFormatHint.ATTRIBUTE) 
+            return -1;
+          else
+            return 1;
+        }
+      }); 
+    
+    // Generate this classes properties
+    for( ElementDefn member : composite.getElement() )
+    {
+    	generateMemberProperty(composite, member, order);
+    	order += 10;
+    }
+  }
+
+
+	private void generateMembers()
+	{
+	  
+	}
+	
   private void generateValidationMethod(CompositeTypeDefn composite) {
     String specifier = "override";
     
@@ -226,25 +272,65 @@ public class CSharpModelGenerator extends GenBlock
 	  return false;
 	}
 	
-	private void generateMemberProperty(CompositeTypeDefn context, ElementDefn member)
+	private void generateMemberProperty(CompositeTypeDefn context, ElementDefn member, int order)
 			throws Exception {
-		ln("/// <summary>");
+
+    // Determine the most appropriate FHIR type to use for this
+    // (possibly polymorphic) element.
+    TypeRef tref = GeneratorUtils.getMemberTypeForElement(getDefinitions(),member);
+    boolean isFhirPrimitive = Character.isLowerCase(tref.getName().charAt(0));
+    boolean needsNativeProperty = (isFhirPrimitive && member.getXmlFormatHint() != XmlFormatHint.ELEMENT) ||
+                                    member.isPrimitiveValueElement();
+    boolean hasBothPrimitiveAndElementProperty = isFhirPrimitive && !needsNativeProperty;
+    
+	  ln("/// <summary>");
 		ln("/// " + member.getAnnotation().getShortDefinition());
 		ln("/// </summary>");
+		
+	  ln("[FhirElement(\"" + member.getName() + "\"");
+		  
+	  if(member.isPrimitiveValueElement())
+		    nl(", IsPrimitiveValue=true");
+		  
+    if(member.getXmlFormatHint() != XmlFormatHint.ELEMENT)
+	      nl(", XmlSerialization=XmlSerializationHint." + member.getXmlFormatHint().getName());
+
+    if(order != 0)
+      nl(", Order=" + Integer.toString(order));
+    
+	  nl(")]");
+		
+		if(member.isPolymorph())
+		{		  
+		  for(TypeRef choiceTRef : member.getType())
+		  {
+		    ln("[Choice(");
+		    
+		    String name = choiceTRef.getName();
+		    
+		    if(name.equals(TypeRef.ELEMENT_TYPE_NAME))
+		      nl("WildcardChoice.AnyDatatype");
+		    else if(name.equals(TypeRef.RESOURCE_TYPE_NAME))
+		      nl("WildcardChoice.AnyResource");
+		    else
+		    {
+  		    nl("\"" + choiceTRef.getName() + "\", ");
+  		    nl("typeof(" + GeneratorUtils.buildFullyScopedTypeName(choiceTRef) + ")"  );
+		    }
+		    nl(")]");
+		  }
+		}
 		ln("public ");
 		
-		// Determine the most appropriate FHIR type to use for this
-		// (possibly polymorphic) element.
-		TypeRef tref = GeneratorUtils.getMemberTypeForElement(getDefinitions(),member);
 		
 		String memberCsType;
 		
 		if( GeneratorUtils.isCodeWithCodeList( getDefinitions(), tref ) )
 		  // Strongly typed enums use a special Code<T> type
 		  memberCsType = "Code<" + GeneratorUtils.buildFullyScopedTypeName(tref.getFullBindingRef()) + ">";	
-		else if( member.isPrimitiveValueElement() )
+		else if( needsNativeProperty )
 	    // Primitive elements' value property maps directly to a C# type
-		  memberCsType = GeneratorUtils.mapPrimitiveToCSharpType(context.getName());
+		  memberCsType = GeneratorUtils.mapPrimitiveToCSharpType(tref.getName());
 		else 
 			memberCsType = GeneratorUtils.buildFullyScopedTypeName(tref);
 
@@ -256,9 +342,10 @@ public class CSharpModelGenerator extends GenBlock
 	
 		String memberName = GeneratorUtils.generateCSharpMemberName(member);
 		
-		boolean isSimpleElement = Character.isLowerCase(tref.getName().charAt(0)) && !member.isPrimitiveValueElement();
-    
-		if(isSimpleElement) memberName += "Element";
+		if(hasBothPrimitiveAndElementProperty)
+		{
+		  memberName += "Element";
+		}
 		
 		member.getGeneratorAnnotations().put(CLASSGEN_MEMBER_NAME, memberName);
 		member.getGeneratorAnnotations().put(CLASSGEN_MEMBER_CSTYPE, memberCsType);
@@ -268,7 +355,7 @@ public class CSharpModelGenerator extends GenBlock
 		nl(" { get; set; }");
 		ln();
 		
-		if(isSimpleElement)
+		if(hasBothPrimitiveAndElementProperty)
 	    // If this element is of a type that is a FHIR primitive, generate extra helper
 	    // access methods to get to easily get to the elements Value property.
 		  generateSimpleValueAccess(member, tref, memberCsType, singleElementCsType, memberName);
@@ -290,7 +377,8 @@ public class CSharpModelGenerator extends GenBlock
 
 	  if( isList )
 	    csType = "IEnumerable<" + csType + ">";
-	  
+
+	  ln("[NotMapped]");
 	  ln("public " + csType + " " + simpleMemberName);
 	  bs("{");
 	    ln("get { return " + memberName + " != null ? ");
@@ -354,12 +442,25 @@ public class CSharpModelGenerator extends GenBlock
 	
 	private void compositeClassHeader(CompositeTypeDefn composite) throws Exception
 	{
-		if( composite.isComposite() )
-			ln("[FhirComposite(");
-		else if( composite.isResource() )
-			ln("[FhirResource(");
-		nl("\"" + composite.getName() + "\""); nl(")]");
-		ln("[Serializable]");
+	  boolean representsPrimitive = hasPrimitiveValueElement(composite);
+
+	  // Avoid generating type attributes with names for the abstract baseclasses Element
+	  // since that's both a primitive and a composite type
+		if( composite.isComposite() && !composite.isAbstract() )
+	  //if( composite.isComposite() )
+		{
+		 // if(!representsPrimitive)
+		    ln("[FhirType(\"" + composite.getName() + "\")]" );
+		 // else
+		 //   ln("[FhirPrimitiveType(\"" + composite.getName() + "\")]" );
+		}
+		//else if( composite.isResource() && !composite.isAbstract() )
+		else if( composite.isResource() && !composite.isAbstract() )
+		{
+			ln("[FhirType(\"" + composite.getName() + "\", IsResource=true)]" );
+		}
+		
+		//ln("[Serializable]");
 		ln( "public ");
 			if( composite.isAbstract() ) nl("abstract ");
 			nl("partial class " + GeneratorUtils.generateCSharpTypeName(composite.getName()) );
@@ -368,7 +469,16 @@ public class CSharpModelGenerator extends GenBlock
 		if( composite.getBaseType() != null ) 
 		{
 			nl( " : " ); 
-			nl(GeneratorUtils.buildFullyScopedTypeName(composite.getBaseType()));
+						
+//			if(composite.isComposite())
+//			{
+//			  if(!representsPrimitive)
+//			    nl("ComplexElement");
+//			  else
+//			    nl("PrimitiveElement");
+//			}
+//			else
+			  nl(GeneratorUtils.buildFullyScopedTypeName(composite.getBaseType()));
 		}
 	}
 	
@@ -383,8 +493,8 @@ public class CSharpModelGenerator extends GenBlock
 				generateEnum(binding);
 				ln();
 				
-				generateEnumHandling(binding);
-				ln();
+			//	generateEnumHandling(binding);
+			//	ln();
 			}
 		}
 	
@@ -487,6 +597,7 @@ public class CSharpModelGenerator extends GenBlock
 		ln("/// <summary>");
 		ln("/// " + binding.getDefinition() );
 		ln("/// </summary>");
+		ln("[FhirEnumeration(\"" + binding.getName() + "\")]");
 		ln("public enum " + 
 				GeneratorUtils.generateCSharpTypeName(binding.getName()));
 		bs("{");
@@ -494,6 +605,7 @@ public class CSharpModelGenerator extends GenBlock
 			{
 				String definition = code.getDefinition();
 				
+				ln("[EnumLiteral(" + "\"" + code.getCode() + "\"" +  ")]");
 				ln(GeneratorUtils.generateCSharpEnumMemberName(code.getCode()) + ",");
 				
 				if( definition != null )

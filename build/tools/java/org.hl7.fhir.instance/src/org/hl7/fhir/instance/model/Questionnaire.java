@@ -29,90 +29,90 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
 
 import java.util.*;
 
 /**
- * A set of answers to predefined lists of questions. The questions may be ordered and grouped into coherent subsets, corresponding to the structure of the grouping of the underlying questions.
+ * A structured set of questions and their answers. The Questionnaire may contain questions, answers or both. The questions may be ordered and grouped into coherent subsets, corresponding to the structure of the grouping of the underlying questions.
  */
 public class Questionnaire extends Resource {
 
-    public enum ObservationStatus {
-        registered, // The existence of the observation is registered, but there is no result yet available
-        interim, // This is an initial or interim observation: data may be incomplete or unverified
-        final_, // The observation is complete and verified by an authorised person
-        amended, // The observation has been modified subsequent to being Final, and is complete and verified by an authorised person
-        cancelled, // The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted")
-        withdrawn, // The observation has been withdrawn following previous Final release
+    public enum QuestionnaireStatus {
+        draft, // This Questionnaire is used as a template but the template is not ready for use or publication.
+        published, // This Questionnaire is used as a template, is published and ready for use.
+        retired, // This Questionnaire is used as a template but should no longer be used for new Questionnaires.
+        inProgress, // This Questionnaire has been filled out with answers, but changes or additions are still expected to be made to it.
+        completed, // This Questionnaire has been filled out with answers, and the current content is regarded as definitive.
+        amended, // This Questionnaire has been filled out with answers, then marked as complete, yet changes or additions have been made to it afterwards.
         Null; // added to help the parsers
-        public static ObservationStatus fromCode(String codeString) throws Exception {
+        public static QuestionnaireStatus fromCode(String codeString) throws Exception {
             if (codeString == null || "".equals(codeString))
                 return null;
-        if ("registered".equals(codeString))
-          return registered;
-        if ("interim".equals(codeString))
-          return interim;
-        if ("final".equals(codeString))
-          return final_;
+        if ("draft".equals(codeString))
+          return draft;
+        if ("published".equals(codeString))
+          return published;
+        if ("retired".equals(codeString))
+          return retired;
+        if ("in progress".equals(codeString))
+          return inProgress;
+        if ("completed".equals(codeString))
+          return completed;
         if ("amended".equals(codeString))
           return amended;
-        if ("cancelled".equals(codeString))
-          return cancelled;
-        if ("withdrawn".equals(codeString))
-          return withdrawn;
-        throw new Exception("Unknown ObservationStatus code '"+codeString+"'");
+        throw new Exception("Unknown QuestionnaireStatus code '"+codeString+"'");
         }
         public String toCode() {
           switch (this) {
-            case registered: return "registered";
-            case interim: return "interim";
-            case final_: return "final";
+            case draft: return "draft";
+            case published: return "published";
+            case retired: return "retired";
+            case inProgress: return "in progress";
+            case completed: return "completed";
             case amended: return "amended";
-            case cancelled: return "cancelled";
-            case withdrawn: return "withdrawn";
             default: return "?";
           }
         }
     }
 
-  public class ObservationStatusEnumFactory implements EnumFactory {
+  public static class QuestionnaireStatusEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
                 return null;
-        if ("registered".equals(codeString))
-          return ObservationStatus.registered;
-        if ("interim".equals(codeString))
-          return ObservationStatus.interim;
-        if ("final".equals(codeString))
-          return ObservationStatus.final_;
+        if ("draft".equals(codeString))
+          return QuestionnaireStatus.draft;
+        if ("published".equals(codeString))
+          return QuestionnaireStatus.published;
+        if ("retired".equals(codeString))
+          return QuestionnaireStatus.retired;
+        if ("in progress".equals(codeString))
+          return QuestionnaireStatus.inProgress;
+        if ("completed".equals(codeString))
+          return QuestionnaireStatus.completed;
         if ("amended".equals(codeString))
-          return ObservationStatus.amended;
-        if ("cancelled".equals(codeString))
-          return ObservationStatus.cancelled;
-        if ("withdrawn".equals(codeString))
-          return ObservationStatus.withdrawn;
-        throw new Exception("Unknown ObservationStatus code '"+codeString+"'");
+          return QuestionnaireStatus.amended;
+        throw new Exception("Unknown QuestionnaireStatus code '"+codeString+"'");
         }
     public String toCode(Enum<?> code) throws Exception {
-      if (code == ObservationStatus.registered)
-        return "registered";
-      if (code == ObservationStatus.interim)
-        return "interim";
-      if (code == ObservationStatus.final_)
-        return "final";
-      if (code == ObservationStatus.amended)
+      if (code == QuestionnaireStatus.draft)
+        return "draft";
+      if (code == QuestionnaireStatus.published)
+        return "published";
+      if (code == QuestionnaireStatus.retired)
+        return "retired";
+      if (code == QuestionnaireStatus.inProgress)
+        return "in progress";
+      if (code == QuestionnaireStatus.completed)
+        return "completed";
+      if (code == QuestionnaireStatus.amended)
         return "amended";
-      if (code == ObservationStatus.cancelled)
-        return "cancelled";
-      if (code == ObservationStatus.withdrawn)
-        return "withdrawn";
       return "?";
       }
     }
 
-    public class QuestionComponent extends Element {
+    public static class QuestionComponent extends BackboneElement {
         /**
          * Structured name for the question.
          */
@@ -148,27 +148,51 @@ public class Questionnaire extends Resource {
          */
         protected String_ remarks;
 
+      public QuestionComponent() {
+        super();
+      }
+
+        /**
+         * @return {@link #name} (Structured name for the question.)
+         */
         public CodeableConcept getName() { 
           return this.name;
         }
 
-        public void setName(CodeableConcept value) { 
+        /**
+         * @param value {@link #name} (Structured name for the question.)
+         */
+        public QuestionComponent setName(CodeableConcept value) { 
           this.name = value;
+          return this;
         }
 
+        /**
+         * @return {@link #text} (Text of the question as it may appear on screen or on a form.)
+         */
         public String_ getText() { 
           return this.text;
         }
 
-        public void setText(String_ value) { 
+        /**
+         * @param value {@link #text} (Text of the question as it may appear on screen or on a form.)
+         */
+        public QuestionComponent setText(String_ value) { 
           this.text = value;
+          return this;
         }
 
+        /**
+         * @return Text of the question as it may appear on screen or on a form.
+         */
         public String getTextSimple() { 
           return this.text == null ? null : this.text.getValue();
         }
 
-        public void setTextSimple(String value) { 
+        /**
+         * @param value Text of the question as it may appear on screen or on a form.
+         */
+        public QuestionComponent setTextSimple(String value) { 
           if (value == null)
             this.text = null;
           else {
@@ -176,56 +200,97 @@ public class Questionnaire extends Resource {
               this.text = new String_();
             this.text.setValue(value);
           }
+          return this;
         }
 
+        /**
+         * @return {@link #answer} (Single-valued answer to the question.)
+         */
         public Type getAnswer() { 
           return this.answer;
         }
 
-        public void setAnswer(Type value) { 
+        /**
+         * @param value {@link #answer} (Single-valued answer to the question.)
+         */
+        public QuestionComponent setAnswer(Type value) { 
           this.answer = value;
+          return this;
         }
 
+        /**
+         * @return {@link #choice} (One of more selections from the list of options.)
+         */
         public List<Coding> getChoice() { 
           return this.choice;
         }
 
     // syntactic sugar
+        /**
+         * @return {@link #choice} (One of more selections from the list of options.)
+         */
         public Coding addChoice() { 
           Coding t = new Coding();
           this.choice.add(t);
           return t;
         }
 
+        /**
+         * @return {@link #options} (Reference to a valueset containing the possible options.)
+         */
         public Type getOptions() { 
           return this.options;
         }
 
-        public void setOptions(Type value) { 
+        /**
+         * @param value {@link #options} (Reference to a valueset containing the possible options.)
+         */
+        public QuestionComponent setOptions(Type value) { 
           this.options = value;
+          return this;
         }
 
+        /**
+         * @return {@link #data} (Structured answer in the form of a FHIR Resource or datatype.)
+         */
         public org.hl7.fhir.instance.model.Type getData() { 
           return this.data;
         }
 
-        public void setData(org.hl7.fhir.instance.model.Type value) { 
+        /**
+         * @param value {@link #data} (Structured answer in the form of a FHIR Resource or datatype.)
+         */
+        public QuestionComponent setData(org.hl7.fhir.instance.model.Type value) { 
           this.data = value;
+          return this;
         }
 
+        /**
+         * @return {@link #remarks} (The remark contains information about the answer given. This is additional information about the answer the author wishes to convey, but should not be used to contain information that is part of the answer itself.)
+         */
         public String_ getRemarks() { 
           return this.remarks;
         }
 
-        public void setRemarks(String_ value) { 
+        /**
+         * @param value {@link #remarks} (The remark contains information about the answer given. This is additional information about the answer the author wishes to convey, but should not be used to contain information that is part of the answer itself.)
+         */
+        public QuestionComponent setRemarks(String_ value) { 
           this.remarks = value;
+          return this;
         }
 
+        /**
+         * @return The remark contains information about the answer given. This is additional information about the answer the author wishes to convey, but should not be used to contain information that is part of the answer itself.
+         */
         public String getRemarksSimple() { 
           return this.remarks == null ? null : this.remarks.getValue();
         }
 
-        public void setRemarksSimple(String value) { 
+        /**
+         * @param value The remark contains information about the answer given. This is additional information about the answer the author wishes to convey, but should not be used to contain information that is part of the answer itself.
+         */
+        public QuestionComponent setRemarksSimple(String value) { 
           if (value == null)
             this.remarks = null;
           else {
@@ -233,10 +298,22 @@ public class Questionnaire extends Resource {
               this.remarks = new String_();
             this.remarks.setValue(value);
           }
+          return this;
+        }
+
+        protected void listChildren(List<Property> childrenList) {
+          super.listChildren(childrenList);
+          childrenList.add(new Property("name", "CodeableConcept", "Structured name for the question.", 0, java.lang.Integer.MAX_VALUE, name));
+          childrenList.add(new Property("text", "string", "Text of the question as it may appear on screen or on a form.", 0, java.lang.Integer.MAX_VALUE, text));
+          childrenList.add(new Property("answer[x]", "decimal|integer|boolean|date|string|dateTime|instant", "Single-valued answer to the question.", 0, java.lang.Integer.MAX_VALUE, answer));
+          childrenList.add(new Property("choice", "Coding", "One of more selections from the list of options.", 0, java.lang.Integer.MAX_VALUE, choice));
+          childrenList.add(new Property("options[x]", "uri|Resource(ValueSet)", "Reference to a valueset containing the possible options.", 0, java.lang.Integer.MAX_VALUE, options));
+          childrenList.add(new Property("data[x]", "*", "Structured answer in the form of a FHIR Resource or datatype.", 0, java.lang.Integer.MAX_VALUE, data));
+          childrenList.add(new Property("remarks", "string", "The remark contains information about the answer given. This is additional information about the answer the author wishes to convey, but should not be used to contain information that is part of the answer itself.", 0, java.lang.Integer.MAX_VALUE, remarks));
         }
 
       public QuestionComponent copy(Questionnaire e) {
-        QuestionComponent dst = e.new QuestionComponent();
+        QuestionComponent dst = new QuestionComponent();
         dst.name = name == null ? null : name.copy();
         dst.text = text == null ? null : text.copy();
         dst.answer = answer == null ? null : answer.copy();
@@ -251,7 +328,7 @@ public class Questionnaire extends Resource {
 
   }
 
-    public class GroupComponent extends Element {
+    public static class GroupComponent extends BackboneElement {
         /**
          * Structured name for a section of a predefined list of questions this questionnaire is responding to.
          */
@@ -282,27 +359,51 @@ public class Questionnaire extends Resource {
          */
         protected List<GroupComponent> group = new ArrayList<GroupComponent>();
 
+      public GroupComponent() {
+        super();
+      }
+
+        /**
+         * @return {@link #name} (Structured name for a section of a predefined list of questions this questionnaire is responding to.)
+         */
         public CodeableConcept getName() { 
           return this.name;
         }
 
-        public void setName(CodeableConcept value) { 
+        /**
+         * @param value {@link #name} (Structured name for a section of a predefined list of questions this questionnaire is responding to.)
+         */
+        public GroupComponent setName(CodeableConcept value) { 
           this.name = value;
+          return this;
         }
 
+        /**
+         * @return {@link #header} (Header for the group, used for display purposes.)
+         */
         public String_ getHeader() { 
           return this.header;
         }
 
-        public void setHeader(String_ value) { 
+        /**
+         * @param value {@link #header} (Header for the group, used for display purposes.)
+         */
+        public GroupComponent setHeader(String_ value) { 
           this.header = value;
+          return this;
         }
 
+        /**
+         * @return Header for the group, used for display purposes.
+         */
         public String getHeaderSimple() { 
           return this.header == null ? null : this.header.getValue();
         }
 
-        public void setHeaderSimple(String value) { 
+        /**
+         * @param value Header for the group, used for display purposes.
+         */
+        public GroupComponent setHeaderSimple(String value) { 
           if (value == null)
             this.header = null;
           else {
@@ -310,21 +411,35 @@ public class Questionnaire extends Resource {
               this.header = new String_();
             this.header.setValue(value);
           }
+          return this;
         }
 
+        /**
+         * @return {@link #text} (Additional text for the group, used for display purposes.)
+         */
         public String_ getText() { 
           return this.text;
         }
 
-        public void setText(String_ value) { 
+        /**
+         * @param value {@link #text} (Additional text for the group, used for display purposes.)
+         */
+        public GroupComponent setText(String_ value) { 
           this.text = value;
+          return this;
         }
 
+        /**
+         * @return Additional text for the group, used for display purposes.
+         */
         public String getTextSimple() { 
           return this.text == null ? null : this.text.getValue();
         }
 
-        public void setTextSimple(String value) { 
+        /**
+         * @param value Additional text for the group, used for display purposes.
+         */
+        public GroupComponent setTextSimple(String value) { 
           if (value == null)
             this.text = null;
           else {
@@ -332,40 +447,70 @@ public class Questionnaire extends Resource {
               this.text = new String_();
             this.text.setValue(value);
           }
+          return this;
         }
 
+        /**
+         * @return {@link #subject} (More specific subject this section's answers are about, details the subject given in Questionnaire.)
+         */
         public ResourceReference getSubject() { 
           return this.subject;
         }
 
-        public void setSubject(ResourceReference value) { 
+        /**
+         * @param value {@link #subject} (More specific subject this section's answers are about, details the subject given in Questionnaire.)
+         */
+        public GroupComponent setSubject(ResourceReference value) { 
           this.subject = value;
+          return this;
         }
 
+        /**
+         * @return {@link #question} (Set of questions within this group.)
+         */
         public List<QuestionComponent> getQuestion() { 
           return this.question;
         }
 
     // syntactic sugar
+        /**
+         * @return {@link #question} (Set of questions within this group.)
+         */
         public QuestionComponent addQuestion() { 
           QuestionComponent t = new QuestionComponent();
           this.question.add(t);
           return t;
         }
 
+        /**
+         * @return {@link #group} (A sub-group within a group.)
+         */
         public List<GroupComponent> getGroup() { 
           return this.group;
         }
 
     // syntactic sugar
+        /**
+         * @return {@link #group} (A sub-group within a group.)
+         */
         public GroupComponent addGroup() { 
           GroupComponent t = new GroupComponent();
           this.group.add(t);
           return t;
         }
 
+        protected void listChildren(List<Property> childrenList) {
+          super.listChildren(childrenList);
+          childrenList.add(new Property("name", "CodeableConcept", "Structured name for a section of a predefined list of questions this questionnaire is responding to.", 0, java.lang.Integer.MAX_VALUE, name));
+          childrenList.add(new Property("header", "string", "Header for the group, used for display purposes.", 0, java.lang.Integer.MAX_VALUE, header));
+          childrenList.add(new Property("text", "string", "Additional text for the group, used for display purposes.", 0, java.lang.Integer.MAX_VALUE, text));
+          childrenList.add(new Property("subject", "Resource(Any)", "More specific subject this section's answers are about, details the subject given in Questionnaire.", 0, java.lang.Integer.MAX_VALUE, subject));
+          childrenList.add(new Property("question", "@Questionnaire.question", "Set of questions within this group.", 0, java.lang.Integer.MAX_VALUE, question));
+          childrenList.add(new Property("group", "@Questionnaire.group", "A sub-group within a group.", 0, java.lang.Integer.MAX_VALUE, group));
+        }
+
       public GroupComponent copy(Questionnaire e) {
-        GroupComponent dst = e.new GroupComponent();
+        GroupComponent dst = new GroupComponent();
         dst.name = name == null ? null : name.copy();
         dst.header = header == null ? null : header.copy();
         dst.text = text == null ? null : text.copy();
@@ -382,9 +527,9 @@ public class Questionnaire extends Resource {
   }
 
     /**
-     * The status of the questionnaire as a whole.
+     * The lifecycle status of the questionnaire as a whole.
      */
-    protected Enumeration<ObservationStatus> status;
+    protected Enumeration<QuestionnaireStatus> status;
 
     /**
      * The date and/or time that this version of the questionnaire was authored.
@@ -397,12 +542,12 @@ public class Questionnaire extends Resource {
     protected ResourceReference subject;
 
     /**
-     * Person that collected the answers to the questions in the Questionnaire.
+     * Person who received the answers to the questions in the Questionnaire and recorded them in the system.
      */
     protected ResourceReference author;
 
     /**
-     * The person that answered the questions about the subject. Only used when this is not the subject him/herself.
+     * The person who answered the questions about the subject. Only used when this is not the subject him/herself.
      */
     protected ResourceReference source;
 
@@ -431,114 +576,219 @@ public class Questionnaire extends Resource {
      */
     protected List<GroupComponent> group = new ArrayList<GroupComponent>();
 
-    public Enumeration<ObservationStatus> getStatus() { 
+    public Questionnaire() {
+      super();
+    }
+
+    public Questionnaire(Enumeration<QuestionnaireStatus> status, DateTime authored) {
+      super();
+      this.status = status;
+      this.authored = authored;
+    }
+
+    /**
+     * @return {@link #status} (The lifecycle status of the questionnaire as a whole.)
+     */
+    public Enumeration<QuestionnaireStatus> getStatus() { 
       return this.status;
     }
 
-    public void setStatus(Enumeration<ObservationStatus> value) { 
+    /**
+     * @param value {@link #status} (The lifecycle status of the questionnaire as a whole.)
+     */
+    public Questionnaire setStatus(Enumeration<QuestionnaireStatus> value) { 
       this.status = value;
+      return this;
     }
 
-    public ObservationStatus getStatusSimple() { 
+    /**
+     * @return The lifecycle status of the questionnaire as a whole.
+     */
+    public QuestionnaireStatus getStatusSimple() { 
       return this.status == null ? null : this.status.getValue();
     }
 
-    public void setStatusSimple(ObservationStatus value) { 
+    /**
+     * @param value The lifecycle status of the questionnaire as a whole.
+     */
+    public Questionnaire setStatusSimple(QuestionnaireStatus value) { 
         if (this.status == null)
-          this.status = new Enumeration<ObservationStatus>();
+          this.status = new Enumeration<QuestionnaireStatus>();
         this.status.setValue(value);
+      return this;
     }
 
+    /**
+     * @return {@link #authored} (The date and/or time that this version of the questionnaire was authored.)
+     */
     public DateTime getAuthored() { 
       return this.authored;
     }
 
-    public void setAuthored(DateTime value) { 
+    /**
+     * @param value {@link #authored} (The date and/or time that this version of the questionnaire was authored.)
+     */
+    public Questionnaire setAuthored(DateTime value) { 
       this.authored = value;
+      return this;
     }
 
+    /**
+     * @return The date and/or time that this version of the questionnaire was authored.
+     */
     public String getAuthoredSimple() { 
       return this.authored == null ? null : this.authored.getValue();
     }
 
-    public void setAuthoredSimple(String value) { 
+    /**
+     * @param value The date and/or time that this version of the questionnaire was authored.
+     */
+    public Questionnaire setAuthoredSimple(String value) { 
         if (this.authored == null)
           this.authored = new DateTime();
         this.authored.setValue(value);
+      return this;
     }
 
+    /**
+     * @return {@link #subject} (The subject of the questionnaires: this is the patient that the answers apply to, but this person is not necessarily the source of information.)
+     */
     public ResourceReference getSubject() { 
       return this.subject;
     }
 
-    public void setSubject(ResourceReference value) { 
+    /**
+     * @param value {@link #subject} (The subject of the questionnaires: this is the patient that the answers apply to, but this person is not necessarily the source of information.)
+     */
+    public Questionnaire setSubject(ResourceReference value) { 
       this.subject = value;
+      return this;
     }
 
+    /**
+     * @return {@link #author} (Person who received the answers to the questions in the Questionnaire and recorded them in the system.)
+     */
     public ResourceReference getAuthor() { 
       return this.author;
     }
 
-    public void setAuthor(ResourceReference value) { 
+    /**
+     * @param value {@link #author} (Person who received the answers to the questions in the Questionnaire and recorded them in the system.)
+     */
+    public Questionnaire setAuthor(ResourceReference value) { 
       this.author = value;
+      return this;
     }
 
+    /**
+     * @return {@link #source} (The person who answered the questions about the subject. Only used when this is not the subject him/herself.)
+     */
     public ResourceReference getSource() { 
       return this.source;
     }
 
-    public void setSource(ResourceReference value) { 
+    /**
+     * @param value {@link #source} (The person who answered the questions about the subject. Only used when this is not the subject him/herself.)
+     */
+    public Questionnaire setSource(ResourceReference value) { 
       this.source = value;
+      return this;
     }
 
+    /**
+     * @return {@link #name} (Structured name for a predefined list of questions this questionnaire is responding to.)
+     */
     public CodeableConcept getName() { 
       return this.name;
     }
 
-    public void setName(CodeableConcept value) { 
+    /**
+     * @param value {@link #name} (Structured name for a predefined list of questions this questionnaire is responding to.)
+     */
+    public Questionnaire setName(CodeableConcept value) { 
       this.name = value;
+      return this;
     }
 
+    /**
+     * @return {@link #identifier} (This records identifiers associated with this question/answer set that are defined by business processed and/ or used to refer to it when a direct URL refernce to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation).)
+     */
     public List<Identifier> getIdentifier() { 
       return this.identifier;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #identifier} (This records identifiers associated with this question/answer set that are defined by business processed and/ or used to refer to it when a direct URL refernce to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation).)
+     */
     public Identifier addIdentifier() { 
       Identifier t = new Identifier();
       this.identifier.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #encounter} (Encounter during which this questionnaireanswers were collected. When there were multiple encounters, this is the one considered most relevant to the context of the answers.)
+     */
     public ResourceReference getEncounter() { 
       return this.encounter;
     }
 
-    public void setEncounter(ResourceReference value) { 
+    /**
+     * @param value {@link #encounter} (Encounter during which this questionnaireanswers were collected. When there were multiple encounters, this is the one considered most relevant to the context of the answers.)
+     */
+    public Questionnaire setEncounter(ResourceReference value) { 
       this.encounter = value;
+      return this;
     }
 
+    /**
+     * @return {@link #question} (Answers to questions on a questionnaire.)
+     */
     public List<QuestionComponent> getQuestion() { 
       return this.question;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #question} (Answers to questions on a questionnaire.)
+     */
     public QuestionComponent addQuestion() { 
       QuestionComponent t = new QuestionComponent();
       this.question.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #group} (A group of questions to a possibly similarly grouped set of question in the questionnaire.)
+     */
     public List<GroupComponent> getGroup() { 
       return this.group;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #group} (A group of questions to a possibly similarly grouped set of question in the questionnaire.)
+     */
     public GroupComponent addGroup() { 
       GroupComponent t = new GroupComponent();
       this.group.add(t);
       return t;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("status", "code", "The lifecycle status of the questionnaire as a whole.", 0, java.lang.Integer.MAX_VALUE, status));
+        childrenList.add(new Property("authored", "dateTime", "The date and/or time that this version of the questionnaire was authored.", 0, java.lang.Integer.MAX_VALUE, authored));
+        childrenList.add(new Property("subject", "Resource(Patient|RelatedPerson)", "The subject of the questionnaires: this is the patient that the answers apply to, but this person is not necessarily the source of information.", 0, java.lang.Integer.MAX_VALUE, subject));
+        childrenList.add(new Property("author", "Resource(Practitioner|Patient|RelatedPerson)", "Person who received the answers to the questions in the Questionnaire and recorded them in the system.", 0, java.lang.Integer.MAX_VALUE, author));
+        childrenList.add(new Property("source", "Resource(Patient|Practitioner|RelatedPerson)", "The person who answered the questions about the subject. Only used when this is not the subject him/herself.", 0, java.lang.Integer.MAX_VALUE, source));
+        childrenList.add(new Property("name", "CodeableConcept", "Structured name for a predefined list of questions this questionnaire is responding to.", 0, java.lang.Integer.MAX_VALUE, name));
+        childrenList.add(new Property("identifier", "Identifier", "This records identifiers associated with this question/answer set that are defined by business processed and/ or used to refer to it when a direct URL refernce to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation).", 0, java.lang.Integer.MAX_VALUE, identifier));
+        childrenList.add(new Property("encounter", "Resource(Encounter)", "Encounter during which this questionnaireanswers were collected. When there were multiple encounters, this is the one considered most relevant to the context of the answers.", 0, java.lang.Integer.MAX_VALUE, encounter));
+        childrenList.add(new Property("question", "", "Answers to questions on a questionnaire.", 0, java.lang.Integer.MAX_VALUE, question));
+        childrenList.add(new Property("group", "", "A group of questions to a possibly similarly grouped set of question in the questionnaire.", 0, java.lang.Integer.MAX_VALUE, group));
+      }
 
       public Questionnaire copy() {
         Questionnaire dst = new Questionnaire();

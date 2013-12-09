@@ -49,100 +49,15 @@ namespace Hl7.Fhir.Support
         public const string XHTMLNS = "http://www.w3.org/1999/xhtml";
         public const string XMLNS = "http://www.w3.org/2000/xmlns/";
 
-        public const string RESTPARAM_FORMAT = "_format";
-       
-        public const string SEARCH_PARAM_ID = "_id";
-        public const string SEARCH_PARAM_COUNT = "_count";
-        public const string SEARCH_PARAM_INCLUDE = "_include";
-        public const string HISTORY_PARAM_SINCE = "_since";
-        public const string SEARCH_PARAM_SORT = "_sort";
-
-        public const string HISTORY_PARAM_COUNT = SEARCH_PARAM_COUNT;
-
+      
         public static bool UriHasValue(Uri u)
         {
             return u != null && !String.IsNullOrEmpty(u.ToString());
         }
 
 
-        private static string xValue(XObject elem)
-        {
-            if (elem == null) return null;
-
-            if (elem is XElement)
-                return (elem as XElement).Value;
-            if (elem is XAttribute)
-                return (elem as XAttribute).Value;
-
-            return null;
-        }
-
-        public static string StringValueOrNull(XObject elem)
-        {
-            string value = xValue(elem);
-
-            return String.IsNullOrEmpty(value) ? null : value;
-        }
-
-        public static int? IntValueOrNull(XObject elem)
-        {
-            string value = xValue(elem);
-
-            return String.IsNullOrEmpty(value) ? (int?)null : Int32.Parse(value);
-        }
-
-        public static Uri UriValueOrNull(XObject elem)
-        {
-            string value = StringValueOrNull(elem);
-
-            return String.IsNullOrEmpty(value) ? null : new Uri(value, UriKind.RelativeOrAbsolute);
-        }
-
-        public static Uri UriValueOrNull(JToken attr)
-        {
-            if (attr == null) return null;
-
-            var value = attr.Value<string>();
-
-            return String.IsNullOrEmpty(value) ? null : new Uri(value, UriKind.RelativeOrAbsolute);
-        }
-
-        public static DateTimeOffset? InstantOrNull(XObject elem)
-        {
-            string value = StringValueOrNull(elem);
-
-            return String.IsNullOrEmpty(value) ? (DateTimeOffset?)null : Util.ParseIsoDateTime(value);
-        }
-
-        public static IEnumerable<string> SplitNotInQuotes(char c, string value)
-        {
-            var categories = Regex.Split(value, c + "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")
-                                .Select(s => s.Trim())
-                                .Where(s => !String.IsNullOrEmpty(s));
-            return categories;
-        }
-
-        
-        public static XmlReader XmlReaderFromString(string xml)
-        {
-            var settings = new XmlReaderSettings();
-            settings.IgnoreComments = true;
-            settings.IgnoreProcessingInstructions = true;
-            settings.IgnoreWhitespace = true;
-
-            XmlReader r = XmlReader.Create(new StringReader(xml), settings);
-
-            return r;
-        }
-
-        public static JsonTextReader JsonReaderFromString(string json)
-        {
-            return new JsonTextReader(new StringReader(json));
-        }
-
         public const string DT_PARAM_PATTERN_FULL = @"yyyy-MM-dd'T'HH:mm:ss.FFFFFFFK";
         public const string DT_PARAM_PATTERN_DATE = @"yyyy-MM-dd";
-
 
         public static DateTimeOffset ParseIsoDateTime(string value)
         {
@@ -175,42 +90,8 @@ namespace Hl7.Fhir.Support
         public static string FormatIsoDateTime(DateTimeOffset value)
         {
             return value.ToString(DT_PARAM_PATTERN_FULL);
-        }
-
-        public static DateTimeOffset RemoveMiliseconds(DateTimeOffset dt)
-        {
-            return new DateTimeOffset(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Offset);
-        }
-
-
-        public static Binary MakeBinary(byte[] data, string contentType)
-        {
-            var binary = new Binary();
-
-            binary.Content = data;
-            binary.ContentType = contentType;
-            //Note: binaries don't have Text narrative
-            //binary.Text = new Narrative()
-            //{
-            //    Status = Narrative.NarrativeStatus.Generated,
-            //    Div = new XElement(XNamespace.Get(XHTMLNS) + "div",
-            //                "Binary content of type " + contentType).ToString()
-            //};
-
-            return binary;
-        }
-
-
+        }   
     }
-
-#if NETFX_CORE
-    [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
-    sealed class Serializable : Attribute
-    {
-        // Just there to avoid compilation errors under NETFX
-        // (instead of putting this #if at every single [Serializable] attribute in the model
-    }
-
 
     public static class ForEachExtension
     {
@@ -220,6 +101,4 @@ namespace Hl7.Fhir.Support
                 action(elem);
         }
     }
-#endif
-
 }

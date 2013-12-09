@@ -20,7 +20,7 @@
   <WindowWidth>22755</WindowWidth>
   <WindowTopX>4140</WindowTopX>
   <WindowTopY>1515</WindowTopY>
-  <ActiveSheet>4</ActiveSheet>
+  <ActiveSheet>2</ActiveSheet>
   <ProtectStructure>False</ProtectStructure>
   <ProtectWindows>False</ProtectWindows>
  </ExcelWorkbook>
@@ -187,7 +187,7 @@
     <Cell ss:StyleID="s67"/>
     <Cell><Data ss:Type="String">code</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">GroupType</Data></Cell>
-    <Cell><Data ss:Type="String">Group Classification</Data></Cell>
+    <Cell><Data ss:Type="String">person | animal | device | medication | substance</Data></Cell>
     <Cell><Data ss:Type="String">Identifies the broad classification of the kind of resources the group includes</Data></Cell>
     <Cell ss:Index="11"><Data ss:Type="String">y</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Identifies what type of resources the group is made up of</Data></Cell>
@@ -291,15 +291,15 @@
     <Cell ss:Index="18" ss:StyleID="s67"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="60">
-    <Cell><Data ss:Type="String">Group.characteristic.type</Data></Cell>
+    <Cell><Data ss:Type="String">Group.characteristic.code</Data></Cell>
     <Cell><Data ss:Type="String">1..1</Data></Cell>
     <Cell ss:StyleID="s67"/>
     <Cell ss:StyleID="s67"/>
     <Cell ss:StyleID="s67"/>
     <Cell><Data ss:Type="String">CodeableConcept</Data></Cell>
-    <Cell ss:StyleID="s67"><Data ss:Type="String">GroupCharacteristicType</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">GroupCharacteristicKind</Data></Cell>
     <Cell><Data ss:Type="String">Kind of characteristic</Data></Cell>
-    <Cell><Data ss:Type="String">Identifies the kind of trait being asserted</Data></Cell>
+    <Cell><Data ss:Type="String">A code that identifies the kind of trait being asserted</Data></Cell>
     <Cell ss:Index="12" ss:StyleID="s67"><Data ss:Type="String">Need a formal way of identifying the characteristic being described</Data></Cell>
     <Cell ss:Index="14" ss:StyleID="s67"><Data ss:Type="String">./code</Data></Cell>
     <Cell ss:StyleID="s67"/>
@@ -312,7 +312,7 @@
     <Cell ss:StyleID="s67"/>
     <Cell ss:StyleID="s67"/>
     <Cell ss:StyleID="s67"/>
-    <Cell><Data ss:Type="String">CodeableConcept|string|boolean|Quantity|Range</Data></Cell>
+    <Cell><Data ss:Type="String">CodeableConcept|boolean|Quantity|Range</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">GroupCharacteristicValue</Data></Cell>
     <Cell><Data ss:Type="String">Value held by characteristic</Data></Cell>
     <Cell><Data ss:Type="String">The value of the trait that holds (or does not hold - see 'exclude') for members of the group</Data></Cell>
@@ -372,7 +372,7 @@
    <FreezePanes/>
    <FrozenNoSplit/>
    <SplitHorizontal>1</SplitHorizontal>
-   <TopRowBottomPane>5</TopRowBottomPane>
+   <TopRowBottomPane>1</TopRowBottomPane>
    <SplitVertical>1</SplitVertical>
    <LeftColumnRightPane>1</LeftColumnRightPane>
    <ActivePane>0</ActivePane>
@@ -385,12 +385,11 @@
     </Pane>
     <Pane>
      <Number>2</Number>
-     <ActiveRow>1</ActiveRow>
     </Pane>
     <Pane>
      <Number>0</Number>
-     <ActiveRow>6</ActiveRow>
-     <ActiveCol>6</ActiveCol>
+     <ActiveRow>4</ActiveRow>
+     <ActiveCol>7</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -482,16 +481,17 @@
   </WorksheetOptions>
  </Worksheet>
  <Worksheet ss:Name="Events">
-  <Table ss:ExpandedColumnCount="6" ss:ExpandedRowCount="2" x:FullColumns="1"
+  <Table ss:ExpandedColumnCount="7" ss:ExpandedRowCount="2" x:FullColumns="1"
    x:FullRows="1" ss:DefaultRowHeight="15">
-   <Column ss:AutoFitWidth="0" ss:Width="82.5"/>
-   <Column ss:AutoFitWidth="0" ss:Width="198.75"/>
+   <Column ss:AutoFitWidth="0" ss:Width="82.5" ss:Span="1"/>
+   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="198.75"/>
    <Column ss:AutoFitWidth="0" ss:Width="157.5"/>
    <Column ss:AutoFitWidth="0" ss:Width="162.75"/>
    <Column ss:AutoFitWidth="0" ss:Width="195.75"/>
    <Column ss:AutoFitWidth="0" ss:Width="74.25"/>
    <Row ss:AutoFitHeight="0" ss:Height="33">
     <Cell ss:StyleID="s65"><Data ss:Type="String">Event Code</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">Category</Data></Cell>
     <Cell ss:StyleID="s65"><Data ss:Type="String">Description</Data></Cell>
     <Cell ss:StyleID="s65"><Data ss:Type="String">Notes</Data></Cell>
     <Cell ss:StyleID="s65"><Data ss:Type="String">Request Resources</Data></Cell>
@@ -500,8 +500,9 @@
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="90">
     <Cell ss:StyleID="s71"><Data ss:Type="String">admin-notify</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Notification</Data></Cell>
     <Cell ss:StyleID="s71"><Data ss:Type="String">Notification of a change to an administrative resource (either create or update). Note that there is no delete, though some administrative resources have status or period elements for this use</Data></Cell>
-    <Cell ss:Index="4" ss:StyleID="s71"><Data ss:Type="String">Group</Data></Cell>
+    <Cell ss:Index="5" ss:StyleID="s71"><Data ss:Type="String">Group</Data></Cell>
    </Row>
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
@@ -511,6 +512,7 @@
     <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
    </PageSetup>
    <Unsynced/>
+   <Selected/>
    <FreezePanes/>
    <FrozenNoSplit/>
    <SplitHorizontal>1</SplitHorizontal>
@@ -530,7 +532,7 @@
     </Pane>
     <Pane>
      <Number>0</Number>
-     <ActiveCol>3</ActiveCol>
+     <ActiveRow>2</ActiveRow>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -554,7 +556,7 @@
     <Cell><Data ss:Type="String">Todo</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell><Data ss:Type="String">group-type</Data></Cell>
+    <Cell><Data ss:Type="String">type</Data></Cell>
     <Cell><Data ss:Type="String">The type of resources the group contains</Data></Cell>
     <Cell><Data ss:Type="String">token</Data></Cell>
     <Cell ss:StyleID="s72"><Data ss:Type="String">Group.type</Data></Cell>
@@ -582,9 +584,9 @@
     <Cell ss:Index="8" ss:StyleID="s64"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell><Data ss:Type="String">type</Data></Cell>
+    <Cell><Data ss:Type="String">characteristic</Data></Cell>
     <Cell ss:Index="3"><Data ss:Type="String">token</Data></Cell>
-    <Cell ss:StyleID="s72"><Data ss:Type="String">Group.characteristic.type</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="String">Group.characteristic.code</Data></Cell>
     <Cell ss:Index="8" ss:StyleID="s64"/>
    </Row>
    <Row ss:AutoFitHeight="0">
@@ -600,10 +602,10 @@
     <Cell ss:Index="8" ss:StyleID="s64"/>
    </Row>
    <Row ss:AutoFitHeight="0">
-    <Cell><Data ss:Type="String">type-value</Data></Cell>
-    <Cell><Data ss:Type="String">A composite of both type and value</Data></Cell>
+    <Cell><Data ss:Type="String">characteristic-value</Data></Cell>
+    <Cell><Data ss:Type="String">A composite of both characteristic and value</Data></Cell>
     <Cell><Data ss:Type="String">composite</Data></Cell>
-    <Cell ss:StyleID="s72"><Data ss:Type="String">type &amp; value</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="String">characteristic &amp; value</Data></Cell>
     <Cell ss:Index="8" ss:StyleID="s64"/>
    </Row>
    <Row ss:AutoFitHeight="0">
@@ -737,8 +739,7 @@
     </Pane>
     <Pane>
      <Number>0</Number>
-     <ActiveRow>2</ActiveRow>
-     <ActiveCol>0</ActiveCol>
+     <ActiveRow>16</ActiveRow>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -767,7 +768,7 @@
     <Cell ss:StyleID="s73"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="30">
-    <Cell ss:StyleID="s67"><Data ss:Type="String">GroupCharacteristicType</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">GroupCharacteristicKind</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">List of characteristics used to describe group members.  E.g. gender, age, owner, location, etc.</Data></Cell>
     <Cell ss:StyleID="s71"><Data ss:Type="String">unbound</Data></Cell>
     <Cell ss:StyleID="s73"/>
@@ -795,7 +796,6 @@
     <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
    </PageSetup>
    <Unsynced/>
-   <Selected/>
    <FreezePanes/>
    <FrozenNoSplit/>
    <SplitHorizontal>1</SplitHorizontal>
@@ -815,7 +815,7 @@
     </Pane>
     <Pane>
      <Number>0</Number>
-     <ActiveRow>2</ActiveRow>
+     <ActiveRow>3</ActiveRow>
      <ActiveCol>0</ActiveCol>
     </Pane>
    </Panes>
@@ -873,7 +873,9 @@
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>4</ActiveRow>
+     <ActiveRow>1</ActiveRow>
+     <ActiveCol>1</ActiveCol>
+     <RangeSelection>R2C2:R6C2</RangeSelection>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>

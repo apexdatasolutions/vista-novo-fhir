@@ -16,7 +16,10 @@ todo: compartments
     <page title="Coming Challenges" filename="change.html"/>
     <page title="EHR FM map" filename="ehr-fm.html"/>
     <page title="Resource Definitions" filename="resources.html">
-      <page title="Tags, Bundles, Compartments" filename="extras.html"/>
+      <page title="Conformance" filename="conformance-rules.html"/>
+      <page title="Tags, Bundles, Compartments" filename="extras.html">
+        <page title="Compartments" filename="compartment-patient.html"/>
+      </page>
       <page title="References" filename="references.html"/>
       <page title="Narrative" filename="narrative.html"/>
       <page title="Formats" filename="formats.html">
@@ -51,11 +54,15 @@ todo: compartments
   
   <page title="Implementation" filename="implementation.html">
     <page title="RESTful API" filename="http.html"/>
+    <page title="Messaging" filename="messaging.html"/>
+    <page title="Documents" filename="documents.html"/>
     <page title="Downloads" filename="downloads.html"/>
     <page title="Using Resources" filename="use.html"/>
     <page title="Support" filename="support.html"/>
     <page title="Common Usages" filename="usecases.html"/>
-    <page title="Security" filename="security.html"/>
+    <page title="Security" filename="security.html">
+      <page title="Security Labels" filename="security-labels.html"/>
+    </page>
     <page title="Integrated Examples" filename="integrated-examples.html"/>
   </page>
 
@@ -88,7 +95,7 @@ todo: compartments
     <page type="resource" resource="DiagnosticOrder"/>
     <page type="resource" resource="ImagingStudy"/>
     <page type="resource" resource="Specimen"/>
-    <page type="resource" resource="DeviceData"/>
+    <page type="resource" resource="DeviceObservationReport"/>
   </page>
   <page title="Administrative" filename="administration.html">
     <page type="resource" resource="Patient"/>
@@ -111,11 +118,10 @@ todo: compartments
     <page type="resource" resource="Other"/>
     <page type="resource" resource="DocumentReference"/>
     <page type="resource" resource="DocumentManifest"/>
-    <page type="resource" resource="Binary"/>
     <page type="resource" resource="Provenance"/>
     <page type="resource" resource="SecurityEvent"/>
-    <page type="resource" resource="Document"/>
-    <page type="resource" resource="Message"/>
+    <page type="resource" resource="Composition"/>
+    <page type="resource" resource="MessageHeader"/>
     <page type="resource" resource="OperationOutcome"/>
     <page type="resource" resource="Query"/>
     <page type="resource" resource="Conformance"/>

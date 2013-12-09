@@ -29,7 +29,9 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
+
+import java.util.*;
 
 /**
  * For referring to data content defined in other formats.
@@ -71,37 +73,73 @@ public class Attachment extends Type {
      */
     protected String_ title;
 
+    public Attachment() {
+      super();
+    }
+
+    public Attachment(Code contentType) {
+      super();
+      this.contentType = contentType;
+    }
+
+    /**
+     * @return {@link #contentType} (Identifies the type of the data in the attachment and allows a method to be chosen to interpret or render the data. Includes mime type parameters such as charset where appropriate.)
+     */
     public Code getContentType() { 
       return this.contentType;
     }
 
-    public void setContentType(Code value) { 
+    /**
+     * @param value {@link #contentType} (Identifies the type of the data in the attachment and allows a method to be chosen to interpret or render the data. Includes mime type parameters such as charset where appropriate.)
+     */
+    public Attachment setContentType(Code value) { 
       this.contentType = value;
+      return this;
     }
 
+    /**
+     * @return Identifies the type of the data in the attachment and allows a method to be chosen to interpret or render the data. Includes mime type parameters such as charset where appropriate.
+     */
     public String getContentTypeSimple() { 
       return this.contentType == null ? null : this.contentType.getValue();
     }
 
-    public void setContentTypeSimple(String value) { 
+    /**
+     * @param value Identifies the type of the data in the attachment and allows a method to be chosen to interpret or render the data. Includes mime type parameters such as charset where appropriate.
+     */
+    public Attachment setContentTypeSimple(String value) { 
         if (this.contentType == null)
           this.contentType = new Code();
         this.contentType.setValue(value);
+      return this;
     }
 
+    /**
+     * @return {@link #language} (The human language of the content. The value can be any valid value according to BCP 47.)
+     */
     public Code getLanguage() { 
       return this.language;
     }
 
-    public void setLanguage(Code value) { 
+    /**
+     * @param value {@link #language} (The human language of the content. The value can be any valid value according to BCP 47.)
+     */
+    public Attachment setLanguage(Code value) { 
       this.language = value;
+      return this;
     }
 
+    /**
+     * @return The human language of the content. The value can be any valid value according to BCP 47.
+     */
     public String getLanguageSimple() { 
       return this.language == null ? null : this.language.getValue();
     }
 
-    public void setLanguageSimple(String value) { 
+    /**
+     * @param value The human language of the content. The value can be any valid value according to BCP 47.
+     */
+    public Attachment setLanguageSimple(String value) { 
       if (value == null)
         this.language = null;
       else {
@@ -109,21 +147,35 @@ public class Attachment extends Type {
           this.language = new Code();
         this.language.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #data} (The actual data of the attachment - a sequence of bytes. In XML, represented using base64.)
+     */
     public Base64Binary getData() { 
       return this.data;
     }
 
-    public void setData(Base64Binary value) { 
+    /**
+     * @param value {@link #data} (The actual data of the attachment - a sequence of bytes. In XML, represented using base64.)
+     */
+    public Attachment setData(Base64Binary value) { 
       this.data = value;
+      return this;
     }
 
+    /**
+     * @return The actual data of the attachment - a sequence of bytes. In XML, represented using base64.
+     */
     public byte[] getDataSimple() { 
       return this.data == null ? null : this.data.getValue();
     }
 
-    public void setDataSimple(byte[] value) { 
+    /**
+     * @param value The actual data of the attachment - a sequence of bytes. In XML, represented using base64.
+     */
+    public Attachment setDataSimple(byte[] value) { 
       if (value == null)
         this.data = null;
       else {
@@ -131,21 +183,35 @@ public class Attachment extends Type {
           this.data = new Base64Binary();
         this.data.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #url} (An alternative location where the data can be accessed.)
+     */
     public Uri getUrl() { 
       return this.url;
     }
 
-    public void setUrl(Uri value) { 
+    /**
+     * @param value {@link #url} (An alternative location where the data can be accessed.)
+     */
+    public Attachment setUrl(Uri value) { 
       this.url = value;
+      return this;
     }
 
+    /**
+     * @return An alternative location where the data can be accessed.
+     */
     public String getUrlSimple() { 
       return this.url == null ? null : this.url.getValue();
     }
 
-    public void setUrlSimple(String value) { 
+    /**
+     * @param value An alternative location where the data can be accessed.
+     */
+    public Attachment setUrlSimple(String value) { 
       if (value == null)
         this.url = null;
       else {
@@ -153,21 +219,35 @@ public class Attachment extends Type {
           this.url = new Uri();
         this.url.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #size} (The number of bytes of data that make up this attachment.)
+     */
     public Integer getSize() { 
       return this.size;
     }
 
-    public void setSize(Integer value) { 
+    /**
+     * @param value {@link #size} (The number of bytes of data that make up this attachment.)
+     */
+    public Attachment setSize(Integer value) { 
       this.size = value;
+      return this;
     }
 
+    /**
+     * @return The number of bytes of data that make up this attachment.
+     */
     public int getSizeSimple() { 
       return this.size == null ? null : this.size.getValue();
     }
 
-    public void setSizeSimple(int value) { 
+    /**
+     * @param value The number of bytes of data that make up this attachment.
+     */
+    public Attachment setSizeSimple(int value) { 
       if (value == -1)
         this.size = null;
       else {
@@ -175,21 +255,35 @@ public class Attachment extends Type {
           this.size = new Integer();
         this.size.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #hash} (The calculated hash of the data using SHA-1. Represented using base64.)
+     */
     public Base64Binary getHash() { 
       return this.hash;
     }
 
-    public void setHash(Base64Binary value) { 
+    /**
+     * @param value {@link #hash} (The calculated hash of the data using SHA-1. Represented using base64.)
+     */
+    public Attachment setHash(Base64Binary value) { 
       this.hash = value;
+      return this;
     }
 
+    /**
+     * @return The calculated hash of the data using SHA-1. Represented using base64.
+     */
     public byte[] getHashSimple() { 
       return this.hash == null ? null : this.hash.getValue();
     }
 
-    public void setHashSimple(byte[] value) { 
+    /**
+     * @param value The calculated hash of the data using SHA-1. Represented using base64.
+     */
+    public Attachment setHashSimple(byte[] value) { 
       if (value == null)
         this.hash = null;
       else {
@@ -197,21 +291,35 @@ public class Attachment extends Type {
           this.hash = new Base64Binary();
         this.hash.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #title} (A label or set of text to display in place of the data.)
+     */
     public String_ getTitle() { 
       return this.title;
     }
 
-    public void setTitle(String_ value) { 
+    /**
+     * @param value {@link #title} (A label or set of text to display in place of the data.)
+     */
+    public Attachment setTitle(String_ value) { 
       this.title = value;
+      return this;
     }
 
+    /**
+     * @return A label or set of text to display in place of the data.
+     */
     public String getTitleSimple() { 
       return this.title == null ? null : this.title.getValue();
     }
 
-    public void setTitleSimple(String value) { 
+    /**
+     * @param value A label or set of text to display in place of the data.
+     */
+    public Attachment setTitleSimple(String value) { 
       if (value == null)
         this.title = null;
       else {
@@ -219,7 +327,19 @@ public class Attachment extends Type {
           this.title = new String_();
         this.title.setValue(value);
       }
+      return this;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("contentType", "code", "Identifies the type of the data in the attachment and allows a method to be chosen to interpret or render the data. Includes mime type parameters such as charset where appropriate.", 0, java.lang.Integer.MAX_VALUE, contentType));
+        childrenList.add(new Property("language", "code", "The human language of the content. The value can be any valid value according to BCP 47.", 0, java.lang.Integer.MAX_VALUE, language));
+        childrenList.add(new Property("data", "base64Binary", "The actual data of the attachment - a sequence of bytes. In XML, represented using base64.", 0, java.lang.Integer.MAX_VALUE, data));
+        childrenList.add(new Property("url", "uri", "An alternative location where the data can be accessed.", 0, java.lang.Integer.MAX_VALUE, url));
+        childrenList.add(new Property("size", "integer", "The number of bytes of data that make up this attachment.", 0, java.lang.Integer.MAX_VALUE, size));
+        childrenList.add(new Property("hash", "base64Binary", "The calculated hash of the data using SHA-1. Represented using base64.", 0, java.lang.Integer.MAX_VALUE, hash));
+        childrenList.add(new Property("title", "string", "A label or set of text to display in place of the data.", 0, java.lang.Integer.MAX_VALUE, title));
+      }
 
       public Attachment copy() {
         Attachment dst = new Attachment();

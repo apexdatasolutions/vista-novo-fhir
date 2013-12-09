@@ -27,6 +27,10 @@ in one section. A summary:
  <li>Audit - FHIR defines <a href="provenance.html">provenance</a> and <a href="securityevent.html">security event</a> resources suitable for tracking the origins, authorship, history, status and access of resources</li>
  <li>Digital Signatures - FHIR includes several specifically reserved locations for digital signatures</li>
  <li>Attachments - FHIR allows for binary resources and attachments. These have their own concerns</li>
+ <li><a href="security-labels.html">Labels</a> - FHIR allows for set of security related tags that affect that way resources are handled</li>
+ <li>Data Management Policies - FHIR defines a set of capabilities to support data exchange.
+     Not all the capabilities that FHIR enables may be appropriate or legal for use in some combinations of context and jurisdiction (e.g. HIPAA for exchange between instutions). 
+     It is the responsibility of implementers to ensure that relevant regulations and other requirements are met</li>
 </ul>
 <p>
 Time critical concerns regarding security flaws in the FHIR specification should be addressed to 
@@ -54,7 +58,7 @@ deployment architecture is a matter for system design:
 <table class="dense">
  <tr><td><img height="32" width="32" src="security-icon-user.png"/></td><td>The consumer that is using a healthcare related system</td></tr>
  <tr><td><img height="32" width="32" src="security-icon-app.png"/></td><td>The client application the user is using (application, mobile app, website, etc.)</td></tr>
- <tr><td><img height="32" width="32" src="security-icon-sec.png"/></td><td>The security system that authenticates and authorizes the user</td></tr>
+ <tr><td><img height="32" width="32" src="security-icon-sec.png"/></td><td>The security system (authentication and access control)</td></tr>
  <tr><td><img height="32" width="32" src="security-icon-fhir.png"/></td><td>The clinical/healthcare repository</td></tr>
 </table>
 </td></tr></table>
@@ -65,15 +69,25 @@ the client (consumer of FHIR services) may either interact with a security syste
 as a FHIR server, and which depends on a subsequent FHIR interface to provide the actual storage,
 or either the client or server interacts with the security system independently. In each of these
 3 scenarios, the different components may be assembled into applications or network components
-differently, but the same logical layout applies. 
+differently, but the same logical layout applies. The FHIR specification assumes that a security 
+system exists, and that it may be deployed in front of or behind the FHIR API. 
 </p>
+<a name="access-control"> </a>
 <p>
-The FHIR specification assumes that a security system exists, and that it may be deployed 
-in front of or behind the FHIR API. Because there are a plethora of standards relating to 
+The security system includes the following subsystems:
+</p>
+<ul>
+ <li>Authentication: Identifies and Authenticates the user</li>
+ <li>Access Control decision engine: decides whether FHIR operations are allowed</li>
+ <li>Audit Log: records actions to allow for subsequent review and detection of intrusion or innappropriate usage</li>
+</ul>
+
+<p>
+Because there are a plethora of standards relating to 
 the administration and functionality of the security system, FHIR does not provide user,
 profile, or other such administration resources. Instead, the FHIR resources are the targets
 of the policies expressed in these other approaches. What FHIR does specify is a way to apply
-security labels to resources so that a security system may use these (along with the contents
+<a href="security-labels.html">security labels</a> to resources so that a security system may use these (along with the contents
 of the resources if appropriate) to determine whether a user is authorised to perform a 
 particular FHIR operation or not.
 </p>
@@ -90,7 +104,7 @@ only suitable for use where such trust relationships exist (e.g. in a single ins
 suitable where such trust does not exist (e.g. state &amp; national EHR systems and health record 
 systems that support disparate systems). Similarly, this simple RESTful interface has no support for 
 explicit archiving and similar functions. Use-cases where these kind of features are required should 
-consider a <a href="message.html">messaging</a> or <a href="implementation.html#SOA">SOA-based approach</a> or 
+consider a <a href="messaging.html">messaging</a> or <a href="implementation.html#SOA">SOA-based approach</a> or 
 some other kind of profiled REST interface.
 -->
 
@@ -136,26 +150,67 @@ the relevant resources and the underlying systems. Note that this isn't necessar
 on any security being in place, or any particular implementation. But real world usage will generally require this. 
 </p>
 <p>
-
-Todo.. outline general considerations. Note: this is under active investigation through connectathons running 
-parallel to the ballot process, and further work is expected on this section. Interested parties should track 
-the joint security / FHIR work in this area.
+A holder of data should not allow the data to be communicated unless there is assurances that the 
+other party is authorized to receive it. This is true for a Client creating a resource through a PUT/POST, 
+as much as it is true for a Server returning resources on a GET. The presumption is that without 
+proper authorization, to the satisfaction of the data holder, the data does not get communicated.
 </p>
 <p>
-RBAC notes go here
+The rules behind the Access Control decision are often very complex, and potentially depends on information sourced from:
 </p>
+<ul>
+ <li>Client, such as User Identity, User Role, Location, level of assurance</li>
+ <li>Resource, such as confidentiality, sensitivity, type of data, date ranges covered by the data, author of the data</li>
+ <li>Patient, such as the patient identity, patient relationship to the user, patient consent policies</li>
+ <li>Context of the transaction, system identity, time-of-day, purpose of use, workflow state, and transport security</li>
+</ul>
+<!-- HL7 has papers on this topic. -->
+<p>For one source of further information, see the 
+<a href="http://www.ihe.net/Technical_Framework/upload/IHE_ITI_TF_WhitePaper_AccessControl_2009-09-28.pdf">IHE Access Control white paper</a>
+</p>
+
+<h2>Audit Logging</h2>
+<p>
+FHIR provides a <a href="securityevent.html">SecurityEvent</a> resource suitable for use by 
+FHIR clients and servers to record when a security or privacy relevant event has occurred. 
+This form of audit logging records as much detail as reasonable at the time the event happened. 
+</p>
+<p>
+The SecurityEvent when used to record security and privacy relevant events can then be 
+used by properly authorized applications to support audit reporting, alerting, filtering, 
+and forwarding. This model has been developed and used in healthcare for a decade as 
+<a href="http://wiki.ihe.net/index.php?title=Audit_Trail_and_Node_Authentication">IHE-ATNA profile</a>. 
+ATNA log events can be automatically converted to SecurityEvent resources, and from there,
+client applications are able to search the security events, or subscribe to them.
+</p>
+
 
 <h2>
 Digital Signatures
 </h2>
-<p>This specification recommends the use of <a href="http://www.w3.org/TR/xmldsig-core/">W3C Digital Signatures</a> to sign resources and  
-provides an element in the <a href="provenance.html">Provenance</a> resource to carry 
-a detached digital signature for a resource. This does not prohibit other ways of using digital signatures.</p>
-
 <p>
-Additional work is anticipated in this area, including alignment with the <a href="http://wiki.ihe.net/index.php?title=Document_Digital_Signature">IHE DSG profile</a>.
+This specification recommends the use of <a href="http://www.w3.org/TR/xmldsig-core/">W3C Digital Signatures</a> for signatures.
+</p>
+<p>
+Resources can be signed using the <a href="provenance.html">Provenance</a> resource to carry a 
+<a href="http://www.w3.org/TR/xmldsig-core/#def-SignatureDetached">detached digital signature</a> 
+for the purpose of detecting subsequent changes to the resource. This signature is not
+suitable for non-repudiation purposes. 
+</p>
+<p>
+In addition, <a href="documents.html#signatures">documents may be signed</a> using an 
+<a href="http://www.w3.org/TR/xmldsig-core/#def-SignatureEnveloped">enveloped</a> 
+signature. 
+</p>
+<p>
+Neither of these definitions prohibits the use of other ways of using digital signatures.
 </p>
 
+<blockquote>
+<p>
+DSTU Note: Additional work is anticipated in this area, including alignment with the <a href="http://wiki.ihe.net/index.php?title=Document_Digital_Signature">IHE DSG profile</a>.
+</p>
+</blockquote>
 
 <h2>Attachments</h2>
 <p>
@@ -166,6 +221,10 @@ always use caution when handling resources.
 
 <a name="labels"> </a>
 <h2>Security Labels</h2>
+
+<p>
+See <a href="security-labels.html">Security Labels</a>.
+</p>
 
 </div>
 

@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
 
 import java.util.*;
 
@@ -78,78 +78,152 @@ public class RelatedPerson extends Resource {
      */
     protected List<Attachment> photo = new ArrayList<Attachment>();
 
+    public RelatedPerson() {
+      super();
+    }
+
+    public RelatedPerson(ResourceReference patient) {
+      super();
+      this.patient = patient;
+    }
+
+    /**
+     * @return {@link #identifier} (Identifier for a person within a particular scope.)
+     */
     public List<Identifier> getIdentifier() { 
       return this.identifier;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #identifier} (Identifier for a person within a particular scope.)
+     */
     public Identifier addIdentifier() { 
       Identifier t = new Identifier();
       this.identifier.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #patient} (The patient this person is related to.)
+     */
     public ResourceReference getPatient() { 
       return this.patient;
     }
 
-    public void setPatient(ResourceReference value) { 
+    /**
+     * @param value {@link #patient} (The patient this person is related to.)
+     */
+    public RelatedPerson setPatient(ResourceReference value) { 
       this.patient = value;
+      return this;
     }
 
+    /**
+     * @return {@link #relationship} (The nature of the relationship between a patient and the related person.)
+     */
     public CodeableConcept getRelationship() { 
       return this.relationship;
     }
 
-    public void setRelationship(CodeableConcept value) { 
+    /**
+     * @param value {@link #relationship} (The nature of the relationship between a patient and the related person.)
+     */
+    public RelatedPerson setRelationship(CodeableConcept value) { 
       this.relationship = value;
+      return this;
     }
 
+    /**
+     * @return {@link #name} (A name associated with the person.)
+     */
     public HumanName getName() { 
       return this.name;
     }
 
-    public void setName(HumanName value) { 
+    /**
+     * @param value {@link #name} (A name associated with the person.)
+     */
+    public RelatedPerson setName(HumanName value) { 
       this.name = value;
+      return this;
     }
 
+    /**
+     * @return {@link #telecom} (A contact detail for the person, e.g. a telephone number or an email address.)
+     */
     public List<Contact> getTelecom() { 
       return this.telecom;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #telecom} (A contact detail for the person, e.g. a telephone number or an email address.)
+     */
     public Contact addTelecom() { 
       Contact t = new Contact();
       this.telecom.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #gender} (Administrative Gender - the gender that the person is considered to have for administration and record keeping purposes.)
+     */
     public CodeableConcept getGender() { 
       return this.gender;
     }
 
-    public void setGender(CodeableConcept value) { 
+    /**
+     * @param value {@link #gender} (Administrative Gender - the gender that the person is considered to have for administration and record keeping purposes.)
+     */
+    public RelatedPerson setGender(CodeableConcept value) { 
       this.gender = value;
+      return this;
     }
 
+    /**
+     * @return {@link #address} (Address where the related person can be contacted or visited.)
+     */
     public Address getAddress() { 
       return this.address;
     }
 
-    public void setAddress(Address value) { 
+    /**
+     * @param value {@link #address} (Address where the related person can be contacted or visited.)
+     */
+    public RelatedPerson setAddress(Address value) { 
       this.address = value;
+      return this;
     }
 
+    /**
+     * @return {@link #photo} (Image of the person.)
+     */
     public List<Attachment> getPhoto() { 
       return this.photo;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #photo} (Image of the person.)
+     */
     public Attachment addPhoto() { 
       Attachment t = new Attachment();
       this.photo.add(t);
       return t;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("identifier", "Identifier", "Identifier for a person within a particular scope.", 0, java.lang.Integer.MAX_VALUE, identifier));
+        childrenList.add(new Property("patient", "Resource(Patient)", "The patient this person is related to.", 0, java.lang.Integer.MAX_VALUE, patient));
+        childrenList.add(new Property("relationship", "CodeableConcept", "The nature of the relationship between a patient and the related person.", 0, java.lang.Integer.MAX_VALUE, relationship));
+        childrenList.add(new Property("name", "HumanName", "A name associated with the person.", 0, java.lang.Integer.MAX_VALUE, name));
+        childrenList.add(new Property("telecom", "Contact", "A contact detail for the person, e.g. a telephone number or an email address.", 0, java.lang.Integer.MAX_VALUE, telecom));
+        childrenList.add(new Property("gender", "CodeableConcept", "Administrative Gender - the gender that the person is considered to have for administration and record keeping purposes.", 0, java.lang.Integer.MAX_VALUE, gender));
+        childrenList.add(new Property("address", "Address", "Address where the related person can be contacted or visited.", 0, java.lang.Integer.MAX_VALUE, address));
+        childrenList.add(new Property("photo", "Attachment", "Image of the person.", 0, java.lang.Integer.MAX_VALUE, photo));
+      }
 
       public RelatedPerson copy() {
         RelatedPerson dst = new RelatedPerson();

@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
 
 import java.util.*;
 
@@ -196,7 +196,7 @@ public class ImagingStudy extends Resource {
         }
     }
 
-  public class ImagingModalityEnumFactory implements EnumFactory {
+  public static class ImagingModalityEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
@@ -382,7 +382,7 @@ public class ImagingStudy extends Resource {
         }
     }
 
-  public class InstanceAvailabilityEnumFactory implements EnumFactory {
+  public static class InstanceAvailabilityEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
@@ -636,7 +636,7 @@ public class ImagingStudy extends Resource {
         }
     }
 
-  public class ModalityEnumFactory implements EnumFactory {
+  public static class ModalityEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
@@ -860,7 +860,7 @@ public class ImagingStudy extends Resource {
       }
     }
 
-    public class ImagingStudySeriesComponent extends Element {
+    public static class ImagingStudySeriesComponent extends BackboneElement {
         /**
          * The number of this series in the overall sequence.
          */
@@ -911,19 +911,43 @@ public class ImagingStudy extends Resource {
          */
         protected List<ImagingStudySeriesInstanceComponent> instance = new ArrayList<ImagingStudySeriesInstanceComponent>();
 
+      public ImagingStudySeriesComponent() {
+        super();
+      }
+
+      public ImagingStudySeriesComponent(Enumeration<Modality> modality, Oid uid, Integer numberOfInstances) {
+        super();
+        this.modality = modality;
+        this.uid = uid;
+        this.numberOfInstances = numberOfInstances;
+      }
+
+        /**
+         * @return {@link #number} (The number of this series in the overall sequence.)
+         */
         public Integer getNumber() { 
           return this.number;
         }
 
-        public void setNumber(Integer value) { 
+        /**
+         * @param value {@link #number} (The number of this series in the overall sequence.)
+         */
+        public ImagingStudySeriesComponent setNumber(Integer value) { 
           this.number = value;
+          return this;
         }
 
+        /**
+         * @return The number of this series in the overall sequence.
+         */
         public int getNumberSimple() { 
           return this.number == null ? null : this.number.getValue();
         }
 
-        public void setNumberSimple(int value) { 
+        /**
+         * @param value The number of this series in the overall sequence.
+         */
+        public ImagingStudySeriesComponent setNumberSimple(int value) { 
           if (value == -1)
             this.number = null;
           else {
@@ -931,57 +955,99 @@ public class ImagingStudy extends Resource {
               this.number = new Integer();
             this.number.setValue(value);
           }
+          return this;
         }
 
+        /**
+         * @return {@link #modality} (The modality of this series sequence.)
+         */
         public Enumeration<Modality> getModality() { 
           return this.modality;
         }
 
-        public void setModality(Enumeration<Modality> value) { 
+        /**
+         * @param value {@link #modality} (The modality of this series sequence.)
+         */
+        public ImagingStudySeriesComponent setModality(Enumeration<Modality> value) { 
           this.modality = value;
+          return this;
         }
 
+        /**
+         * @return The modality of this series sequence.
+         */
         public Modality getModalitySimple() { 
           return this.modality == null ? null : this.modality.getValue();
         }
 
-        public void setModalitySimple(Modality value) { 
+        /**
+         * @param value The modality of this series sequence.
+         */
+        public ImagingStudySeriesComponent setModalitySimple(Modality value) { 
             if (this.modality == null)
               this.modality = new Enumeration<Modality>();
             this.modality.setValue(value);
+          return this;
         }
 
+        /**
+         * @return {@link #uid} (Formal identifier for this series.)
+         */
         public Oid getUid() { 
           return this.uid;
         }
 
-        public void setUid(Oid value) { 
+        /**
+         * @param value {@link #uid} (Formal identifier for this series.)
+         */
+        public ImagingStudySeriesComponent setUid(Oid value) { 
           this.uid = value;
+          return this;
         }
 
+        /**
+         * @return Formal identifier for this series.
+         */
         public String getUidSimple() { 
           return this.uid == null ? null : this.uid.getValue();
         }
 
-        public void setUidSimple(String value) { 
+        /**
+         * @param value Formal identifier for this series.
+         */
+        public ImagingStudySeriesComponent setUidSimple(String value) { 
             if (this.uid == null)
               this.uid = new Oid();
             this.uid.setValue(value);
+          return this;
         }
 
+        /**
+         * @return {@link #description} (A description of the series.)
+         */
         public String_ getDescription() { 
           return this.description;
         }
 
-        public void setDescription(String_ value) { 
+        /**
+         * @param value {@link #description} (A description of the series.)
+         */
+        public ImagingStudySeriesComponent setDescription(String_ value) { 
           this.description = value;
+          return this;
         }
 
+        /**
+         * @return A description of the series.
+         */
         public String getDescriptionSimple() { 
           return this.description == null ? null : this.description.getValue();
         }
 
-        public void setDescriptionSimple(String value) { 
+        /**
+         * @param value A description of the series.
+         */
+        public ImagingStudySeriesComponent setDescriptionSimple(String value) { 
           if (value == null)
             this.description = null;
           else {
@@ -989,39 +1055,67 @@ public class ImagingStudy extends Resource {
               this.description = new String_();
             this.description.setValue(value);
           }
+          return this;
         }
 
+        /**
+         * @return {@link #numberOfInstances} (Sequence that contains attributes from the.)
+         */
         public Integer getNumberOfInstances() { 
           return this.numberOfInstances;
         }
 
-        public void setNumberOfInstances(Integer value) { 
+        /**
+         * @param value {@link #numberOfInstances} (Sequence that contains attributes from the.)
+         */
+        public ImagingStudySeriesComponent setNumberOfInstances(Integer value) { 
           this.numberOfInstances = value;
+          return this;
         }
 
+        /**
+         * @return Sequence that contains attributes from the.
+         */
         public int getNumberOfInstancesSimple() { 
           return this.numberOfInstances == null ? null : this.numberOfInstances.getValue();
         }
 
-        public void setNumberOfInstancesSimple(int value) { 
+        /**
+         * @param value Sequence that contains attributes from the.
+         */
+        public ImagingStudySeriesComponent setNumberOfInstancesSimple(int value) { 
             if (this.numberOfInstances == null)
               this.numberOfInstances = new Integer();
             this.numberOfInstances.setValue(value);
+          return this;
         }
 
+        /**
+         * @return {@link #availability} (Availability of series (online, offline or nearlnie).)
+         */
         public Enumeration<InstanceAvailability> getAvailability() { 
           return this.availability;
         }
 
-        public void setAvailability(Enumeration<InstanceAvailability> value) { 
+        /**
+         * @param value {@link #availability} (Availability of series (online, offline or nearlnie).)
+         */
+        public ImagingStudySeriesComponent setAvailability(Enumeration<InstanceAvailability> value) { 
           this.availability = value;
+          return this;
         }
 
+        /**
+         * @return Availability of series (online, offline or nearlnie).
+         */
         public InstanceAvailability getAvailabilitySimple() { 
           return this.availability == null ? null : this.availability.getValue();
         }
 
-        public void setAvailabilitySimple(InstanceAvailability value) { 
+        /**
+         * @param value Availability of series (online, offline or nearlnie).
+         */
+        public ImagingStudySeriesComponent setAvailabilitySimple(InstanceAvailability value) { 
           if (value == null)
             this.availability = null;
           else {
@@ -1029,21 +1123,35 @@ public class ImagingStudy extends Resource {
               this.availability = new Enumeration<InstanceAvailability>();
             this.availability.setValue(value);
           }
+          return this;
         }
 
+        /**
+         * @return {@link #url} (WADO-RS URI where Series is available.)
+         */
         public Uri getUrl() { 
           return this.url;
         }
 
-        public void setUrl(Uri value) { 
+        /**
+         * @param value {@link #url} (WADO-RS URI where Series is available.)
+         */
+        public ImagingStudySeriesComponent setUrl(Uri value) { 
           this.url = value;
+          return this;
         }
 
+        /**
+         * @return WADO-RS URI where Series is available.
+         */
         public String getUrlSimple() { 
           return this.url == null ? null : this.url.getValue();
         }
 
-        public void setUrlSimple(String value) { 
+        /**
+         * @param value WADO-RS URI where Series is available.
+         */
+        public ImagingStudySeriesComponent setUrlSimple(String value) { 
           if (value == null)
             this.url = null;
           else {
@@ -1051,29 +1159,50 @@ public class ImagingStudy extends Resource {
               this.url = new Uri();
             this.url.setValue(value);
           }
+          return this;
         }
 
+        /**
+         * @return {@link #bodySite} (Body part examined. See  DICOM Part 16 Annex L for the mapping from DICOM to Snomed.)
+         */
         public Coding getBodySite() { 
           return this.bodySite;
         }
 
-        public void setBodySite(Coding value) { 
+        /**
+         * @param value {@link #bodySite} (Body part examined. See  DICOM Part 16 Annex L for the mapping from DICOM to Snomed.)
+         */
+        public ImagingStudySeriesComponent setBodySite(Coding value) { 
           this.bodySite = value;
+          return this;
         }
 
+        /**
+         * @return {@link #dateTime} (When the series started.)
+         */
         public DateTime getDateTime() { 
           return this.dateTime;
         }
 
-        public void setDateTime(DateTime value) { 
+        /**
+         * @param value {@link #dateTime} (When the series started.)
+         */
+        public ImagingStudySeriesComponent setDateTime(DateTime value) { 
           this.dateTime = value;
+          return this;
         }
 
+        /**
+         * @return When the series started.
+         */
         public String getDateTimeSimple() { 
           return this.dateTime == null ? null : this.dateTime.getValue();
         }
 
-        public void setDateTimeSimple(String value) { 
+        /**
+         * @param value When the series started.
+         */
+        public ImagingStudySeriesComponent setDateTimeSimple(String value) { 
           if (value == null)
             this.dateTime = null;
           else {
@@ -1081,21 +1210,42 @@ public class ImagingStudy extends Resource {
               this.dateTime = new DateTime();
             this.dateTime.setValue(value);
           }
+          return this;
         }
 
+        /**
+         * @return {@link #instance} (A single image taken from a patient.)
+         */
         public List<ImagingStudySeriesInstanceComponent> getInstance() { 
           return this.instance;
         }
 
     // syntactic sugar
+        /**
+         * @return {@link #instance} (A single image taken from a patient.)
+         */
         public ImagingStudySeriesInstanceComponent addInstance() { 
           ImagingStudySeriesInstanceComponent t = new ImagingStudySeriesInstanceComponent();
           this.instance.add(t);
           return t;
         }
 
+        protected void listChildren(List<Property> childrenList) {
+          super.listChildren(childrenList);
+          childrenList.add(new Property("number", "integer", "The number of this series in the overall sequence.", 0, java.lang.Integer.MAX_VALUE, number));
+          childrenList.add(new Property("modality", "code", "The modality of this series sequence.", 0, java.lang.Integer.MAX_VALUE, modality));
+          childrenList.add(new Property("uid", "oid", "Formal identifier for this series.", 0, java.lang.Integer.MAX_VALUE, uid));
+          childrenList.add(new Property("description", "string", "A description of the series.", 0, java.lang.Integer.MAX_VALUE, description));
+          childrenList.add(new Property("numberOfInstances", "integer", "Sequence that contains attributes from the.", 0, java.lang.Integer.MAX_VALUE, numberOfInstances));
+          childrenList.add(new Property("availability", "code", "Availability of series (online, offline or nearlnie).", 0, java.lang.Integer.MAX_VALUE, availability));
+          childrenList.add(new Property("url", "uri", "WADO-RS URI where Series is available.", 0, java.lang.Integer.MAX_VALUE, url));
+          childrenList.add(new Property("bodySite", "Coding", "Body part examined. See  DICOM Part 16 Annex L for the mapping from DICOM to Snomed.", 0, java.lang.Integer.MAX_VALUE, bodySite));
+          childrenList.add(new Property("dateTime", "dateTime", "When the series started.", 0, java.lang.Integer.MAX_VALUE, dateTime));
+          childrenList.add(new Property("instance", "", "A single image taken from a patient.", 0, java.lang.Integer.MAX_VALUE, instance));
+        }
+
       public ImagingStudySeriesComponent copy(ImagingStudy e) {
-        ImagingStudySeriesComponent dst = e.new ImagingStudySeriesComponent();
+        ImagingStudySeriesComponent dst = new ImagingStudySeriesComponent();
         dst.number = number == null ? null : number.copy();
         dst.modality = modality == null ? null : modality.copy();
         dst.uid = uid == null ? null : uid.copy();
@@ -1113,7 +1263,7 @@ public class ImagingStudy extends Resource {
 
   }
 
-    public class ImagingStudySeriesInstanceComponent extends Element {
+    public static class ImagingStudySeriesInstanceComponent extends BackboneElement {
         /**
          * The number of this image in the series.
          */
@@ -1149,19 +1299,42 @@ public class ImagingStudy extends Resource {
          */
         protected ResourceReference attachment;
 
+      public ImagingStudySeriesInstanceComponent() {
+        super();
+      }
+
+      public ImagingStudySeriesInstanceComponent(Oid uid, Oid sopclass) {
+        super();
+        this.uid = uid;
+        this.sopclass = sopclass;
+      }
+
+        /**
+         * @return {@link #number} (The number of this image in the series.)
+         */
         public Integer getNumber() { 
           return this.number;
         }
 
-        public void setNumber(Integer value) { 
+        /**
+         * @param value {@link #number} (The number of this image in the series.)
+         */
+        public ImagingStudySeriesInstanceComponent setNumber(Integer value) { 
           this.number = value;
+          return this;
         }
 
+        /**
+         * @return The number of this image in the series.
+         */
         public int getNumberSimple() { 
           return this.number == null ? null : this.number.getValue();
         }
 
-        public void setNumberSimple(int value) { 
+        /**
+         * @param value The number of this image in the series.
+         */
+        public ImagingStudySeriesInstanceComponent setNumberSimple(int value) { 
           if (value == -1)
             this.number = null;
           else {
@@ -1169,57 +1342,99 @@ public class ImagingStudy extends Resource {
               this.number = new Integer();
             this.number.setValue(value);
           }
+          return this;
         }
 
+        /**
+         * @return {@link #uid} (Formal identifier for this image.)
+         */
         public Oid getUid() { 
           return this.uid;
         }
 
-        public void setUid(Oid value) { 
+        /**
+         * @param value {@link #uid} (Formal identifier for this image.)
+         */
+        public ImagingStudySeriesInstanceComponent setUid(Oid value) { 
           this.uid = value;
+          return this;
         }
 
+        /**
+         * @return Formal identifier for this image.
+         */
         public String getUidSimple() { 
           return this.uid == null ? null : this.uid.getValue();
         }
 
-        public void setUidSimple(String value) { 
+        /**
+         * @param value Formal identifier for this image.
+         */
+        public ImagingStudySeriesInstanceComponent setUidSimple(String value) { 
             if (this.uid == null)
               this.uid = new Oid();
             this.uid.setValue(value);
+          return this;
         }
 
+        /**
+         * @return {@link #sopclass} (DICOM Image type.)
+         */
         public Oid getSopclass() { 
           return this.sopclass;
         }
 
-        public void setSopclass(Oid value) { 
+        /**
+         * @param value {@link #sopclass} (DICOM Image type.)
+         */
+        public ImagingStudySeriesInstanceComponent setSopclass(Oid value) { 
           this.sopclass = value;
+          return this;
         }
 
+        /**
+         * @return DICOM Image type.
+         */
         public String getSopclassSimple() { 
           return this.sopclass == null ? null : this.sopclass.getValue();
         }
 
-        public void setSopclassSimple(String value) { 
+        /**
+         * @param value DICOM Image type.
+         */
+        public ImagingStudySeriesInstanceComponent setSopclassSimple(String value) { 
             if (this.sopclass == null)
               this.sopclass = new Oid();
             this.sopclass.setValue(value);
+          return this;
         }
 
+        /**
+         * @return {@link #type} (Type of instance (0004,1430).)
+         */
         public String_ getType() { 
           return this.type;
         }
 
-        public void setType(String_ value) { 
+        /**
+         * @param value {@link #type} (Type of instance (0004,1430).)
+         */
+        public ImagingStudySeriesInstanceComponent setType(String_ value) { 
           this.type = value;
+          return this;
         }
 
+        /**
+         * @return Type of instance (0004,1430).
+         */
         public String getTypeSimple() { 
           return this.type == null ? null : this.type.getValue();
         }
 
-        public void setTypeSimple(String value) { 
+        /**
+         * @param value Type of instance (0004,1430).
+         */
+        public ImagingStudySeriesInstanceComponent setTypeSimple(String value) { 
           if (value == null)
             this.type = null;
           else {
@@ -1227,21 +1442,35 @@ public class ImagingStudy extends Resource {
               this.type = new String_();
             this.type.setValue(value);
           }
+          return this;
         }
 
+        /**
+         * @return {@link #title} (Description (0070,0080 | 0040,A043 > 0008,0104 | 0042,0010 | 0008,0008).)
+         */
         public String_ getTitle() { 
           return this.title;
         }
 
-        public void setTitle(String_ value) { 
+        /**
+         * @param value {@link #title} (Description (0070,0080 | 0040,A043 > 0008,0104 | 0042,0010 | 0008,0008).)
+         */
+        public ImagingStudySeriesInstanceComponent setTitle(String_ value) { 
           this.title = value;
+          return this;
         }
 
+        /**
+         * @return Description (0070,0080 | 0040,A043 > 0008,0104 | 0042,0010 | 0008,0008).
+         */
         public String getTitleSimple() { 
           return this.title == null ? null : this.title.getValue();
         }
 
-        public void setTitleSimple(String value) { 
+        /**
+         * @param value Description (0070,0080 | 0040,A043 > 0008,0104 | 0042,0010 | 0008,0008).
+         */
+        public ImagingStudySeriesInstanceComponent setTitleSimple(String value) { 
           if (value == null)
             this.title = null;
           else {
@@ -1249,21 +1478,35 @@ public class ImagingStudy extends Resource {
               this.title = new String_();
             this.title.setValue(value);
           }
+          return this;
         }
 
+        /**
+         * @return {@link #url} (WADO-RS url where image is available.)
+         */
         public Uri getUrl() { 
           return this.url;
         }
 
-        public void setUrl(Uri value) { 
+        /**
+         * @param value {@link #url} (WADO-RS url where image is available.)
+         */
+        public ImagingStudySeriesInstanceComponent setUrl(Uri value) { 
           this.url = value;
+          return this;
         }
 
+        /**
+         * @return WADO-RS url where image is available.
+         */
         public String getUrlSimple() { 
           return this.url == null ? null : this.url.getValue();
         }
 
-        public void setUrlSimple(String value) { 
+        /**
+         * @param value WADO-RS url where image is available.
+         */
+        public ImagingStudySeriesInstanceComponent setUrlSimple(String value) { 
           if (value == null)
             this.url = null;
           else {
@@ -1271,18 +1514,37 @@ public class ImagingStudy extends Resource {
               this.url = new Uri();
             this.url.setValue(value);
           }
+          return this;
         }
 
+        /**
+         * @return {@link #attachment} (A FHIR resource with content for this instance.)
+         */
         public ResourceReference getAttachment() { 
           return this.attachment;
         }
 
-        public void setAttachment(ResourceReference value) { 
+        /**
+         * @param value {@link #attachment} (A FHIR resource with content for this instance.)
+         */
+        public ImagingStudySeriesInstanceComponent setAttachment(ResourceReference value) { 
           this.attachment = value;
+          return this;
+        }
+
+        protected void listChildren(List<Property> childrenList) {
+          super.listChildren(childrenList);
+          childrenList.add(new Property("number", "integer", "The number of this image in the series.", 0, java.lang.Integer.MAX_VALUE, number));
+          childrenList.add(new Property("uid", "oid", "Formal identifier for this image.", 0, java.lang.Integer.MAX_VALUE, uid));
+          childrenList.add(new Property("sopclass", "oid", "DICOM Image type.", 0, java.lang.Integer.MAX_VALUE, sopclass));
+          childrenList.add(new Property("type", "string", "Type of instance (0004,1430).", 0, java.lang.Integer.MAX_VALUE, type));
+          childrenList.add(new Property("title", "string", "Description (0070,0080 | 0040,A043 > 0008,0104 | 0042,0010 | 0008,0008).", 0, java.lang.Integer.MAX_VALUE, title));
+          childrenList.add(new Property("url", "uri", "WADO-RS url where image is available.", 0, java.lang.Integer.MAX_VALUE, url));
+          childrenList.add(new Property("attachment", "Resource(Any)", "A FHIR resource with content for this instance.", 0, java.lang.Integer.MAX_VALUE, attachment));
         }
 
       public ImagingStudySeriesInstanceComponent copy(ImagingStudy e) {
-        ImagingStudySeriesInstanceComponent dst = e.new ImagingStudySeriesInstanceComponent();
+        ImagingStudySeriesInstanceComponent dst = new ImagingStudySeriesInstanceComponent();
         dst.number = number == null ? null : number.copy();
         dst.uid = uid == null ? null : uid.copy();
         dst.sopclass = sopclass == null ? null : sopclass.copy();
@@ -1380,19 +1642,44 @@ public class ImagingStudy extends Resource {
      */
     protected List<ImagingStudySeriesComponent> series = new ArrayList<ImagingStudySeriesComponent>();
 
+    public ImagingStudy() {
+      super();
+    }
+
+    public ImagingStudy(ResourceReference subject, Oid uid, Integer numberOfSeries, Integer numberOfInstances) {
+      super();
+      this.subject = subject;
+      this.uid = uid;
+      this.numberOfSeries = numberOfSeries;
+      this.numberOfInstances = numberOfInstances;
+    }
+
+    /**
+     * @return {@link #dateTime} (Date and Time the study took place.)
+     */
     public DateTime getDateTime() { 
       return this.dateTime;
     }
 
-    public void setDateTime(DateTime value) { 
+    /**
+     * @param value {@link #dateTime} (Date and Time the study took place.)
+     */
+    public ImagingStudy setDateTime(DateTime value) { 
       this.dateTime = value;
+      return this;
     }
 
+    /**
+     * @return Date and Time the study took place.
+     */
     public String getDateTimeSimple() { 
       return this.dateTime == null ? null : this.dateTime.getValue();
     }
 
-    public void setDateTimeSimple(String value) { 
+    /**
+     * @param value Date and Time the study took place.
+     */
+    public ImagingStudy setDateTimeSimple(String value) { 
       if (value == null)
         this.dateTime = null;
       else {
@@ -1400,75 +1687,125 @@ public class ImagingStudy extends Resource {
           this.dateTime = new DateTime();
         this.dateTime.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #subject} (Who the images are of.)
+     */
     public ResourceReference getSubject() { 
       return this.subject;
     }
 
-    public void setSubject(ResourceReference value) { 
+    /**
+     * @param value {@link #subject} (Who the images are of.)
+     */
+    public ImagingStudy setSubject(ResourceReference value) { 
       this.subject = value;
+      return this;
     }
 
+    /**
+     * @return {@link #uid} (Formal identifier for the study.)
+     */
     public Oid getUid() { 
       return this.uid;
     }
 
-    public void setUid(Oid value) { 
+    /**
+     * @param value {@link #uid} (Formal identifier for the study.)
+     */
+    public ImagingStudy setUid(Oid value) { 
       this.uid = value;
+      return this;
     }
 
+    /**
+     * @return Formal identifier for the study.
+     */
     public String getUidSimple() { 
       return this.uid == null ? null : this.uid.getValue();
     }
 
-    public void setUidSimple(String value) { 
+    /**
+     * @param value Formal identifier for the study.
+     */
+    public ImagingStudy setUidSimple(String value) { 
         if (this.uid == null)
           this.uid = new Oid();
         this.uid.setValue(value);
+      return this;
     }
 
+    /**
+     * @return {@link #accessionNo} (Accession Number.)
+     */
     public Identifier getAccessionNo() { 
       return this.accessionNo;
     }
 
-    public void setAccessionNo(Identifier value) { 
+    /**
+     * @param value {@link #accessionNo} (Accession Number.)
+     */
+    public ImagingStudy setAccessionNo(Identifier value) { 
       this.accessionNo = value;
+      return this;
     }
 
+    /**
+     * @return {@link #identifier} (Other identifiers for the study.)
+     */
     public List<Identifier> getIdentifier() { 
       return this.identifier;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #identifier} (Other identifiers for the study.)
+     */
     public Identifier addIdentifier() { 
       Identifier t = new Identifier();
       this.identifier.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #order} (A list of the diagnostic orders that resulted in this imaging study being performed.)
+     */
     public List<ResourceReference> getOrder() { 
       return this.order;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #order} (A list of the diagnostic orders that resulted in this imaging study being performed.)
+     */
     public ResourceReference addOrder() { 
       ResourceReference t = new ResourceReference();
       this.order.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #modality} (A list of all the Series.ImageModality values that are actual acquisition modalities, i.e. those in the DICOM Context Group 29 (value set OID 1.2.840.10008.6.1.19).)
+     */
     public List<Enumeration<ImagingModality>> getModality() { 
       return this.modality;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #modality} (A list of all the Series.ImageModality values that are actual acquisition modalities, i.e. those in the DICOM Context Group 29 (value set OID 1.2.840.10008.6.1.19).)
+     */
     public Enumeration<ImagingModality> addModality() { 
       Enumeration<ImagingModality> t = new Enumeration<ImagingModality>();
       this.modality.add(t);
       return t;
     }
 
+    /**
+     * @param value {@link #modality} (A list of all the Series.ImageModality values that are actual acquisition modalities, i.e. those in the DICOM Context Group 29 (value set OID 1.2.840.10008.6.1.19).)
+     */
     public Enumeration<ImagingModality> addModalitySimple(ImagingModality value) { 
       Enumeration<ImagingModality> t = new Enumeration<ImagingModality>();
       t.setValue(value);
@@ -1476,27 +1813,47 @@ public class ImagingStudy extends Resource {
       return t;
     }
 
+    /**
+     * @return {@link #referrer} (The requesting/referring physician.)
+     */
     public ResourceReference getReferrer() { 
       return this.referrer;
     }
 
-    public void setReferrer(ResourceReference value) { 
+    /**
+     * @param value {@link #referrer} (The requesting/referring physician.)
+     */
+    public ImagingStudy setReferrer(ResourceReference value) { 
       this.referrer = value;
+      return this;
     }
 
+    /**
+     * @return {@link #availability} (Availability of study (online, offline or nearlnie).)
+     */
     public Enumeration<InstanceAvailability> getAvailability() { 
       return this.availability;
     }
 
-    public void setAvailability(Enumeration<InstanceAvailability> value) { 
+    /**
+     * @param value {@link #availability} (Availability of study (online, offline or nearlnie).)
+     */
+    public ImagingStudy setAvailability(Enumeration<InstanceAvailability> value) { 
       this.availability = value;
+      return this;
     }
 
+    /**
+     * @return Availability of study (online, offline or nearlnie).
+     */
     public InstanceAvailability getAvailabilitySimple() { 
       return this.availability == null ? null : this.availability.getValue();
     }
 
-    public void setAvailabilitySimple(InstanceAvailability value) { 
+    /**
+     * @param value Availability of study (online, offline or nearlnie).
+     */
+    public ImagingStudy setAvailabilitySimple(InstanceAvailability value) { 
       if (value == null)
         this.availability = null;
       else {
@@ -1504,21 +1861,35 @@ public class ImagingStudy extends Resource {
           this.availability = new Enumeration<InstanceAvailability>();
         this.availability.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #url} (WADO-RS URI where Study is available.)
+     */
     public Uri getUrl() { 
       return this.url;
     }
 
-    public void setUrl(Uri value) { 
+    /**
+     * @param value {@link #url} (WADO-RS URI where Study is available.)
+     */
+    public ImagingStudy setUrl(Uri value) { 
       this.url = value;
+      return this;
     }
 
+    /**
+     * @return WADO-RS URI where Study is available.
+     */
     public String getUrlSimple() { 
       return this.url == null ? null : this.url.getValue();
     }
 
-    public void setUrlSimple(String value) { 
+    /**
+     * @param value WADO-RS URI where Study is available.
+     */
+    public ImagingStudy setUrlSimple(String value) { 
       if (value == null)
         this.url = null;
       else {
@@ -1526,57 +1897,99 @@ public class ImagingStudy extends Resource {
           this.url = new Uri();
         this.url.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #numberOfSeries} (Number of Series in Study.)
+     */
     public Integer getNumberOfSeries() { 
       return this.numberOfSeries;
     }
 
-    public void setNumberOfSeries(Integer value) { 
+    /**
+     * @param value {@link #numberOfSeries} (Number of Series in Study.)
+     */
+    public ImagingStudy setNumberOfSeries(Integer value) { 
       this.numberOfSeries = value;
+      return this;
     }
 
+    /**
+     * @return Number of Series in Study.
+     */
     public int getNumberOfSeriesSimple() { 
       return this.numberOfSeries == null ? null : this.numberOfSeries.getValue();
     }
 
-    public void setNumberOfSeriesSimple(int value) { 
+    /**
+     * @param value Number of Series in Study.
+     */
+    public ImagingStudy setNumberOfSeriesSimple(int value) { 
         if (this.numberOfSeries == null)
           this.numberOfSeries = new Integer();
         this.numberOfSeries.setValue(value);
+      return this;
     }
 
+    /**
+     * @return {@link #numberOfInstances} (Number of SOP Instances in Study.)
+     */
     public Integer getNumberOfInstances() { 
       return this.numberOfInstances;
     }
 
-    public void setNumberOfInstances(Integer value) { 
+    /**
+     * @param value {@link #numberOfInstances} (Number of SOP Instances in Study.)
+     */
+    public ImagingStudy setNumberOfInstances(Integer value) { 
       this.numberOfInstances = value;
+      return this;
     }
 
+    /**
+     * @return Number of SOP Instances in Study.
+     */
     public int getNumberOfInstancesSimple() { 
       return this.numberOfInstances == null ? null : this.numberOfInstances.getValue();
     }
 
-    public void setNumberOfInstancesSimple(int value) { 
+    /**
+     * @param value Number of SOP Instances in Study.
+     */
+    public ImagingStudy setNumberOfInstancesSimple(int value) { 
         if (this.numberOfInstances == null)
           this.numberOfInstances = new Integer();
         this.numberOfInstances.setValue(value);
+      return this;
     }
 
+    /**
+     * @return {@link #clinicalInformation} (Diagnoses etc provided with request.)
+     */
     public String_ getClinicalInformation() { 
       return this.clinicalInformation;
     }
 
-    public void setClinicalInformation(String_ value) { 
+    /**
+     * @param value {@link #clinicalInformation} (Diagnoses etc provided with request.)
+     */
+    public ImagingStudy setClinicalInformation(String_ value) { 
       this.clinicalInformation = value;
+      return this;
     }
 
+    /**
+     * @return Diagnoses etc provided with request.
+     */
     public String getClinicalInformationSimple() { 
       return this.clinicalInformation == null ? null : this.clinicalInformation.getValue();
     }
 
-    public void setClinicalInformationSimple(String value) { 
+    /**
+     * @param value Diagnoses etc provided with request.
+     */
+    public ImagingStudy setClinicalInformationSimple(String value) { 
       if (value == null)
         this.clinicalInformation = null;
       else {
@@ -1584,40 +1997,67 @@ public class ImagingStudy extends Resource {
           this.clinicalInformation = new String_();
         this.clinicalInformation.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #procedure} (Type of procedure performed.)
+     */
     public List<Coding> getProcedure() { 
       return this.procedure;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #procedure} (Type of procedure performed.)
+     */
     public Coding addProcedure() { 
       Coding t = new Coding();
       this.procedure.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #interpreter} (Who read study and interpreted the images.)
+     */
     public ResourceReference getInterpreter() { 
       return this.interpreter;
     }
 
-    public void setInterpreter(ResourceReference value) { 
+    /**
+     * @param value {@link #interpreter} (Who read study and interpreted the images.)
+     */
+    public ImagingStudy setInterpreter(ResourceReference value) { 
       this.interpreter = value;
+      return this;
     }
 
+    /**
+     * @return {@link #description} (Institution-generated description or classification of the Study (component) performed.)
+     */
     public String_ getDescription() { 
       return this.description;
     }
 
-    public void setDescription(String_ value) { 
+    /**
+     * @param value {@link #description} (Institution-generated description or classification of the Study (component) performed.)
+     */
+    public ImagingStudy setDescription(String_ value) { 
       this.description = value;
+      return this;
     }
 
+    /**
+     * @return Institution-generated description or classification of the Study (component) performed.
+     */
     public String getDescriptionSimple() { 
       return this.description == null ? null : this.description.getValue();
     }
 
-    public void setDescriptionSimple(String value) { 
+    /**
+     * @param value Institution-generated description or classification of the Study (component) performed.
+     */
+    public ImagingStudy setDescriptionSimple(String value) { 
       if (value == null)
         this.description = null;
       else {
@@ -1625,18 +2065,46 @@ public class ImagingStudy extends Resource {
           this.description = new String_();
         this.description.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #series} (Each study has one or more series of image instances.)
+     */
     public List<ImagingStudySeriesComponent> getSeries() { 
       return this.series;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #series} (Each study has one or more series of image instances.)
+     */
     public ImagingStudySeriesComponent addSeries() { 
       ImagingStudySeriesComponent t = new ImagingStudySeriesComponent();
       this.series.add(t);
       return t;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("dateTime", "dateTime", "Date and Time the study took place.", 0, java.lang.Integer.MAX_VALUE, dateTime));
+        childrenList.add(new Property("subject", "Resource(Patient)", "Who the images are of.", 0, java.lang.Integer.MAX_VALUE, subject));
+        childrenList.add(new Property("uid", "oid", "Formal identifier for the study.", 0, java.lang.Integer.MAX_VALUE, uid));
+        childrenList.add(new Property("accessionNo", "Identifier", "Accession Number.", 0, java.lang.Integer.MAX_VALUE, accessionNo));
+        childrenList.add(new Property("identifier", "Identifier", "Other identifiers for the study.", 0, java.lang.Integer.MAX_VALUE, identifier));
+        childrenList.add(new Property("order", "Resource(DiagnosticOrder)", "A list of the diagnostic orders that resulted in this imaging study being performed.", 0, java.lang.Integer.MAX_VALUE, order));
+        childrenList.add(new Property("modality", "code", "A list of all the Series.ImageModality values that are actual acquisition modalities, i.e. those in the DICOM Context Group 29 (value set OID 1.2.840.10008.6.1.19).", 0, java.lang.Integer.MAX_VALUE, modality));
+        childrenList.add(new Property("referrer", "Resource(Practitioner)", "The requesting/referring physician.", 0, java.lang.Integer.MAX_VALUE, referrer));
+        childrenList.add(new Property("availability", "code", "Availability of study (online, offline or nearlnie).", 0, java.lang.Integer.MAX_VALUE, availability));
+        childrenList.add(new Property("url", "uri", "WADO-RS URI where Study is available.", 0, java.lang.Integer.MAX_VALUE, url));
+        childrenList.add(new Property("numberOfSeries", "integer", "Number of Series in Study.", 0, java.lang.Integer.MAX_VALUE, numberOfSeries));
+        childrenList.add(new Property("numberOfInstances", "integer", "Number of SOP Instances in Study.", 0, java.lang.Integer.MAX_VALUE, numberOfInstances));
+        childrenList.add(new Property("clinicalInformation", "string", "Diagnoses etc provided with request.", 0, java.lang.Integer.MAX_VALUE, clinicalInformation));
+        childrenList.add(new Property("procedure", "Coding", "Type of procedure performed.", 0, java.lang.Integer.MAX_VALUE, procedure));
+        childrenList.add(new Property("interpreter", "Resource(Practitioner)", "Who read study and interpreted the images.", 0, java.lang.Integer.MAX_VALUE, interpreter));
+        childrenList.add(new Property("description", "string", "Institution-generated description or classification of the Study (component) performed.", 0, java.lang.Integer.MAX_VALUE, description));
+        childrenList.add(new Property("series", "", "Each study has one or more series of image instances.", 0, java.lang.Integer.MAX_VALUE, series));
+      }
 
       public ImagingStudy copy() {
         ImagingStudy dst = new ImagingStudy();

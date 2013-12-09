@@ -29,7 +29,9 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
+
+import java.util.*;
 
 /**
  * A technical identifier - identifies some entity uniquely and unambiguously.
@@ -66,7 +68,7 @@ public class Identifier extends Type {
         }
     }
 
-  public class IdentifierUseEnumFactory implements EnumFactory {
+  public static class IdentifierUseEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
@@ -95,7 +97,7 @@ public class Identifier extends Type {
     }
 
     /**
-     * usual | official | temp | secondary (If known).
+     * The use of this identifier.
      */
     protected Enumeration<IdentifierUse> use;
 
@@ -124,19 +126,36 @@ public class Identifier extends Type {
      */
     protected ResourceReference assigner;
 
+    public Identifier() {
+      super();
+    }
+
+    /**
+     * @return {@link #use} (The use of this identifier.)
+     */
     public Enumeration<IdentifierUse> getUse() { 
       return this.use;
     }
 
-    public void setUse(Enumeration<IdentifierUse> value) { 
+    /**
+     * @param value {@link #use} (The use of this identifier.)
+     */
+    public Identifier setUse(Enumeration<IdentifierUse> value) { 
       this.use = value;
+      return this;
     }
 
+    /**
+     * @return The use of this identifier.
+     */
     public IdentifierUse getUseSimple() { 
       return this.use == null ? null : this.use.getValue();
     }
 
-    public void setUseSimple(IdentifierUse value) { 
+    /**
+     * @param value The use of this identifier.
+     */
+    public Identifier setUseSimple(IdentifierUse value) { 
       if (value == null)
         this.use = null;
       else {
@@ -144,21 +163,35 @@ public class Identifier extends Type {
           this.use = new Enumeration<IdentifierUse>();
         this.use.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #label} (A label for the identifier that can be displayed to a human so they can recognize the identifier.)
+     */
     public String_ getLabel() { 
       return this.label;
     }
 
-    public void setLabel(String_ value) { 
+    /**
+     * @param value {@link #label} (A label for the identifier that can be displayed to a human so they can recognize the identifier.)
+     */
+    public Identifier setLabel(String_ value) { 
       this.label = value;
+      return this;
     }
 
+    /**
+     * @return A label for the identifier that can be displayed to a human so they can recognize the identifier.
+     */
     public String getLabelSimple() { 
       return this.label == null ? null : this.label.getValue();
     }
 
-    public void setLabelSimple(String value) { 
+    /**
+     * @param value A label for the identifier that can be displayed to a human so they can recognize the identifier.
+     */
+    public Identifier setLabelSimple(String value) { 
       if (value == null)
         this.label = null;
       else {
@@ -166,21 +199,35 @@ public class Identifier extends Type {
           this.label = new String_();
         this.label.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #system} (Establishes the namespace in which set of possible id values is unique.)
+     */
     public Uri getSystem() { 
       return this.system;
     }
 
-    public void setSystem(Uri value) { 
+    /**
+     * @param value {@link #system} (Establishes the namespace in which set of possible id values is unique.)
+     */
+    public Identifier setSystem(Uri value) { 
       this.system = value;
+      return this;
     }
 
+    /**
+     * @return Establishes the namespace in which set of possible id values is unique.
+     */
     public String getSystemSimple() { 
       return this.system == null ? null : this.system.getValue();
     }
 
-    public void setSystemSimple(String value) { 
+    /**
+     * @param value Establishes the namespace in which set of possible id values is unique.
+     */
+    public Identifier setSystemSimple(String value) { 
       if (value == null)
         this.system = null;
       else {
@@ -188,21 +235,35 @@ public class Identifier extends Type {
           this.system = new Uri();
         this.system.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #value} (The portion of the identifier typically displayed to the user and which is unique within the context of the system.)
+     */
     public String_ getValue() { 
       return this.value;
     }
 
-    public void setValue(String_ value) { 
+    /**
+     * @param value {@link #value} (The portion of the identifier typically displayed to the user and which is unique within the context of the system.)
+     */
+    public Identifier setValue(String_ value) { 
       this.value = value;
+      return this;
     }
 
+    /**
+     * @return The portion of the identifier typically displayed to the user and which is unique within the context of the system.
+     */
     public String getValueSimple() { 
       return this.value == null ? null : this.value.getValue();
     }
 
-    public void setValueSimple(String value) { 
+    /**
+     * @param value The portion of the identifier typically displayed to the user and which is unique within the context of the system.
+     */
+    public Identifier setValueSimple(String value) { 
       if (value == null)
         this.value = null;
       else {
@@ -210,23 +271,48 @@ public class Identifier extends Type {
           this.value = new String_();
         this.value.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #period} (Time period during which identifier was valid for use.)
+     */
     public Period getPeriod() { 
       return this.period;
     }
 
-    public void setPeriod(Period value) { 
+    /**
+     * @param value {@link #period} (Time period during which identifier was valid for use.)
+     */
+    public Identifier setPeriod(Period value) { 
       this.period = value;
+      return this;
     }
 
+    /**
+     * @return {@link #assigner} (Organization that issued/manages the identifier.)
+     */
     public ResourceReference getAssigner() { 
       return this.assigner;
     }
 
-    public void setAssigner(ResourceReference value) { 
+    /**
+     * @param value {@link #assigner} (Organization that issued/manages the identifier.)
+     */
+    public Identifier setAssigner(ResourceReference value) { 
       this.assigner = value;
+      return this;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("use", "code", "The use of this identifier.", 0, java.lang.Integer.MAX_VALUE, use));
+        childrenList.add(new Property("label", "string", "A label for the identifier that can be displayed to a human so they can recognize the identifier.", 0, java.lang.Integer.MAX_VALUE, label));
+        childrenList.add(new Property("system", "uri", "Establishes the namespace in which set of possible id values is unique.", 0, java.lang.Integer.MAX_VALUE, system));
+        childrenList.add(new Property("value", "string", "The portion of the identifier typically displayed to the user and which is unique within the context of the system.", 0, java.lang.Integer.MAX_VALUE, value));
+        childrenList.add(new Property("period", "Period", "Time period during which identifier was valid for use.", 0, java.lang.Integer.MAX_VALUE, period));
+        childrenList.add(new Property("assigner", "Resource(Organization)", "Organization that issued/manages the identifier.", 0, java.lang.Integer.MAX_VALUE, assigner));
+      }
 
       public Identifier copy() {
         Identifier dst = new Identifier();

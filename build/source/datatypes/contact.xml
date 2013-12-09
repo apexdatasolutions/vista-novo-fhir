@@ -19,7 +19,6 @@
   <WindowWidth>25635</WindowWidth>
   <WindowTopX>2640</WindowTopX>
   <WindowTopY>2715</WindowTopY>
-  <ActiveSheet>4</ActiveSheet>
   <ProtectStructure>False</ProtectStructure>
   <ProtectWindows>False</ProtectWindows>
  </ExcelWorkbook>
@@ -136,6 +135,7 @@
     <Cell><Data ss:Type="String">All kinds of technology mediated contact details for a person or organisation, including telephone, email, etc.</Data></Cell>
     <Cell><Data ss:Type="String">Need to track phone, fax, mobile, sms numbers, email addresses, twitter tags, etc.</Data></Cell>
     <Cell ss:Index="11"><Data ss:Type="String">TEL</Data></Cell>
+    <Cell><Data ss:Type="String">XTN</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="42.75">
     <Cell><Data ss:Type="String">Contact.system</Data></Cell>
@@ -143,9 +143,10 @@
     <Cell><Data ss:Type="Number">2</Data></Cell>
     <Cell ss:Index="5"><Data ss:Type="String">code</Data></Cell>
     <Cell><Data ss:Type="String">ContactSystem</Data></Cell>
-    <Cell><Data ss:Type="String">Telecommunications form for contact</Data></Cell>
+    <Cell><Data ss:Type="String">phone | fax | email | url</Data></Cell>
     <Cell><Data ss:Type="String">Telecommunications form for contact - what communications system is required to make use of the contact</Data></Cell>
     <Cell ss:Index="11"><Data ss:Type="String">./scheme</Data></Cell>
+    <Cell><Data ss:Type="String">XTN.3</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="75">
     <Cell><Data ss:Type="String">Contact.value</Data></Cell>
@@ -156,6 +157,7 @@
     <Cell><Data ss:Type="String">Need to support legacy numbers that are not in a tightly controlled format </Data></Cell>
     <Cell><Data ss:Type="String">additional out of band data such as extensions, or notes about use of the contact are sometimes included in the value</Data></Cell>
     <Cell><Data ss:Type="String">./url</Data></Cell>
+    <Cell><Data ss:Type="String">XTN.1 (or XTN.12)</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="60">
     <Cell><Data ss:Type="String">Contact.use</Data></Cell>
@@ -163,11 +165,12 @@
     <Cell ss:Index="4"><Data ss:Type="String">Y</Data></Cell>
     <Cell><Data ss:Type="String">code</Data></Cell>
     <Cell><Data ss:Type="String">ContactUse</Data></Cell>
-    <Cell><Data ss:Type="String">How to use this address</Data></Cell>
+    <Cell><Data ss:Type="String">home | work | temp | old | mobile - purpose of this address</Data></Cell>
     <Cell><Data ss:Type="String">Identifies the context for the address</Data></Cell>
     <Cell><Data ss:Type="String">Need to track the way a person uses this contact, so a user can choose which is appropriate for their purpose</Data></Cell>
     <Cell><Data ss:Type="String">This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old contact etc for a current/permanent one. Applications can assume that a contact is not temporary or old unless it explicitly says that it is</Data></Cell>
     <Cell><Data ss:Type="String">unique(./use)</Data></Cell>
+    <Cell><Data ss:Type="String">XTN.2 - but often indicated by field</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="45">
     <Cell><Data ss:Type="String">Contact.period</Data></Cell>
@@ -176,6 +179,7 @@
     <Cell ss:Index="7"><Data ss:Type="String">Time period when the contact was/is in use</Data></Cell>
     <Cell><Data ss:Type="String">Time period when the contact was/is in use</Data></Cell>
     <Cell ss:Index="11"><Data ss:Type="String">./useablePeriod[type=&quot;IVL&lt;TS&gt;&quot;]</Data></Cell>
+    <Cell><Data ss:Type="String">N/A</Data></Cell>
    </Row>
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
@@ -185,11 +189,12 @@
     <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
    </PageSetup>
    <Unsynced/>
+   <Selected/>
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>5</ActiveRow>
-     <ActiveCol>9</ActiveCol>
+     <ActiveRow>2</ActiveRow>
+     <ActiveCol>10</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -355,8 +360,9 @@
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>5</ActiveRow>
-     <ActiveCol>4</ActiveCol>
+     <ActiveRow>1</ActiveRow>
+     <ActiveCol>1</ActiveCol>
+     <RangeSelection>R2C2:R6C2</RangeSelection>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -386,7 +392,7 @@
     <Cell><Data ss:Type="Number">2</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">fax</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">The value is a fax machine. Use of full international numbers starting with + is recommended to enable automatic dialing support but not required.</Data></Cell>
-    <Cell><Data ss:Type="String">~0202.FAX</Data></Cell>
+    <Cell><Data ss:Type="String">~0202.FX</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="Number">3</Data></Cell>
@@ -408,12 +414,12 @@
     <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
    </PageSetup>
    <Unsynced/>
-   <Selected/>
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>2</ActiveRow>
-     <ActiveCol>2</ActiveCol>
+     <ActiveRow>1</ActiveRow>
+     <ActiveCol>1</ActiveCol>
+     <RangeSelection>R2C2:R5C2</RangeSelection>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>

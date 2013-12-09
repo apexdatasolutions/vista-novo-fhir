@@ -9,18 +9,17 @@
   <Author>Grahame</Author>
   <LastAuthor>Grahame</LastAuthor>
   <Created>2012-03-19T11:15:30Z</Created>
-  <LastSaved>2013-06-20T02:48:43Z</LastSaved>
+  <LastSaved>2013-11-20T23:19:15Z</LastSaved>
   <Version>14.00</Version>
  </DocumentProperties>
  <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
   <AllowPNG/>
  </OfficeDocumentSettings>
  <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
-  <WindowHeight>2340</WindowHeight>
+  <WindowHeight>2280</WindowHeight>
   <WindowWidth>10005</WindowWidth>
   <WindowTopX>120</WindowTopX>
-  <WindowTopY>8940</WindowTopY>
-  <ActiveSheet>5</ActiveSheet>
+  <WindowTopY>9000</WindowTopY>
   <ProtectStructure>False</ProtectStructure>
   <ProtectWindows>False</ProtectWindows>
  </ExcelWorkbook>
@@ -150,7 +149,7 @@
     <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s66"/>
-    <Cell ss:StyleID="s66"/>
+    <Cell ss:StyleID="s66"><Data ss:Type="String">200;0</Data></Cell>
     <Cell><Data ss:Type="String">Resource</Data></Cell>
     <Cell ss:Index="8"><Data ss:Type="String"> Detailed information about conditions, problems or diagnoses</Data></Cell>
     <Cell><Data ss:Type="String">Use to record detailed information about conditions, problems or diagnoses recognized by a clinician. There are many uses including: recording a Diagnosis during an Encounter; populating a problem List or a Summary Statement, such as a Discharge Summary</Data></Cell>
@@ -184,7 +183,8 @@
     <Cell><Data ss:Type="String">Condition.encounter</Data></Cell>
     <Cell><Data ss:Type="String">0..1</Data></Cell>
     <Cell ss:Index="6"><Data ss:Type="String">Resource(Encounter)</Data></Cell>
-    <Cell ss:Index="8"><Data ss:Type="String">Encounter during which the condition was first asserted</Data></Cell>
+    <Cell ss:Index="8"><Data ss:Type="String">Encounter when condition first asserted</Data></Cell>
+    <Cell><Data ss:Type="String">Encounter during which the condition was first asserted</Data></Cell>
     <Cell ss:Index="13"><Data ss:Type="String">PV1-19 (+PV1-54)</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="90">
@@ -273,7 +273,7 @@
    <Row ss:AutoFitHeight="0" ss:Height="45">
     <Cell><Data ss:Type="String">Condition.stage</Data></Cell>
     <Cell><Data ss:Type="String">0..1</Data></Cell>
-    <Cell ss:Index="5"><Data ss:Type="String">up</Data></Cell>
+    <Cell ss:Index="5"><Data ss:Type="String">0;0</Data></Cell>
     <Cell ss:Index="8"><Data ss:Type="String">Stage/grade, usually assessed formally</Data></Cell>
     <Cell><Data ss:Type="String">Clinical stage or grade of a condition. May include formal severity assessments</Data></Cell>
    </Row>
@@ -297,7 +297,7 @@
    <Row ss:AutoFitHeight="0" ss:Height="75">
     <Cell><Data ss:Type="String">Condition.evidence</Data></Cell>
     <Cell><Data ss:Type="String">0..*</Data></Cell>
-    <Cell ss:Index="5"><Data ss:Type="String">down</Data></Cell>
+    <Cell ss:Index="5"><Data ss:Type="String">0;150</Data></Cell>
     <Cell ss:Index="8"><Data ss:Type="String">Supporting evidence</Data></Cell>
     <Cell><Data ss:Type="String">Supporting Evidence / manifestations that are the basis on which this condition is suspected or confirmed</Data></Cell>
     <Cell ss:Index="11"><Data ss:Type="String">The evidence may be a simple lost of coded symptoms/manifestations, or references to observations or formal assessments, or both</Data></Cell>
@@ -321,7 +321,7 @@
    <Row ss:AutoFitHeight="0" ss:Height="60">
     <Cell><Data ss:Type="String">Condition.location</Data></Cell>
     <Cell><Data ss:Type="String">0..*</Data></Cell>
-    <Cell ss:Index="5"><Data ss:Type="String">up</Data></Cell>
+    <Cell ss:Index="5"><Data ss:Type="String">500;0</Data></Cell>
     <Cell ss:Index="8"><Data ss:Type="String">Anatomical location, if relevant</Data></Cell>
     <Cell><Data ss:Type="String">The anatomical location where this condition manifests itself</Data></Cell>
     <Cell ss:Index="11"><Data ss:Type="String">May be a summary code, or a reference to a very precise definition of the location, or both</Data></Cell>
@@ -346,7 +346,7 @@
    <Row ss:AutoFitHeight="0" ss:Height="75">
     <Cell><Data ss:Type="String">Condition.relatedItem</Data></Cell>
     <Cell><Data ss:Type="String">0..*</Data></Cell>
-    <Cell ss:Index="5"><Data ss:Type="String">down</Data></Cell>
+    <Cell ss:Index="5"><Data ss:Type="String">550;150</Data></Cell>
     <Cell ss:Index="8"><Data ss:Type="String">Causes or precedents for this Condition</Data></Cell>
     <Cell><Data ss:Type="String">Further conditions, problems, diagnoses, procedures or events that are related in some way to this condition, or the substance that caused/triggered this Condition</Data></Cell>
     <Cell ss:Index="11"><Data ss:Type="String">Although a condition may be caused by a substance, this is not intended to be used to record allergies/adverse reactions to substances</Data></Cell>
@@ -357,7 +357,7 @@
     <Cell><Data ss:Type="String">1..1</Data></Cell>
     <Cell ss:Index="6"><Data ss:Type="String">code</Data></Cell>
     <Cell><Data ss:Type="String">ConditionRelationshipType</Data></Cell>
-    <Cell><Data ss:Type="String">due-to | follows</Data></Cell>
+    <Cell><Data ss:Type="String">due-to | following</Data></Cell>
     <Cell><Data ss:Type="String">The type of relationship that this condition has to the related item</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="30">
@@ -399,11 +399,13 @@
     <HorizontalResolution>-3</HorizontalResolution>
     <VerticalResolution>-3</VerticalResolution>
    </Print>
+   <Selected/>
+   <TopRowVisible>12</TopRowVisible>
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>7</ActiveRow>
-     <ActiveCol>6</ActiveCol>
+     <ActiveRow>23</ActiveRow>
+     <ActiveCol>7</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -527,31 +529,31 @@
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="16.5">
     <Cell><Data ss:Type="String">code</Data></Cell>
-    <Cell><Data ss:Type="String">code for the condition</Data></Cell>
+    <Cell><Data ss:Type="String">Code for the condition</Data></Cell>
     <Cell><Data ss:Type="String">token</Data></Cell>
     <Cell ss:StyleID="s64"><Data ss:Type="String">Condition.code</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="16.5">
     <Cell><Data ss:Type="String">status</Data></Cell>
-    <Cell><Data ss:Type="String">the status of the condition</Data></Cell>
+    <Cell><Data ss:Type="String">The status of the condition</Data></Cell>
     <Cell><Data ss:Type="String">token</Data></Cell>
     <Cell ss:StyleID="s64"><Data ss:Type="String">Condition.status</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">severity</Data></Cell>
-    <Cell><Data ss:Type="String">the severity of the condition</Data></Cell>
+    <Cell><Data ss:Type="String">The severity of the condition</Data></Cell>
     <Cell><Data ss:Type="String">token</Data></Cell>
     <Cell ss:StyleID="s64"><Data ss:Type="String">Condition.severity</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">category</Data></Cell>
-    <Cell><Data ss:Type="String">the category of the condition</Data></Cell>
+    <Cell><Data ss:Type="String">The category of the condition</Data></Cell>
     <Cell><Data ss:Type="String">token</Data></Cell>
     <Cell ss:StyleID="s64"><Data ss:Type="String">Condition.category</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">onset</Data></Cell>
-    <Cell><Data ss:Type="String">when the Condition started (if started on a date)</Data></Cell>
+    <Cell><Data ss:Type="String">When the Condition started (if started on a date)</Data></Cell>
     <Cell><Data ss:Type="String">date</Data></Cell>
     <Cell ss:StyleID="s64"><Data ss:Type="String">Condition.onset[x]</Data></Cell>
    </Row>
@@ -652,7 +654,7 @@
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>10</ActiveRow>
+     <ActiveRow>6</ActiveRow>
      <ActiveCol>1</ActiveCol>
     </Pane>
    </Panes>
@@ -756,8 +758,8 @@
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>6</ActiveRow>
-     <ActiveCol>5</ActiveCol>
+     <ActiveRow>11</ActiveRow>
+     <ActiveCol>3</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -840,7 +842,6 @@
     <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
    </PageSetup>
    <Unsynced/>
-   <Selected/>
    <Panes>
     <Pane>
      <Number>3</Number>

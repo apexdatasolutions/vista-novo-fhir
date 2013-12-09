@@ -212,12 +212,20 @@ public class CompositeTypeConverter {
 		ElementDefn result = FhirFactory.eINSTANCE.createElementDefn();
 
 		String name = element.getName();
-		if (name.endsWith("[x]"))
+		if (name.endsWith("[x]")) {
 			name = name.replace("[x]", "");
+			if (Utilities.noString(name))
+			  name = "value";
+		}
 
 		result.setName(name);
 		Annotations ann = buildAnnotationsFromFhirElement(element);
 
+		if(element.isXmlAttribute())
+		  result.setXmlFormatHint(XmlFormatHint.ATTRIBUTE);
+		if(element.isXhtmlElement())
+		  result.setXmlFormatHint(XmlFormatHint.XHTML_ELEMENT);
+		
 		result.setAnnotation(ann);		
 		result.setIsModifier(element.isModifier());
 		
@@ -345,7 +353,7 @@ public class CompositeTypeConverter {
 	
 	public static ElementDefn buildInternalIdElement()
 	{
-	  ElementDefn idElem = GeneratorUtils.buildSimpleElementDefn("_id", "id", "Local id for element", 0, 1);	  
+	  ElementDefn idElem = GeneratorUtils.buildSimpleElementDefn("id", "id", "Local id for element", 0, 1);	  
 		idElem.setPrimitiveContents(true);
 		idElem.setXmlFormatHint(XmlFormatHint.ATTRIBUTE);
 		idElem.setSummaryItem(true);		

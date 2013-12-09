@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
 
 import java.util.*;
 
@@ -60,7 +60,7 @@ public class Procedure extends Resource {
         }
     }
 
-  public class ProcedureRelationshipTypeEnumFactory implements EnumFactory {
+  public static class ProcedureRelationshipTypeEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
@@ -80,7 +80,7 @@ public class Procedure extends Resource {
       }
     }
 
-    public class ProcedurePerformerComponent extends Element {
+    public static class ProcedurePerformerComponent extends BackboneElement {
         /**
          * The practitioner who was involved in the procedure.
          */
@@ -91,24 +91,48 @@ public class Procedure extends Resource {
          */
         protected CodeableConcept role;
 
+      public ProcedurePerformerComponent() {
+        super();
+      }
+
+        /**
+         * @return {@link #person} (The practitioner who was involved in the procedure.)
+         */
         public ResourceReference getPerson() { 
           return this.person;
         }
 
-        public void setPerson(ResourceReference value) { 
+        /**
+         * @param value {@link #person} (The practitioner who was involved in the procedure.)
+         */
+        public ProcedurePerformerComponent setPerson(ResourceReference value) { 
           this.person = value;
+          return this;
         }
 
+        /**
+         * @return {@link #role} (E.g. surgeon, anaethetist, endoscopist.)
+         */
         public CodeableConcept getRole() { 
           return this.role;
         }
 
-        public void setRole(CodeableConcept value) { 
+        /**
+         * @param value {@link #role} (E.g. surgeon, anaethetist, endoscopist.)
+         */
+        public ProcedurePerformerComponent setRole(CodeableConcept value) { 
           this.role = value;
+          return this;
+        }
+
+        protected void listChildren(List<Property> childrenList) {
+          super.listChildren(childrenList);
+          childrenList.add(new Property("person", "Resource(Practitioner)", "The practitioner who was involved in the procedure.", 0, java.lang.Integer.MAX_VALUE, person));
+          childrenList.add(new Property("role", "CodeableConcept", "E.g. surgeon, anaethetist, endoscopist.", 0, java.lang.Integer.MAX_VALUE, role));
         }
 
       public ProcedurePerformerComponent copy(Procedure e) {
-        ProcedurePerformerComponent dst = e.new ProcedurePerformerComponent();
+        ProcedurePerformerComponent dst = new ProcedurePerformerComponent();
         dst.person = person == null ? null : person.copy();
         dst.role = role == null ? null : role.copy();
         return dst;
@@ -116,7 +140,7 @@ public class Procedure extends Resource {
 
   }
 
-    public class ProcedureRelatedItemComponent extends Element {
+    public static class ProcedureRelatedItemComponent extends BackboneElement {
         /**
          * The nature of the relationship.
          */
@@ -127,19 +151,36 @@ public class Procedure extends Resource {
          */
         protected ResourceReference target;
 
+      public ProcedureRelatedItemComponent() {
+        super();
+      }
+
+        /**
+         * @return {@link #type} (The nature of the relationship.)
+         */
         public Enumeration<ProcedureRelationshipType> getType() { 
           return this.type;
         }
 
-        public void setType(Enumeration<ProcedureRelationshipType> value) { 
+        /**
+         * @param value {@link #type} (The nature of the relationship.)
+         */
+        public ProcedureRelatedItemComponent setType(Enumeration<ProcedureRelationshipType> value) { 
           this.type = value;
+          return this;
         }
 
+        /**
+         * @return The nature of the relationship.
+         */
         public ProcedureRelationshipType getTypeSimple() { 
           return this.type == null ? null : this.type.getValue();
         }
 
-        public void setTypeSimple(ProcedureRelationshipType value) { 
+        /**
+         * @param value The nature of the relationship.
+         */
+        public ProcedureRelatedItemComponent setTypeSimple(ProcedureRelationshipType value) { 
           if (value == null)
             this.type = null;
           else {
@@ -147,18 +188,32 @@ public class Procedure extends Resource {
               this.type = new Enumeration<ProcedureRelationshipType>();
             this.type.setValue(value);
           }
+          return this;
         }
 
+        /**
+         * @return {@link #target} (The related item - e.g. a procedure.)
+         */
         public ResourceReference getTarget() { 
           return this.target;
         }
 
-        public void setTarget(ResourceReference value) { 
+        /**
+         * @param value {@link #target} (The related item - e.g. a procedure.)
+         */
+        public ProcedureRelatedItemComponent setTarget(ResourceReference value) { 
           this.target = value;
+          return this;
+        }
+
+        protected void listChildren(List<Property> childrenList) {
+          super.listChildren(childrenList);
+          childrenList.add(new Property("type", "code", "The nature of the relationship.", 0, java.lang.Integer.MAX_VALUE, type));
+          childrenList.add(new Property("target", "Resource(AdverseReaction|AllergyIntolerance|CarePlan|Condition|DeviceObservationReport|DiagnosticReport|FamilyHistory|ImagingStudy|Immunization|ImmunizationRecommendation|MedicationAdministration|MedicationDispense|MedicationPrescription|MedicationStatement|Observation|Procedure)", "The related item - e.g. a procedure.", 0, java.lang.Integer.MAX_VALUE, target));
         }
 
       public ProcedureRelatedItemComponent copy(Procedure e) {
-        ProcedureRelatedItemComponent dst = e.new ProcedureRelatedItemComponent();
+        ProcedureRelatedItemComponent dst = new ProcedureRelatedItemComponent();
         dst.type = type == null ? null : type.copy();
         dst.target = target == null ? null : target.copy();
         return dst;
@@ -236,95 +291,170 @@ public class Procedure extends Resource {
      */
     protected String_ notes;
 
+    public Procedure() {
+      super();
+    }
+
+    public Procedure(ResourceReference subject, CodeableConcept type) {
+      super();
+      this.subject = subject;
+      this.type = type;
+    }
+
+    /**
+     * @return {@link #identifier} (This records identifiers associated with this procedure that are defined by business processed and/ or used to refer to it when a direct URL refernce to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation).)
+     */
     public List<Identifier> getIdentifier() { 
       return this.identifier;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #identifier} (This records identifiers associated with this procedure that are defined by business processed and/ or used to refer to it when a direct URL refernce to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation).)
+     */
     public Identifier addIdentifier() { 
       Identifier t = new Identifier();
       this.identifier.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #subject} (The person on whom the procedure was performed.)
+     */
     public ResourceReference getSubject() { 
       return this.subject;
     }
 
-    public void setSubject(ResourceReference value) { 
+    /**
+     * @param value {@link #subject} (The person on whom the procedure was performed.)
+     */
+    public Procedure setSubject(ResourceReference value) { 
       this.subject = value;
+      return this;
     }
 
+    /**
+     * @return {@link #type} (The specific procedure that is performed. Use text if the exact nature of the procedure can't be coded.)
+     */
     public CodeableConcept getType() { 
       return this.type;
     }
 
-    public void setType(CodeableConcept value) { 
+    /**
+     * @param value {@link #type} (The specific procedure that is performed. Use text if the exact nature of the procedure can't be coded.)
+     */
+    public Procedure setType(CodeableConcept value) { 
       this.type = value;
+      return this;
     }
 
+    /**
+     * @return {@link #bodySite} (Detailed and structured anatomical location information. Multiple locations are allowed - e.g. multiple punch biopsies of a lesion.)
+     */
     public List<CodeableConcept> getBodySite() { 
       return this.bodySite;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #bodySite} (Detailed and structured anatomical location information. Multiple locations are allowed - e.g. multiple punch biopsies of a lesion.)
+     */
     public CodeableConcept addBodySite() { 
       CodeableConcept t = new CodeableConcept();
       this.bodySite.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #indication} (The reason why the procedure was performed. This may be due to a Condition, may be coded entity of some type, or may simply be present as text.)
+     */
     public List<CodeableConcept> getIndication() { 
       return this.indication;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #indication} (The reason why the procedure was performed. This may be due to a Condition, may be coded entity of some type, or may simply be present as text.)
+     */
     public CodeableConcept addIndication() { 
       CodeableConcept t = new CodeableConcept();
       this.indication.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #performer} (Limited to 'real' people rather than equipment.)
+     */
     public List<ProcedurePerformerComponent> getPerformer() { 
       return this.performer;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #performer} (Limited to 'real' people rather than equipment.)
+     */
     public ProcedurePerformerComponent addPerformer() { 
       ProcedurePerformerComponent t = new ProcedurePerformerComponent();
       this.performer.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #date} (The dates over which the period was performed. Allows a period to support complex procedures that span more that one date, and also allows for the length of the procedure to be captured.)
+     */
     public Period getDate() { 
       return this.date;
     }
 
-    public void setDate(Period value) { 
+    /**
+     * @param value {@link #date} (The dates over which the period was performed. Allows a period to support complex procedures that span more that one date, and also allows for the length of the procedure to be captured.)
+     */
+    public Procedure setDate(Period value) { 
       this.date = value;
+      return this;
     }
 
+    /**
+     * @return {@link #encounter} (The encounter during which the procedure was performed.)
+     */
     public ResourceReference getEncounter() { 
       return this.encounter;
     }
 
-    public void setEncounter(ResourceReference value) { 
+    /**
+     * @param value {@link #encounter} (The encounter during which the procedure was performed.)
+     */
+    public Procedure setEncounter(ResourceReference value) { 
       this.encounter = value;
+      return this;
     }
 
+    /**
+     * @return {@link #outcome} (What was the outcome of the procedure - did it resolve reasons why the procedure was performed?.)
+     */
     public String_ getOutcome() { 
       return this.outcome;
     }
 
-    public void setOutcome(String_ value) { 
+    /**
+     * @param value {@link #outcome} (What was the outcome of the procedure - did it resolve reasons why the procedure was performed?.)
+     */
+    public Procedure setOutcome(String_ value) { 
       this.outcome = value;
+      return this;
     }
 
+    /**
+     * @return What was the outcome of the procedure - did it resolve reasons why the procedure was performed?.
+     */
     public String getOutcomeSimple() { 
       return this.outcome == null ? null : this.outcome.getValue();
     }
 
-    public void setOutcomeSimple(String value) { 
+    /**
+     * @param value What was the outcome of the procedure - did it resolve reasons why the procedure was performed?.
+     */
+    public Procedure setOutcomeSimple(String value) { 
       if (value == null)
         this.outcome = null;
       else {
@@ -332,43 +462,69 @@ public class Procedure extends Resource {
           this.outcome = new String_();
         this.outcome.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #report} (This could be a histology result. There could potentially be multiple reports - e.g. if this was a procedure that made multiple biopsies.)
+     */
     public List<ResourceReference> getReport() { 
       return this.report;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #report} (This could be a histology result. There could potentially be multiple reports - e.g. if this was a procedure that made multiple biopsies.)
+     */
     public ResourceReference addReport() { 
       ResourceReference t = new ResourceReference();
       this.report.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #complication} (Any complications that occurred during the procedure, or in the immediate post-operative period. These are generally tracked separately from the notes, which typically will describe the procedure itself rather than any 'post procedure' issues.)
+     */
     public List<CodeableConcept> getComplication() { 
       return this.complication;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #complication} (Any complications that occurred during the procedure, or in the immediate post-operative period. These are generally tracked separately from the notes, which typically will describe the procedure itself rather than any 'post procedure' issues.)
+     */
     public CodeableConcept addComplication() { 
       CodeableConcept t = new CodeableConcept();
       this.complication.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #followUp} (If the procedure required specific follow up - e.g. removal of sutures. The followup may be represented as a simple note, or potentially could be more complex in which case the CarePlan resource can be used.)
+     */
     public String_ getFollowUp() { 
       return this.followUp;
     }
 
-    public void setFollowUp(String_ value) { 
+    /**
+     * @param value {@link #followUp} (If the procedure required specific follow up - e.g. removal of sutures. The followup may be represented as a simple note, or potentially could be more complex in which case the CarePlan resource can be used.)
+     */
+    public Procedure setFollowUp(String_ value) { 
       this.followUp = value;
+      return this;
     }
 
+    /**
+     * @return If the procedure required specific follow up - e.g. removal of sutures. The followup may be represented as a simple note, or potentially could be more complex in which case the CarePlan resource can be used.
+     */
     public String getFollowUpSimple() { 
       return this.followUp == null ? null : this.followUp.getValue();
     }
 
-    public void setFollowUpSimple(String value) { 
+    /**
+     * @param value If the procedure required specific follow up - e.g. removal of sutures. The followup may be represented as a simple note, or potentially could be more complex in which case the CarePlan resource can be used.
+     */
+    public Procedure setFollowUpSimple(String value) { 
       if (value == null)
         this.followUp = null;
       else {
@@ -376,32 +532,52 @@ public class Procedure extends Resource {
           this.followUp = new String_();
         this.followUp.setValue(value);
       }
+      return this;
     }
 
+    /**
+     * @return {@link #relatedItem} (Procedures may be related to other items such as procedures or medications. For example treating wound dehiscence following a previous procedure.)
+     */
     public List<ProcedureRelatedItemComponent> getRelatedItem() { 
       return this.relatedItem;
     }
 
     // syntactic sugar
+    /**
+     * @return {@link #relatedItem} (Procedures may be related to other items such as procedures or medications. For example treating wound dehiscence following a previous procedure.)
+     */
     public ProcedureRelatedItemComponent addRelatedItem() { 
       ProcedureRelatedItemComponent t = new ProcedureRelatedItemComponent();
       this.relatedItem.add(t);
       return t;
     }
 
+    /**
+     * @return {@link #notes} (Any other notes about the procedure - e.g. the operative notes.)
+     */
     public String_ getNotes() { 
       return this.notes;
     }
 
-    public void setNotes(String_ value) { 
+    /**
+     * @param value {@link #notes} (Any other notes about the procedure - e.g. the operative notes.)
+     */
+    public Procedure setNotes(String_ value) { 
       this.notes = value;
+      return this;
     }
 
+    /**
+     * @return Any other notes about the procedure - e.g. the operative notes.
+     */
     public String getNotesSimple() { 
       return this.notes == null ? null : this.notes.getValue();
     }
 
-    public void setNotesSimple(String value) { 
+    /**
+     * @param value Any other notes about the procedure - e.g. the operative notes.
+     */
+    public Procedure setNotesSimple(String value) { 
       if (value == null)
         this.notes = null;
       else {
@@ -409,7 +585,26 @@ public class Procedure extends Resource {
           this.notes = new String_();
         this.notes.setValue(value);
       }
+      return this;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("identifier", "Identifier", "This records identifiers associated with this procedure that are defined by business processed and/ or used to refer to it when a direct URL refernce to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation).", 0, java.lang.Integer.MAX_VALUE, identifier));
+        childrenList.add(new Property("subject", "Resource(Patient)", "The person on whom the procedure was performed.", 0, java.lang.Integer.MAX_VALUE, subject));
+        childrenList.add(new Property("type", "CodeableConcept", "The specific procedure that is performed. Use text if the exact nature of the procedure can't be coded.", 0, java.lang.Integer.MAX_VALUE, type));
+        childrenList.add(new Property("bodySite", "CodeableConcept", "Detailed and structured anatomical location information. Multiple locations are allowed - e.g. multiple punch biopsies of a lesion.", 0, java.lang.Integer.MAX_VALUE, bodySite));
+        childrenList.add(new Property("indication", "CodeableConcept", "The reason why the procedure was performed. This may be due to a Condition, may be coded entity of some type, or may simply be present as text.", 0, java.lang.Integer.MAX_VALUE, indication));
+        childrenList.add(new Property("performer", "", "Limited to 'real' people rather than equipment.", 0, java.lang.Integer.MAX_VALUE, performer));
+        childrenList.add(new Property("date", "Period", "The dates over which the period was performed. Allows a period to support complex procedures that span more that one date, and also allows for the length of the procedure to be captured.", 0, java.lang.Integer.MAX_VALUE, date));
+        childrenList.add(new Property("encounter", "Resource(Encounter)", "The encounter during which the procedure was performed.", 0, java.lang.Integer.MAX_VALUE, encounter));
+        childrenList.add(new Property("outcome", "string", "What was the outcome of the procedure - did it resolve reasons why the procedure was performed?.", 0, java.lang.Integer.MAX_VALUE, outcome));
+        childrenList.add(new Property("report", "Resource(DiagnosticReport)", "This could be a histology result. There could potentially be multiple reports - e.g. if this was a procedure that made multiple biopsies.", 0, java.lang.Integer.MAX_VALUE, report));
+        childrenList.add(new Property("complication", "CodeableConcept", "Any complications that occurred during the procedure, or in the immediate post-operative period. These are generally tracked separately from the notes, which typically will describe the procedure itself rather than any 'post procedure' issues.", 0, java.lang.Integer.MAX_VALUE, complication));
+        childrenList.add(new Property("followUp", "string", "If the procedure required specific follow up - e.g. removal of sutures. The followup may be represented as a simple note, or potentially could be more complex in which case the CarePlan resource can be used.", 0, java.lang.Integer.MAX_VALUE, followUp));
+        childrenList.add(new Property("relatedItem", "", "Procedures may be related to other items such as procedures or medications. For example treating wound dehiscence following a previous procedure.", 0, java.lang.Integer.MAX_VALUE, relatedItem));
+        childrenList.add(new Property("notes", "string", "Any other notes about the procedure - e.g. the operative notes.", 0, java.lang.Integer.MAX_VALUE, notes));
+      }
 
       public Procedure copy() {
         Procedure dst = new Procedure();

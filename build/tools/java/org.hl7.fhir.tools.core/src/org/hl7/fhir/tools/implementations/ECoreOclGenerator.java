@@ -88,7 +88,7 @@ public boolean isECoreGenerator() {
 
   @Override
 public void generate(org.hl7.fhir.definitions.ecore.fhir.Definitions definitions, String destDir,
-      String implDir, Logger logger) throws Exception {
+      String implDir, Logger logger, String svnRevision) throws Exception {
     throw new UnsupportedOperationException("Ocl generator uses ElementDefn-style definitions.");
   }
 
@@ -98,7 +98,7 @@ public boolean doesCompile() {
   }
 
   @Override
-public boolean compile(String rootDir, List<String> errors) {
+public boolean compile(String rootDir, List<String> errors, Logger logger) {
     return false;
   }
 

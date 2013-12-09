@@ -41,11 +41,11 @@ namespace Hl7.Fhir.Model
 {
     public partial class Code
     {
-        public static bool TryParse(string value, out Code result)
+        public static bool TryParseValue(string value, out string result)
         {
             if (value == null || Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline ))
             {
-                result = new Code(value);
+                result = value;
                 return true;
             }
             else
@@ -55,11 +55,11 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        public static Code Parse(string value)
+        public static string ParseValue(string value)
         {
-            Code result = null;
+            string result = null;
 
-            if (TryParse(value, out result))
+            if (TryParseValue(value, out result))
                 return result;
             else
                 throw new FhirFormatException("Not a correctly formatted code value");
@@ -73,9 +73,9 @@ namespace Hl7.Fhir.Model
                 result.Add("Code values cannot be empty");
             else
             {
-                Code dummy;
+                string dummy;
 
-                if (!TryParse(Value, out dummy))
+                if (!TryParseValue(Value, out dummy))
                     result.Add("Not a correctly formatted code value");
             }
 
@@ -88,94 +88,68 @@ namespace Hl7.Fhir.Model
         }
     }
 
-
-    [Serializable]
-    public class Code<T> : Element  where T : struct
+    [FhirType("codeOfT")]
+    public class Code<T> : Element where T : struct
     {
         // Primitive value of element
+        [FhirElement("value", IsPrimitiveValue=true)]
         public T? Value { get; set; }
 
         public Code() : this(null) {}
 
         public Code(T? value)
         {
-#if !NETFX_CORE
             if (!typeof(T).IsEnum) 
-#else
-            if(!typeof(T).GetTypeInfo().IsEnum)
-#endif
                 throw new ArgumentException("T must be an enumerated type");
 
             Value = value;
         }
 
-        //public static implicit operator Code<T>(T? value)
+        //public static bool TryParseValue(string value, out T result)
         //{
-        //    return new Code<T>(value);
-        //}
+        //    if (value == null) throw new ArgumentNullException("value");
 
-        //public static explicit operator T(Code<T> source)
-        //{
-        //    if (source.Value.HasValue)
-        //        return source.Value.Value;
+        //    object res;
+
+        //    if (EnumHelper.TryParseEnum(value, typeof(T), out res))
+        //    {
+        //        result = (T)res;
+        //        return true;
+        //    }
         //    else
-        //        throw new InvalidCastException();
+        //    {
+        //        result = default(T);
+        //        return false;
+        //    }
         //}
 
-        //public static explicit operator T?(Code<T> source)
+        //public static T ParseValue(string value)
         //{
-        //    return source.Value;
+        //    T result;
+
+        //    if (TryParseValue(value, out result))
+        //        return result;
+        //    else
+        //        throw new FhirFormatException("'" + value + "' is not a correct value for " +
+        //                    "enum " + typeof(T).Name );
         //}
 
 
-        public static bool TryParse(string value, out Code<T> result)
-        {
-            object enumValue;
+        //public override ErrorList Validate()
+        //{
+        //    var code = new Code(this.ToString());
+        //    code.Extension = this.Extension;
+        //    code.Id = this.Id;
 
-            if (value == null)
-            {
-                result = new Code<T>(null);
-                return true;
-            }
-            else if (EnumHelper.TryParseEnum(value, typeof(T), out enumValue))
-            {
-                result = new Code<T>((T)enumValue);
-                return true;
-            }
-            else
-            {
-                result = null;
-                return false;
-            }
-        }
+        //    return code.Validate();
+        //}
 
-        public static Code<T> Parse(string value)
-        {
-            Code<T> result = null;
-
-            if (TryParse(value, out result))
-                return result;
-            else
-                throw new FhirFormatException("'" + value + "' is not a correct value for " +
-                            "enum " + typeof(T).Name );
-        }
-
-
-        public override ErrorList Validate()
-        {
-            var code = new Code(this.ToString());
-            code.Extension = this.Extension;
-            code.LocalId = this.LocalId;
-
-            return code.Validate();
-        }
-
-        public override string ToString()
-        {
-            if (this.Value.HasValue)
-                return EnumHelper.EnumToString(this.Value, typeof(T));
-            else
-                return null;
-        }
+        //public override string ToString()
+        //{
+        //    if (this.Value.HasValue)
+        //        return EnumHelper.EnumToString(this.Value, typeof(T));
+        //    else
+        //        return null;
+        //}
     }
 }

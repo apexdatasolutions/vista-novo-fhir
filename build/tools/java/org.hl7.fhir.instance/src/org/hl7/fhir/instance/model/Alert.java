@@ -29,7 +29,9 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Fri, Oct 18, 2013 12:16+1100 for FHIR v0.12
+// Generated on Sun, Dec 1, 2013 22:52+1100 for FHIR v0.12
+
+import java.util.*;
 
 /**
  * Prospective warnings of potential issues when providing care to the patient.
@@ -39,7 +41,7 @@ public class Alert extends Resource {
     public enum AlertStatus {
         active, // A current alert that should be displayed to a user. A system may use the category to determine which roles should view the alert.
         inactive, // The alert does not need to be displayed any more.
-        error, // The alert was added in error, and should no longer be displayed.
+        enteredInError, // The alert was added in error, and should no longer be displayed.
         Null; // added to help the parsers
         public static AlertStatus fromCode(String codeString) throws Exception {
             if (codeString == null || "".equals(codeString))
@@ -48,21 +50,21 @@ public class Alert extends Resource {
           return active;
         if ("inactive".equals(codeString))
           return inactive;
-        if ("error".equals(codeString))
-          return error;
+        if ("entered in error".equals(codeString))
+          return enteredInError;
         throw new Exception("Unknown AlertStatus code '"+codeString+"'");
         }
         public String toCode() {
           switch (this) {
             case active: return "active";
             case inactive: return "inactive";
-            case error: return "error";
+            case enteredInError: return "entered in error";
             default: return "?";
           }
         }
     }
 
-  public class AlertStatusEnumFactory implements EnumFactory {
+  public static class AlertStatusEnumFactory implements EnumFactory {
     public Enum<?> fromCode(String codeString) throws Exception {
       if (codeString == null || "".equals(codeString))
             if (codeString == null || "".equals(codeString))
@@ -71,8 +73,8 @@ public class Alert extends Resource {
           return AlertStatus.active;
         if ("inactive".equals(codeString))
           return AlertStatus.inactive;
-        if ("error".equals(codeString))
-          return AlertStatus.error;
+        if ("entered in error".equals(codeString))
+          return AlertStatus.enteredInError;
         throw new Exception("Unknown AlertStatus code '"+codeString+"'");
         }
     public String toCode(Enum<?> code) throws Exception {
@@ -80,8 +82,8 @@ public class Alert extends Resource {
         return "active";
       if (code == AlertStatus.inactive)
         return "inactive";
-      if (code == AlertStatus.error)
-        return "error";
+      if (code == AlertStatus.enteredInError)
+        return "entered in error";
       return "?";
       }
     }
@@ -111,65 +113,134 @@ public class Alert extends Resource {
      */
     protected String_ note;
 
+    public Alert() {
+      super();
+    }
+
+    public Alert(Enumeration<AlertStatus> status, ResourceReference subject, String_ note) {
+      super();
+      this.status = status;
+      this.subject = subject;
+      this.note = note;
+    }
+
+    /**
+     * @return {@link #category} (Allows an alert to be divided into different categories like clinical, administrative etc.)
+     */
     public CodeableConcept getCategory() { 
       return this.category;
     }
 
-    public void setCategory(CodeableConcept value) { 
+    /**
+     * @param value {@link #category} (Allows an alert to be divided into different categories like clinical, administrative etc.)
+     */
+    public Alert setCategory(CodeableConcept value) { 
       this.category = value;
+      return this;
     }
 
+    /**
+     * @return {@link #status} (Supports basic workflow.)
+     */
     public Enumeration<AlertStatus> getStatus() { 
       return this.status;
     }
 
-    public void setStatus(Enumeration<AlertStatus> value) { 
+    /**
+     * @param value {@link #status} (Supports basic workflow.)
+     */
+    public Alert setStatus(Enumeration<AlertStatus> value) { 
       this.status = value;
+      return this;
     }
 
+    /**
+     * @return Supports basic workflow.
+     */
     public AlertStatus getStatusSimple() { 
       return this.status == null ? null : this.status.getValue();
     }
 
-    public void setStatusSimple(AlertStatus value) { 
+    /**
+     * @param value Supports basic workflow.
+     */
+    public Alert setStatusSimple(AlertStatus value) { 
         if (this.status == null)
           this.status = new Enumeration<AlertStatus>();
         this.status.setValue(value);
+      return this;
     }
 
+    /**
+     * @return {@link #subject} (The person who this alert concerns.)
+     */
     public ResourceReference getSubject() { 
       return this.subject;
     }
 
-    public void setSubject(ResourceReference value) { 
+    /**
+     * @param value {@link #subject} (The person who this alert concerns.)
+     */
+    public Alert setSubject(ResourceReference value) { 
       this.subject = value;
+      return this;
     }
 
+    /**
+     * @return {@link #author} (The person or device that created the alert.)
+     */
     public ResourceReference getAuthor() { 
       return this.author;
     }
 
-    public void setAuthor(ResourceReference value) { 
+    /**
+     * @param value {@link #author} (The person or device that created the alert.)
+     */
+    public Alert setAuthor(ResourceReference value) { 
       this.author = value;
+      return this;
     }
 
+    /**
+     * @return {@link #note} (The textual component of the alert to display to the user.)
+     */
     public String_ getNote() { 
       return this.note;
     }
 
-    public void setNote(String_ value) { 
+    /**
+     * @param value {@link #note} (The textual component of the alert to display to the user.)
+     */
+    public Alert setNote(String_ value) { 
       this.note = value;
+      return this;
     }
 
+    /**
+     * @return The textual component of the alert to display to the user.
+     */
     public String getNoteSimple() { 
       return this.note == null ? null : this.note.getValue();
     }
 
-    public void setNoteSimple(String value) { 
+    /**
+     * @param value The textual component of the alert to display to the user.
+     */
+    public Alert setNoteSimple(String value) { 
         if (this.note == null)
           this.note = new String_();
         this.note.setValue(value);
+      return this;
     }
+
+      protected void listChildren(List<Property> childrenList) {
+        super.listChildren(childrenList);
+        childrenList.add(new Property("category", "CodeableConcept", "Allows an alert to be divided into different categories like clinical, administrative etc.", 0, java.lang.Integer.MAX_VALUE, category));
+        childrenList.add(new Property("status", "code", "Supports basic workflow.", 0, java.lang.Integer.MAX_VALUE, status));
+        childrenList.add(new Property("subject", "Resource(Patient)", "The person who this alert concerns.", 0, java.lang.Integer.MAX_VALUE, subject));
+        childrenList.add(new Property("author", "Resource(Practitioner|Patient|Device)", "The person or device that created the alert.", 0, java.lang.Integer.MAX_VALUE, author));
+        childrenList.add(new Property("note", "string", "The textual component of the alert to display to the user.", 0, java.lang.Integer.MAX_VALUE, note));
+      }
 
       public Alert copy() {
         Alert dst = new Alert();
