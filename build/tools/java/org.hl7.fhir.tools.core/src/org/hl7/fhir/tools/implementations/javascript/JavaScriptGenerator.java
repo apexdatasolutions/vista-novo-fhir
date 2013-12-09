@@ -102,21 +102,11 @@ public class JavaScriptGenerator extends BaseGenerator implements PlatformGenera
   }
 
   @Override
-  public void generate(org.hl7.fhir.definitions.ecore.fhir.Definitions definitions, String destDir, String implDir, Logger logger) throws Exception {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
   public boolean doesCompile() {
     return false;
   }
 
-  @Override
-  public boolean compile(String rootDir, List<String> errors) throws Exception {
-    // TODO Auto-generated method stub
-    return false;
-  }
+
 
   @Override
   public boolean doesTest() {
@@ -133,6 +123,19 @@ public class JavaScriptGenerator extends BaseGenerator implements PlatformGenera
   public String checkFragments(String rootDir, String fragmentsXml) throws Exception {
     // TODO Auto-generated method stub
     return null;
+  }
+
+  @Override
+  public void generate(org.hl7.fhir.definitions.ecore.fhir.Definitions definitions, String destDir, String implDir, Logger logger, String svnRevision)
+      throws Exception {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public boolean compile(String rootDir, List<String> errors, Logger logger) throws Exception {
+    // TODO Auto-generated method stub
+    return false;
   }
 
 }

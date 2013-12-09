@@ -52,7 +52,13 @@ public enum ResourceType {
     Appointment,
     AssessmentDefinition,
     InterestOfCare,
-    Binary;
+    Binary, 
+    Document, 
+    DeviceCapabilities,
+    DeviceData,
+    DeviceLog,
+    DeviceObservation,
+    Message;
 
     public String getPath() {;
       switch (this) {
