@@ -87,6 +87,18 @@ public class MongooseModel {
             generateQuantitySchema(block);
             block.es();
             generateTypeClosing(elementDefinition,block,iterator.hasNext(),includeTrailingComma);
+          } else if(elementType.equals("HumanName")) {
+            block.ln(generateTypeName(elementDefinition, typeRef) + generateTypeOpening(elementDefinition));
+            block.bs();
+            generateHumanNameSchema(block);
+            block.es();
+            generateTypeClosing(elementDefinition,block,iterator.hasNext(),includeTrailingComma);          
+          } else if(elementType.equals("Identifier")) {
+            block.ln(generateTypeName(elementDefinition, typeRef) + generateTypeOpening(elementDefinition));
+            block.bs();
+            generateIdentifierSchema(block);
+            block.es();
+            generateTypeClosing(elementDefinition,block,iterator.hasNext(),includeTrailingComma);          
           } else {
             block.ln(generateTypeName(elementDefinition, typeRef) + generateTypeOpening(elementDefinition));
             block.bs();
@@ -180,5 +192,21 @@ public class MongooseModel {
       generateValueSchema(block, "system", true);
       generateValueSchema(block, "code", false);
       
+    }
+    
+    private void generateHumanNameSchema(GenBlock block) {
+      generateValueSchema(block, "use", true);
+      generateValueSchema(block, "text", true);
+      block.ln("family: [String],");
+      block.ln("given: [String],");
+      block.ln("prefix: [String],");
+      block.ln("suffix: [String]");
+    }
+    
+    private void generateIdentifierSchema(GenBlock block) {
+      generateValueSchema(block, "use", true);
+      generateValueSchema(block, "label", true);
+      generateValueSchema(block, "system", true);
+      generateValueSchema(block, "value", false);
     }
 }
