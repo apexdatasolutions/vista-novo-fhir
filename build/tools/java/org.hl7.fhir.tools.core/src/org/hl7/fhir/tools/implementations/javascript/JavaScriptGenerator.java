@@ -56,6 +56,10 @@ public class JavaScriptGenerator extends BaseGenerator implements PlatformGenera
     if (! controllerDir.exists()) {
       controllerDir.mkdirs();
     }
+    File viewDir = new File(baseDir + SEPARATOR + "views");
+    if (! viewDir.exists()) {
+      viewDir.mkdirs();
+    }
     File configDir = new File(implDir + SEPARATOR + "config");
     if (! configDir.exists()) {
       configDir.mkdirs();
@@ -74,12 +78,17 @@ public class JavaScriptGenerator extends BaseGenerator implements PlatformGenera
     
     File resourceHistoryModel = new File(javaScriptRoot + "app" + SEPARATOR + "models" + SEPARATOR + "resource_history.js");
     FileUtils.copyFileToDirectory(resourceHistoryModel, modelDir);
+    FileUtils.copyFileToDirectory(new File(javaScriptRoot + "app" + SEPARATOR + "views" + SEPARATOR + "atom.xml.eco"), viewDir);
+    FileUtils.copyFileToDirectory(new File(javaScriptRoot + "app" + SEPARATOR + "views" + SEPARATOR + "index.eco"), viewDir);
+    FileUtils.copyFileToDirectory(new File(javaScriptRoot + "app" + SEPARATOR + "views" + SEPARATOR + "test.eco"), viewDir);
     FileUtils.copyFileToDirectory(new File(javaScriptRoot + SEPARATOR + "package.json"), new File(implDir));
     FileUtils.copyFileToDirectory(new File(javaScriptRoot + SEPARATOR + "app.js"), new File(implDir));
     FileUtils.copyFileToDirectory(new File(javaScriptRoot + SEPARATOR + "config" + SEPARATOR + "mongoose.js"), configDir);
     FileUtils.copyFileToDirectory(new File(javaScriptRoot + SEPARATOR + "config" + SEPARATOR + "express.js"), configDir);
     FileUtils.copyFileToDirectory(new File(javaScriptRoot + SEPARATOR + "lib" + SEPARATOR + "format_query_parameter_handler.js"), libDir);
     FileUtils.copyFileToDirectory(new File(javaScriptRoot + SEPARATOR + "lib" + SEPARATOR + "response_format_helper.js"), libDir);
+    FileUtils.copyFileToDirectory(new File(javaScriptRoot + SEPARATOR + "lib" + SEPARATOR + "patient_service_invoker.js"), libDir);
+    FileUtils.copyFileToDirectory(new File(javaScriptRoot + SEPARATOR + "lib" + SEPARATOR + "observation_service_invoker.js"), libDir);
   }
   
   private void generateMongooseModel(String name, File modelDir, Definitions definitions) throws Exception {
