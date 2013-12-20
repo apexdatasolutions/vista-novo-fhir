@@ -5,7 +5,7 @@ var Observation = mongoose.model('Observation');
 var ResourceHistory = mongoose.model('ResourceHistory');
 
 exports.checkObservationCache = function(req, res, next, model) {
-  if (model === 'observation') {
+  if (model === 'observation' && typeof req.params.id !== "undefined") {
     var observationId = req.params.id;
     ResourceHistory.findInCacheOrLocal(observationId, 'Observation', function(resourceHistory) {
       if (resourceHistory) {
@@ -15,11 +15,15 @@ exports.checkObservationCache = function(req, res, next, model) {
         next();
       } else {
         // fetch from the backend service
-        var requestUrl = "http://localhost:3001/admin/observation/" + observationId + ".json";
-        // XXX: Remove hardcoded credentials - extract to config file
-        restler.get(requestUrl, {username: 'andy@mitre.org', password: 'splatter'}).on('complete', function(vistaObservation) {
+        var requestUrl = req.serviceConfig.observations.url + observationId + ".json";
+        restler.get(requestUrl, {username: req.serviceConfig.observations.username, password: req.serviceConfig.observations.password}).once('complete', function(vistaObservation) {
           var novoObservation = new Observation();
-          novoObservation.name.coding = [{system: "http://loinc.org", code: vistaObservation.name}]
+          novoObservation.name.coding = [{system: "http://loinc.org", code: vistaObservation.name}];
+          var bpReading = vistaObservation.value.split('/');
+          novoObservation.component = [{name: {coding: [{system: "http://loinc.org", code: "8480-6"}]}, valueQuantity: {"value": bpReading[0], units: "mm[Hg]"}}, 
+                                       {name: {coding: [{system: "http://loinc.org", code: "8462-4"}]}, valueQuantity: {"value": bpReading[1], units: "mm[Hg]"}}];
+          novoObservation.appliesDateTime = Date.parse(vistaObservation.issued)
+
           novoObservation.save(function(err, savedObservation) {          
             if(err) {
               res.send(500);
