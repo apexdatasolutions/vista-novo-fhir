@@ -117,10 +117,10 @@ exports.list = function(req, res) {
         content.totalResults = counter;
         history.findLatest( function(err, <LowerCaseModelName>) {
           var entrywrapper = {
-            title: "<ModelName> " + histories[0].vistaId + " Version " + history.versionCount(),
-            id: "http://localhost:3000/<LowerCaseModelName>/@" + histories[0].vistaId,
+            title: "<ModelName> " + history.vistaId + " Version " + history.versionCount(),
+            id: "http://localhost:3000/<LowerCaseModelName>/@" + history.vistaId,
             link: {
-              href: "http://localhost:3000/<LowerCaseModelName>/@" + histories[0].vistaId + "/history/@" + history.versionCount(),
+              href: "http://localhost:3000/<LowerCaseModelName>/@" + history.vistaId + "/history/@" + history.versionCount(),
               rel: "self"
             },
             updated: history.lastUpdatedAt(),
